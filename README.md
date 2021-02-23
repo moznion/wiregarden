@@ -1,6 +1,6 @@
 # wiregarden
 
-A daemon to provision the WireGuard peers over HTTP.
+A daemon to provision the WireGuard peers over HTTP/gRPC.
 
 WIP WIP WIP
 
