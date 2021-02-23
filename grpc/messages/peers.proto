@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option go_package = "github.com/moznion/wiregarden/grpc/messages";
+
+service Peers {
+    rpc GetPeers (GetPeersRequest) returns (GetPeersResponse);
+    rpc UpdatePeers (UpdatePeersRequest) returns (UpdatePeersResponse);
+    rpc DeletePeers (DeletePeersRequest) returns (DeletePeersResponse);
+}
+
+message GetPeersRequest {
+    repeated string public_keys = 1;
+}
+
+message GetPeersResponse {
+    repeated Peer peers = 1;
+}
+
+message UpdatePeersRequest {
+    Peer peer = 1;
+}
+
+message UpdatePeersResponse {
+}
+
+message DeletePeersRequest {
+    repeated string public_keys = 1;
+}
+
+message DeletePeersResponse {
+}
+
+message Peer {
+    string public_key = 1;
+    repeated string allowed_ips = 2;
+    string endpoint = 3;
+}
