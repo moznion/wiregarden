@@ -13,7 +13,8 @@ type Peers struct {
 }
 
 func (h *Peers) GetPeers(context.Context, *messages.GetPeersRequest) (*messages.GetPeersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPeers not implemented")
+	peers := make([]*messages.Peer, 0)
+	return &messages.GetPeersResponse{Peers: peers}, nil
 }
 
 func (h *Peers) UpdatePeers(context.Context, *messages.UpdatePeersRequest) (*messages.UpdatePeersResponse, error) {
