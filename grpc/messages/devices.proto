@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+import "grpc/messages/peers.proto";
+
+option go_package = "github.com/moznion/wiregarden/grpc/messages";
+
+service devices {
+    rpc GetDevices (GetDevicesRequest) returns (GetDevicesResponse);
+}
+
+message GetDevicesRequest {
+    string name = 1;
+    repeated string filter_public_keys = 2;
+}
+
+message GetDevicesResponse {
+    repeated Device devices = 1;
+}
+
+message Device {
+    string name = 1;
+    uint32 device_type = 2;
+    string device_type_name = 3;
+    string public_key = 4;
+    uint32 listen_port = 5;
+    int64 firewall_mark = 6;
+    repeated Peer peers = 7;
+}

@@ -6,6 +6,7 @@ import (
 
 	"github.com/moznion/wiregarden/grpc/handlers"
 	"github.com/moznion/wiregarden/grpc/messages"
+	"github.com/moznion/wiregarden/internal/service"
 	"google.golang.org/grpc"
 )
 
@@ -26,6 +27,14 @@ func (s *Server) Run() error {
 	return grpcServer.Serve(lis)
 }
 
-func (s *Server) registerHandlers(grpcServer *grpc.Server) {
+func (s *Server) registerHandlers(grpcServer *grpc.Server) error {
+	deviceService, err := service.NewDevice()
+	if err != nil {
+		return err
+	}
+
 	messages.RegisterPeersServer(grpcServer, &handlers.Peers{})
+	messages.RegisterDevicesServer(grpcServer, handlers.NewDevices(deviceService))
+
+	return nil
 }
