@@ -19,14 +19,7 @@ func NewWGCtrl() (*WGCtrl, error) {
 	}, nil
 }
 
-func (w *WGCtrl) GetDevices(name string, publicKeys []string) ([]*wgtypes.Device, error) {
-	if name != "" {
-		return w.getSingleDevice(name, publicKeys)
-	}
-	return w.getDevices(publicKeys)
-}
-
-func (w *WGCtrl) getSingleDevice(name string, filterPublicKeys []string) ([]*wgtypes.Device, error) {
+func (w *WGCtrl) GetSingleDevice(name string, filterPublicKeys []string) ([]*wgtypes.Device, error) {
 	gotDevice, err := w.client.Device(name)
 	if err != nil {
 		return nil, err
@@ -38,14 +31,14 @@ func (w *WGCtrl) getSingleDevice(name string, filterPublicKeys []string) ([]*wgt
 
 	publicKeyFilterMap := w.publicKeysToFilterMap(filterPublicKeys)
 
-	if publicKeyFilterMap[gotDevice.PublicKey] {
+	if publicKeyFilterMap[gotDevice.PublicKey.String()] {
 		return []*wgtypes.Device{gotDevice}, nil
 	}
 
 	return []*wgtypes.Device{}, nil
 }
 
-func (w *WGCtrl) getDevices(filterPublicKeys []string) ([]*wgtypes.Device, error) {
+func (w *WGCtrl) GetDevices(filterPublicKeys []string) ([]*wgtypes.Device, error) {
 	gotDevices, err := w.client.Devices()
 	if err != nil {
 		return nil, err
@@ -59,19 +52,17 @@ func (w *WGCtrl) getDevices(filterPublicKeys []string) ([]*wgtypes.Device, error
 
 	var devices []*wgtypes.Device
 	for _, device := range gotDevices {
-		if publicKeyFilterMap[device.PublicKey] {
+		if publicKeyFilterMap[device.PublicKey.String()] {
 			devices = append(devices, device)
 		}
 	}
 	return devices, nil
 }
 
-func (w *WGCtrl) publicKeysToFilterMap(publicKeys []string) map[[wgtypes.KeyLen]byte]bool {
-	m := make(map[[wgtypes.KeyLen]byte]bool)
+func (w *WGCtrl) publicKeysToFilterMap(publicKeys []string) map[string]bool {
+	m := make(map[string]bool)
 	for _, publicKey := range publicKeys {
-		var publicKeyBytes [wgtypes.KeyLen]byte
-		copy(publicKeyBytes[:], publicKey)
-		m[publicKeyBytes] = true
+		m[publicKey] = true
 	}
 	return m
 }

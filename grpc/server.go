@@ -33,7 +33,7 @@ func (s *Server) registerHandlers(grpcServer *grpc.Server) error {
 		return err
 	}
 
-	messages.RegisterPeersServer(grpcServer, &handlers.Peers{})
+	messages.RegisterPeersServer(grpcServer, handlers.NewPeers(deviceService))
 	messages.RegisterDevicesServer(grpcServer, handlers.NewDevices(deviceService))
 
 	return nil
