@@ -22,7 +22,10 @@ func (s *Server) Run() error {
 
 	grpcServer := grpc.NewServer()
 
-	messages.RegisterPeersServer(grpcServer, &handlers.Peers{})
+	err = s.registerHandlers(grpcServer)
+	if err != nil {
+		return err
+	}
 
 	return grpcServer.Serve(lis)
 }
@@ -33,8 +36,8 @@ func (s *Server) registerHandlers(grpcServer *grpc.Server) error {
 		return err
 	}
 
-	messages.RegisterPeersServer(grpcServer, handlers.NewPeers(deviceService))
 	messages.RegisterDevicesServer(grpcServer, handlers.NewDevices(deviceService))
+	messages.RegisterPeersServer(grpcServer, handlers.NewPeers(service.NewPeer(deviceService)))
 
 	return nil
 }

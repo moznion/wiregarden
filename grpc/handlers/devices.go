@@ -32,6 +32,9 @@ func (h *Devices) GetDevices(ctx context.Context, req *messages.GetDevicesReques
 		if err != nil {
 			return nil, err
 		}
+		if gotDevice == nil {
+			return []*wgtypes.Device{}, nil
+		}
 		return []*wgtypes.Device{gotDevice}, nil
 	}()
 	if err != nil {

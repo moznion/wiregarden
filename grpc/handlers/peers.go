@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"log"
 
 	"github.com/moznion/wiregarden/grpc/messages"
 	"github.com/moznion/wiregarden/internal/service"
@@ -10,45 +11,31 @@ import (
 )
 
 type Peers struct {
-	deviceService *service.Device
+	peerService *service.Peer
 	messages.UnimplementedPeersServer
 }
 
-func NewPeers(deviceService *service.Device) *Peers {
+func NewPeers(peerService *service.Peer) *Peers {
 	return &Peers{
-		deviceService: deviceService,
+		peerService: peerService,
 	}
 }
 
 func (h *Peers) GetPeers(ctx context.Context, req *messages.GetPeersRequest) (*messages.GetPeersResponse, error) {
-	if req.DeviceName == "" {
+	deviceName := req.DeviceName
+	if deviceName == "" {
 		return nil, status.Errorf(codes.InvalidArgument, "device_name is a mandatory parameter, but missing")
 	}
 
-	device, err := h.deviceService.GetDevice(req.DeviceName, req.FilterPublicKeys)
+	gotPeers, err := h.peerService.GetPeers(deviceName, req.FilterPublicKeys)
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to collect the devices")
+		log.Printf("[error] %s", err)
+		return nil, status.Error(codes.Internal, "failed to collect the peers")
 	}
 
-	if len(req.FilterPublicKeys) <= 0 {
-		peers := make([]*messages.Peer, len(device.Peers))
-		for i, peer := range device.Peers {
-			peers[i] = messages.ConvertFromWgctrlPeer(&peer)
-		}
-		return &messages.GetPeersResponse{Peers: peers}, nil
-	}
-
-	// FIXME duplicated code
-	filterPublicKeysMap := make(map[string]bool, len(req.FilterPublicKeys))
-	for _, key := range req.FilterPublicKeys {
-		filterPublicKeysMap[key] = true
-	}
-
-	var peers []*messages.Peer
-	for _, peer := range device.Peers {
-		if filterPublicKeysMap[peer.PublicKey.String()] {
-			peers = append(peers, messages.ConvertFromWgctrlPeer(&peer))
-		}
+	peers := make([]*messages.Peer, len(gotPeers))
+	for i, peer := range gotPeers {
+		peers[i] = messages.ConvertFromWgctrlPeer(&peer)
 	}
 
 	return &messages.GetPeersResponse{Peers: peers}, nil
