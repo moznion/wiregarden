@@ -1,6 +1,8 @@
 package infra
 
 import (
+	"context"
+
 	"golang.zx2c4.com/wireguard/wgctrl"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 )
@@ -19,7 +21,7 @@ func NewWGCtrl() (*WGCtrl, error) {
 	}, nil
 }
 
-func (w *WGCtrl) GetSingleDevice(name string, filterPublicKeys []string) ([]*wgtypes.Device, error) {
+func (w *WGCtrl) GetSingleDevice(ctx context.Context, name string, filterPublicKeys []string) ([]*wgtypes.Device, error) {
 	gotDevice, err := w.client.Device(name)
 	if err != nil {
 		return nil, err
@@ -38,7 +40,7 @@ func (w *WGCtrl) GetSingleDevice(name string, filterPublicKeys []string) ([]*wgt
 	return []*wgtypes.Device{}, nil
 }
 
-func (w *WGCtrl) GetDevices(filterPublicKeys []string) ([]*wgtypes.Device, error) {
+func (w *WGCtrl) GetDevices(ctx context.Context, filterPublicKeys []string) ([]*wgtypes.Device, error) {
 	gotDevices, err := w.client.Devices()
 	if err != nil {
 		return nil, err
@@ -59,7 +61,7 @@ func (w *WGCtrl) GetDevices(filterPublicKeys []string) ([]*wgtypes.Device, error
 	return devices, nil
 }
 
-func (w *WGCtrl) RegisterPeers(deviceName string, peers []wgtypes.PeerConfig) error {
+func (w *WGCtrl) RegisterPeers(ctx context.Context, deviceName string, peers []wgtypes.PeerConfig) error {
 	err := w.client.ConfigureDevice(deviceName, wgtypes.Config{
 		ReplacePeers: false,
 		Peers:        peers,

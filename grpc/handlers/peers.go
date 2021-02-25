@@ -28,7 +28,7 @@ func (h *Peers) GetPeers(ctx context.Context, req *messages.GetPeersRequest) (*m
 		return nil, status.Errorf(codes.InvalidArgument, "device_name is a mandatory parameter, but missing")
 	}
 
-	gotPeers, err := h.peerService.GetPeers(deviceName, req.FilterPublicKeys)
+	gotPeers, err := h.peerService.GetPeers(ctx, deviceName, req.FilterPublicKeys)
 	if err != nil {
 		log.Printf("[error] %s", err)
 		return nil, status.Error(codes.Internal, "failed to collect the peers")
@@ -57,7 +57,7 @@ func (h *Peers) RegisterPeers(ctx context.Context, req *messages.RegisterPeersRe
 		peers[i] = *peer
 	}
 
-	err := h.peerService.RegisterPeers(deviceName, peers)
+	err := h.peerService.RegisterPeers(ctx, deviceName, peers)
 	if err != nil {
 		log.Printf("[error] %s", err)
 		return nil, status.Error(codes.Internal, "failed to register peers")

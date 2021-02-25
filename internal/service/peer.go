@@ -1,6 +1,8 @@
 package service
 
 import (
+	"context"
+
 	"github.com/moznion/wiregarden/internal/infra"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 )
@@ -22,8 +24,8 @@ func NewPeer(device *Device) (*Peer, error) {
 	}, nil
 }
 
-func (p *Peer) GetPeers(deviceName string, filterPublicKeys []string) ([]wgtypes.Peer, error) {
-	device, err := p.deviceService.GetDevice(deviceName, []string{})
+func (p *Peer) GetPeers(ctx context.Context, deviceName string, filterPublicKeys []string) ([]wgtypes.Peer, error) {
+	device, err := p.deviceService.GetDevice(ctx, deviceName, []string{})
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +53,7 @@ func (p *Peer) GetPeers(deviceName string, filterPublicKeys []string) ([]wgtypes
 	return peers, nil
 }
 
-func (p *Peer) RegisterPeers(deviceName string, peers []wgtypes.Peer) error { // FIXME don't pass wgtypes.peer directly
+func (p *Peer) RegisterPeers(ctx context.Context, deviceName string, peers []wgtypes.Peer) error { // FIXME don't pass wgtypes.peer directly
 	peerConfigurations := make([]wgtypes.PeerConfig, len(peers))
 	for i, peer := range peers {
 		peerConfigurations[i] = wgtypes.PeerConfig{
@@ -64,7 +66,7 @@ func (p *Peer) RegisterPeers(deviceName string, peers []wgtypes.Peer) error { //
 		}
 	}
 
-	err := p.wgctrl.RegisterPeers(deviceName, peerConfigurations)
+	err := p.wgctrl.RegisterPeers(ctx, deviceName, peerConfigurations)
 	if err != nil {
 		return nil
 	}

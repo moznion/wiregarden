@@ -1,6 +1,8 @@
 package service
 
 import (
+	"context"
+
 	"github.com/moznion/wiregarden/internal/infra"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 )
@@ -20,8 +22,8 @@ func NewDevice() (*Device, error) {
 	}, nil
 }
 
-func (d *Device) GetDevice(name string, filterPublicKeys []string) (*wgtypes.Device, error) {
-	gotDevices, err := d.wgctrl.GetSingleDevice(name, filterPublicKeys)
+func (d *Device) GetDevice(ctx context.Context, name string, filterPublicKeys []string) (*wgtypes.Device, error) {
+	gotDevices, err := d.wgctrl.GetSingleDevice(ctx, name, filterPublicKeys)
 	if err != nil {
 		return nil, err
 	}
@@ -32,8 +34,8 @@ func (d *Device) GetDevice(name string, filterPublicKeys []string) (*wgtypes.Dev
 	return gotDevices[0], nil
 }
 
-func (d *Device) GetDevices(filterPublicKeys []string) ([]*wgtypes.Device, error) {
-	gotDevices, err := d.wgctrl.GetDevices(filterPublicKeys)
+func (d *Device) GetDevices(ctx context.Context, filterPublicKeys []string) ([]*wgtypes.Device, error) {
+	gotDevices, err := d.wgctrl.GetDevices(ctx, filterPublicKeys)
 	if err != nil {
 		return nil, err
 	}

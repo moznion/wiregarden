@@ -25,10 +25,10 @@ func NewDevices(deviceService *service.Device) *Devices {
 func (h *Devices) GetDevices(ctx context.Context, req *messages.GetDevicesRequest) (*messages.GetDevicesResponse, error) {
 	gotDevices, err := func() ([]*wgtypes.Device, error) {
 		if req.Name == "" {
-			return h.deviceService.GetDevices(req.FilterPublicKeys)
+			return h.deviceService.GetDevices(ctx, req.FilterPublicKeys)
 		}
 
-		gotDevice, err := h.deviceService.GetDevice(req.Name, req.FilterPublicKeys)
+		gotDevice, err := h.deviceService.GetDevice(ctx, req.Name, req.FilterPublicKeys)
 		if err != nil {
 			return nil, err
 		}
