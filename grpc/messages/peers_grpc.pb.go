@@ -19,7 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PeersClient interface {
 	GetPeers(ctx context.Context, in *GetPeersRequest, opts ...grpc.CallOption) (*GetPeersResponse, error)
-	UpdatePeers(ctx context.Context, in *UpdatePeersRequest, opts ...grpc.CallOption) (*UpdatePeersResponse, error)
+	RegisterPeers(ctx context.Context, in *RegisterPeersRequest, opts ...grpc.CallOption) (*RegisterPeersResponse, error)
 	DeletePeers(ctx context.Context, in *DeletePeersRequest, opts ...grpc.CallOption) (*DeletePeersResponse, error)
 }
 
@@ -40,9 +40,9 @@ func (c *peersClient) GetPeers(ctx context.Context, in *GetPeersRequest, opts ..
 	return out, nil
 }
 
-func (c *peersClient) UpdatePeers(ctx context.Context, in *UpdatePeersRequest, opts ...grpc.CallOption) (*UpdatePeersResponse, error) {
-	out := new(UpdatePeersResponse)
-	err := c.cc.Invoke(ctx, "/Peers/UpdatePeers", in, out, opts...)
+func (c *peersClient) RegisterPeers(ctx context.Context, in *RegisterPeersRequest, opts ...grpc.CallOption) (*RegisterPeersResponse, error) {
+	out := new(RegisterPeersResponse)
+	err := c.cc.Invoke(ctx, "/Peers/RegisterPeers", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func (c *peersClient) DeletePeers(ctx context.Context, in *DeletePeersRequest, o
 // for forward compatibility
 type PeersServer interface {
 	GetPeers(context.Context, *GetPeersRequest) (*GetPeersResponse, error)
-	UpdatePeers(context.Context, *UpdatePeersRequest) (*UpdatePeersResponse, error)
+	RegisterPeers(context.Context, *RegisterPeersRequest) (*RegisterPeersResponse, error)
 	DeletePeers(context.Context, *DeletePeersRequest) (*DeletePeersResponse, error)
 	mustEmbedUnimplementedPeersServer()
 }
@@ -75,8 +75,8 @@ type UnimplementedPeersServer struct {
 func (UnimplementedPeersServer) GetPeers(context.Context, *GetPeersRequest) (*GetPeersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPeers not implemented")
 }
-func (UnimplementedPeersServer) UpdatePeers(context.Context, *UpdatePeersRequest) (*UpdatePeersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatePeers not implemented")
+func (UnimplementedPeersServer) RegisterPeers(context.Context, *RegisterPeersRequest) (*RegisterPeersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterPeers not implemented")
 }
 func (UnimplementedPeersServer) DeletePeers(context.Context, *DeletePeersRequest) (*DeletePeersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePeers not implemented")
@@ -112,20 +112,20 @@ func _Peers_GetPeers_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Peers_UpdatePeers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdatePeersRequest)
+func _Peers_RegisterPeers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterPeersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PeersServer).UpdatePeers(ctx, in)
+		return srv.(PeersServer).RegisterPeers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Peers/UpdatePeers",
+		FullMethod: "/Peers/RegisterPeers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PeersServer).UpdatePeers(ctx, req.(*UpdatePeersRequest))
+		return srv.(PeersServer).RegisterPeers(ctx, req.(*RegisterPeersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -160,8 +160,8 @@ var Peers_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Peers_GetPeers_Handler,
 		},
 		{
-			MethodName: "UpdatePeers",
-			Handler:    _Peers_UpdatePeers_Handler,
+			MethodName: "RegisterPeers",
+			Handler:    _Peers_RegisterPeers_Handler,
 		},
 		{
 			MethodName: "DeletePeers",

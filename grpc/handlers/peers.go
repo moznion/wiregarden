@@ -41,7 +41,7 @@ func (h *Peers) GetPeers(ctx context.Context, req *messages.GetPeersRequest) (*m
 	return &messages.GetPeersResponse{Peers: peers}, nil
 }
 
-func (h *Peers) UpdatePeers(context.Context, *messages.UpdatePeersRequest) (*messages.UpdatePeersResponse, error) {
+func (h *Peers) UpdatePeers(context.Context, *messages.RegisterPeersRequest) (*messages.RegisterPeersRequest, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePeers not implemented")
 }
 

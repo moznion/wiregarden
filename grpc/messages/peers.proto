@@ -4,7 +4,7 @@ option go_package = "github.com/moznion/wiregarden/grpc/messages";
 
 service Peers {
     rpc GetPeers (GetPeersRequest) returns (GetPeersResponse);
-    rpc UpdatePeers (UpdatePeersRequest) returns (UpdatePeersResponse);
+    rpc RegisterPeers (RegisterPeersRequest) returns (RegisterPeersResponse);
     rpc DeletePeers (DeletePeersRequest) returns (DeletePeersResponse);
 }
 
@@ -17,11 +17,12 @@ message GetPeersResponse {
     repeated Peer peers = 1;
 }
 
-message UpdatePeersRequest {
-    Peer peer = 1;
+message RegisterPeersRequest {
+    string device_name = 1;
+    repeated Peer peers = 2;
 }
 
-message UpdatePeersResponse {
+message RegisterPeersResponse {
 }
 
 message DeletePeersRequest {
