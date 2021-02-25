@@ -35,8 +35,8 @@ func (h *Peers) GetPeers(ctx context.Context, req *messages.GetPeersRequest) (*m
 	}
 
 	peers := make([]*messages.Peer, len(gotPeers))
-	for i, peer := range gotPeers {
-		peers[i] = messages.ConvertFromWgctrlPeer(&peer)
+	for i := range gotPeers {
+		peers[i] = messages.ConvertFromWgctrlPeer(&gotPeers[i])
 	}
 
 	return &messages.GetPeersResponse{Peers: peers}, nil

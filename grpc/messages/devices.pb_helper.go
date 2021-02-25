@@ -6,8 +6,8 @@ import (
 
 func ConvertFromWgctrlDevice(device *wgtypes.Device) *Device {
 	peers := make([]*Peer, len(device.Peers))
-	for i, peer := range device.Peers {
-		peers[i] = ConvertFromWgctrlPeer(&peer)
+	for i := range device.Peers {
+		peers[i] = ConvertFromWgctrlPeer(&device.Peers[i])
 	}
 
 	return &Device{
