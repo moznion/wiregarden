@@ -35,9 +35,13 @@ func (s *Server) registerHandlers(grpcServer *grpc.Server) error {
 	if err != nil {
 		return err
 	}
+	peerService, err := service.NewPeer(deviceService)
+	if err != nil {
+		return err
+	}
 
 	messages.RegisterDevicesServer(grpcServer, handlers.NewDevices(deviceService))
-	messages.RegisterPeersServer(grpcServer, handlers.NewPeers(service.NewPeer(deviceService)))
+	messages.RegisterPeersServer(grpcServer, handlers.NewPeers(peerService))
 
 	return nil
 }

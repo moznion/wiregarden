@@ -59,6 +59,17 @@ func (w *WGCtrl) GetDevices(filterPublicKeys []string) ([]*wgtypes.Device, error
 	return devices, nil
 }
 
+func (w *WGCtrl) RegisterPeers(deviceName string, peers []wgtypes.PeerConfig) error {
+	err := w.client.ConfigureDevice(deviceName, wgtypes.Config{
+		ReplacePeers: false,
+		Peers:        peers,
+	})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (w *WGCtrl) publicKeysToFilterMap(publicKeys []string) map[string]bool {
 	m := make(map[string]bool)
 	for _, publicKey := range publicKeys {

@@ -6,6 +6,7 @@ import (
 
 	"github.com/moznion/wiregarden/grpc/messages"
 	"github.com/moznion/wiregarden/internal/service"
+	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -41,8 +42,28 @@ func (h *Peers) GetPeers(ctx context.Context, req *messages.GetPeersRequest) (*m
 	return &messages.GetPeersResponse{Peers: peers}, nil
 }
 
-func (h *Peers) UpdatePeers(context.Context, *messages.RegisterPeersRequest) (*messages.RegisterPeersRequest, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatePeers not implemented")
+func (h *Peers) RegisterPeers(ctx context.Context, req *messages.RegisterPeersRequest) (*messages.RegisterPeersResponse, error) {
+	deviceName := req.DeviceName
+	if deviceName == "" {
+		return nil, status.Errorf(codes.InvalidArgument, "device_name is a mandatory parameter, but missing")
+	}
+
+	peers := make([]wgtypes.Peer, len(req.Peers))
+	for i, reqPeer := range req.Peers {
+		peer, err := reqPeer.ToWgctrlPeer()
+		if err != nil {
+			return nil, err
+		}
+		peers[i] = *peer
+	}
+
+	err := h.peerService.RegisterPeers(deviceName, peers)
+	if err != nil {
+		log.Printf("[error] %s", err)
+		return nil, status.Error(codes.Internal, "failed to register peers")
+	}
+
+	return &messages.RegisterPeersResponse{}, nil
 }
 
 func (h *Peers) DeletePeers(context.Context, *messages.DeletePeersRequest) (*messages.DeletePeersResponse, error) {
