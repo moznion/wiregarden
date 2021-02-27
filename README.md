@@ -19,6 +19,41 @@ Note: if you faced like `operation not permitted` error, please run the server b
 
 See the example: [examples/wiregarden-client](https://github.com/moznion/wiregarden/tree/main/examples/wiregarden-client)
 
+The following code is a simple example to retrieve peers of `wg0` device.
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+
+	"github.com/moznion/wiregarden/grpc/messages"
+	"google.golang.org/grpc"
+)
+
+func main() {
+	conn, err := grpc.Dial("127.0.0.1:54321", grpc.WithInsecure(), grpc.WithBlock())
+	if err != nil {
+		log.Fatalf("did not connect: %v", err)
+	}
+	defer func() {
+		_ = conn.Close()
+	}()
+	peersClient := messages.NewPeersClient(conn)
+
+	resp, err := peersClient.GetPeers(context.Background(), &messages.GetPeersRequest{
+		DeviceName: "wg0",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("%#v\n", resp.Peers)
+}
+```
+
 ## Features
 
 Currently, it supports the following features:
@@ -34,7 +69,7 @@ Currently, it supports the following features:
 
 - Docker
 
-### How to generate a server binary
+### How to build a server binary
 
 ```
 $ make build GOOS=linux GOARCH=amd64
