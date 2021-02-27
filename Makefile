@@ -2,7 +2,7 @@
 
 PKGS := $(shell go list ./...)
 WG_PROTO_GEN_CONTAINER := "wiregarden-proto-gen:latest"
-GO_BUILD_CONTAINER := "golang:1.16.0-alpine3.13"
+GO_BUILD_CONTAINER := "golang:1.16.0-buster"
 
 check: fmt-check test lint vet sec
 
@@ -20,6 +20,15 @@ container4protogen:
 	docker build . -f devtools/Dockerfile -t $(WG_PROTO_GEN_CONTAINER)
 
 build:
+ifndef GOOS
+	@echo "[error] \$$GOOS must be specified"
+	@exit 1
+endif
+ifndef GOARCH
+	@echo "[error] \$$GOARCH must be specified"
+	@exit 1
+endif
+
 	docker run -it -v $(PWD):/wiregarden -w /wiregarden \
 		-e GOOS=$(GOOS) \
 		-e GOARCH=$(GOARCH) \
