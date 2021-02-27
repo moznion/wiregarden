@@ -72,3 +72,11 @@ func (p *Peer) RegisterPeers(ctx context.Context, deviceName string, peers []wgt
 	}
 	return err
 }
+
+func (p *Peer) DeletePeers(ctx context.Context, deviceName string, publicKeys []string) error {
+	err := p.wgctrl.DeletePeers(ctx, deviceName, publicKeys)
+	if err != nil {
+		return err
+	}
+	return nil
+}

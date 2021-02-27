@@ -72,6 +72,31 @@ func (w *WGCtrl) RegisterPeers(ctx context.Context, deviceName string, peers []w
 	return nil
 }
 
+// FIXME unify with RegisterPeers?
+func (w *WGCtrl) DeletePeers(ctx context.Context, deviceName string, publicKeys []string) error {
+	peersToRemove := make([]wgtypes.PeerConfig, len(publicKeys))
+
+	for i, publicKey := range publicKeys {
+		parsedKey, err := wgtypes.ParseKey(publicKey)
+		if err != nil {
+			return err
+		}
+
+		peersToRemove[i] = wgtypes.PeerConfig{
+			PublicKey: parsedKey,
+			Remove:    true,
+		}
+	}
+
+	err := w.client.ConfigureDevice(deviceName, wgtypes.Config{
+		Peers: peersToRemove,
+	})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (w *WGCtrl) publicKeysToFilterMap(publicKeys []string) map[string]bool {
 	m := make(map[string]bool)
 	for _, publicKey := range publicKeys {

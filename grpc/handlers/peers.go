@@ -66,6 +66,21 @@ func (h *Peers) RegisterPeers(ctx context.Context, req *messages.RegisterPeersRe
 	return &messages.RegisterPeersResponse{}, nil
 }
 
-func (h *Peers) DeletePeers(context.Context, *messages.DeletePeersRequest) (*messages.DeletePeersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeletePeers not implemented")
+func (h *Peers) DeletePeers(ctx context.Context, req *messages.DeletePeersRequest) (*messages.DeletePeersResponse, error) {
+	deviceName := req.DeviceName
+	if deviceName == "" {
+		return nil, status.Errorf(codes.InvalidArgument, "device_name is a mandatory parameter, but missing")
+	}
+	publicKeys := req.PublicKeys
+	if len(publicKeys) <= 0 {
+		return nil, status.Errorf(codes.InvalidArgument, "public_keys parameter is mandatory, but missing or empty")
+	}
+
+	err := h.peerService.DeletePeers(ctx, deviceName, publicKeys)
+	if err != nil {
+		log.Printf("[error] %s", err)
+		return nil, status.Error(codes.Internal, "failed to delete peers")
+	}
+
+	return &messages.DeletePeersResponse{}, nil
 }
