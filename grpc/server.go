@@ -1,7 +1,9 @@
 package grpc
 
 import (
+	"context"
 	"fmt"
+	"log"
 	"net"
 
 	"github.com/moznion/wiregarden/grpc/handlers"
@@ -14,8 +16,8 @@ type Server struct {
 	Port uint16
 }
 
-func (s *Server) Run() error {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", s.Port))
+func (s *Server) Run(ctx context.Context) error {
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", s.Port))
 	if err != nil {
 		return err
 	}
@@ -27,7 +29,10 @@ func (s *Server) Run() error {
 		return err
 	}
 
-	return grpcServer.Serve(lis)
+	port := listener.Addr().(*net.TCPAddr).Port
+	log.Printf("start to listen gRPC over TCP; port = %d", port)
+
+	return grpcServer.Serve(listener)
 }
 
 func (s *Server) registerHandlers(grpcServer *grpc.Server) error {
