@@ -14,6 +14,7 @@ import (
 type Peers struct {
 	peerService            *service.Peer
 	peersRegistrationHooks []PeersRegistrationHook
+	peersDeletionHooks     []PeersDeletionHook
 	messages.UnimplementedPeersServer
 }
 
@@ -21,10 +22,19 @@ type PeersRegistrationHook interface {
 	Do(req *messages.RegisterPeersRequest) error
 }
 
-func NewPeers(peerService *service.Peer, peersRegistrationHooks []PeersRegistrationHook) *Peers {
+type PeersDeletionHook interface {
+	Do(req *messages.DeletePeersRequest) error
+}
+
+func NewPeers(
+	peerService *service.Peer,
+	peersRegistrationHooks []PeersRegistrationHook,
+	peersDeletionHooks []PeersDeletionHook,
+) *Peers {
 	return &Peers{
 		peerService:            peerService,
 		peersRegistrationHooks: peersRegistrationHooks,
+		peersDeletionHooks:     peersDeletionHooks,
 	}
 }
 
@@ -94,6 +104,14 @@ func (h *Peers) DeletePeers(ctx context.Context, req *messages.DeletePeersReques
 	if err != nil {
 		log.Printf("[error] %s", err)
 		return nil, status.Error(codes.Internal, "failed to delete peers")
+	}
+
+	for _, hook := range h.peersDeletionHooks {
+		err := hook.Do(req)
+		if err != nil {
+			log.Printf("[error] %s", err)
+			return nil, status.Error(codes.Unknown, "failed to do a hook on peers deleted")
+		}
 	}
 
 	return &messages.DeletePeersResponse{}, nil
