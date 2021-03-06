@@ -63,7 +63,7 @@ Currently, it supports the following features:
 - RegisterPeers
 - DeletePeers
 
-## Hooks
+## Hooks - **EXPERIMENTAL FEATURE**
 
 It provides "hook" mechanism by the following interfaces:
 
