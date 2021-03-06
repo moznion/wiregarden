@@ -2,6 +2,7 @@ package messages
 
 import (
 	"net"
+	"time"
 
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 )
@@ -20,14 +21,30 @@ func ConvertFromWgctrlPeer(peer *wgtypes.Peer) *Peer {
 }
 
 func (x *Peer) ToWgctrlPeer() (*wgtypes.Peer, error) {
-	publicKey, err := wgtypes.ParseKey(x.PublicKey)
-	if err != nil {
-		return nil, err
+	var err error
+
+	var publicKey wgtypes.Key
+	if len(x.PublicKey) > 0 {
+		publicKey, err = wgtypes.ParseKey(x.PublicKey)
+		if err != nil {
+			return nil, err
+		}
 	}
 
-	endpoint, err := net.ResolveUDPAddr(x.EndpointUdpType.String(), x.Endpoint)
-	if err != nil {
-		return nil, err
+	var presharedKey wgtypes.Key
+	if len(x.PresharedKey) > 0 {
+		presharedKey, err = wgtypes.ParseKey(x.PresharedKey)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	var endpoint *net.UDPAddr
+	if len(x.Endpoint) > 0 {
+		endpoint, err = net.ResolveUDPAddr(x.EndpointUdpType.String(), x.Endpoint)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	allowIPs := make([]net.IPNet, len(x.AllowedIps))
@@ -40,8 +57,11 @@ func (x *Peer) ToWgctrlPeer() (*wgtypes.Peer, error) {
 	}
 
 	return &wgtypes.Peer{
-		PublicKey:  publicKey,
-		Endpoint:   endpoint,
-		AllowedIPs: allowIPs,
+		PublicKey:                   publicKey,
+		PresharedKey:                presharedKey,
+		Endpoint:                    endpoint,
+		AllowedIPs:                  allowIPs,
+		PersistentKeepaliveInterval: time.Duration(x.PersistentKeepaliveIntervalMilliseconds) * time.Millisecond,
+		ProtocolVersion:             int(x.ProtocolVersion),
 	}, nil
 }

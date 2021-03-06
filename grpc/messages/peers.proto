@@ -39,10 +39,12 @@ enum UDPNetworkType {
     udp6 = 2;
 }
 
-// FIXME insufficient fields
 message Peer {
     string public_key = 1;
     repeated string allowed_ips = 2;
     UDPNetworkType endpoint_udp_type = 3;
     string endpoint = 4;
+    string preshared_key = 5;
+    uint64 persistent_keepalive_interval_milliseconds = 6;
+    uint64 protocol_version = 7;
 }
