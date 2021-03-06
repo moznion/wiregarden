@@ -20,6 +20,7 @@ message GetPeersResponse {
 message RegisterPeersRequest {
     string device_name = 1;
     repeated Peer peers = 2;
+    bytes hooks_payload = 3;
 }
 
 message RegisterPeersResponse {

@@ -12,13 +12,19 @@ import (
 )
 
 type Peers struct {
-	peerService *service.Peer
+	peerService            *service.Peer
+	peersRegistrationHooks []PeersRegistrationHook
 	messages.UnimplementedPeersServer
 }
 
-func NewPeers(peerService *service.Peer) *Peers {
+type PeersRegistrationHook interface {
+	Do(req *messages.RegisterPeersRequest) error
+}
+
+func NewPeers(peerService *service.Peer, peersRegistrationHooks []PeersRegistrationHook) *Peers {
 	return &Peers{
-		peerService: peerService,
+		peerService:            peerService,
+		peersRegistrationHooks: peersRegistrationHooks,
 	}
 }
 
@@ -61,6 +67,14 @@ func (h *Peers) RegisterPeers(ctx context.Context, req *messages.RegisterPeersRe
 	if err != nil {
 		log.Printf("[error] %s", err)
 		return nil, status.Error(codes.Internal, "failed to register peers")
+	}
+
+	for _, hook := range h.peersRegistrationHooks {
+		err := hook.Do(req)
+		if err != nil {
+			log.Printf("[error] %s", err)
+			return nil, status.Error(codes.Unknown, "failed to do a hook on peers registered")
+		}
 	}
 
 	return &messages.RegisterPeersResponse{}, nil
