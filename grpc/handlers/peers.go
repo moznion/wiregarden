@@ -18,10 +18,12 @@ type Peers struct {
 	messages.UnimplementedPeersServer
 }
 
+// PeersRegistrationHook is an interface that defines the hook function to do when the peers' registration has done successfully.
 type PeersRegistrationHook interface {
 	Do(req *messages.RegisterPeersRequest) error
 }
 
+// PeersDeletionHook is an interface that defines the hook function to do when the peers' deletion has done successfully.
 type PeersDeletionHook interface {
 	Do(req *messages.DeletePeersRequest) error
 }

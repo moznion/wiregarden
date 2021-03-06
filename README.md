@@ -63,6 +63,19 @@ Currently, it supports the following features:
 - RegisterPeers
 - DeletePeers
 
+## Hooks
+
+It provides "hook" mechanism by the following interfaces:
+
+- [handlers.PeersRegistrationHook](https://pkg.go.dev/github.com/moznion/wiregarden/grpc/handlers#PeersRegistrationHook) for `RegisterPeers`
+- [handlers.PeersDeletionHook](https://pkg.go.dev/github.com/moznion/wiregarden/grpc/handlers#PeersDeletionHook) for `DeletePeers`
+
+If you'd like to do the hook(s) on any operations, please pass the implementation(s) of the interface to [handlers.Peers](https://pkg.go.dev/github.com/moznion/wiregarden/grpc/handlers#Peers) struct.
+
+Note: currently it doesn't provide a way to register the hooks by the default `wiregarden-server` command. If you'd like to run the server with the hooks, please make your own server launcher based on the [cmd/wiregarden-server/main.go](./cmd/wiregarden-server/main.go).
+
+And, `RegisterPeersRequest.HooksPayload []byte` and `DeletePeersRequest.HooksPayload []byte` are the extension properties for each hook.
+
 ## Development Guide
 
 ### Pre-requirements
