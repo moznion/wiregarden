@@ -1,4 +1,4 @@
-# wiregarden
+# wiregarden [![Go Reference](https://pkg.go.dev/badge/github.com/moznion/wiregarden.svg)](https://pkg.go.dev/github.com/moznion/wiregarden)
 
 A broker daemon to provision the [WireGuard](https://www.wireguard.com/) peers over [gRPC](https://grpc.io/).
 
