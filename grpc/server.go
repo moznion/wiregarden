@@ -13,7 +13,9 @@ import (
 )
 
 type Server struct {
-	Port uint16
+	Port                   uint16
+	PeersRegistrationHooks []handlers.PeersRegistrationHook
+	PeersDeletionHooks     []handlers.PeersDeletionHook
 }
 
 func (s *Server) Run(ctx context.Context) error {
@@ -46,7 +48,7 @@ func (s *Server) registerHandlers(grpcServer *grpc.Server) error {
 	}
 
 	messages.RegisterDevicesServer(grpcServer, handlers.NewDevices(deviceService))
-	messages.RegisterPeersServer(grpcServer, handlers.NewPeers(peerService))
+	messages.RegisterPeersServer(grpcServer, handlers.NewPeers(peerService, s.PeersRegistrationHooks, s.PeersDeletionHooks))
 
 	return nil
 }
