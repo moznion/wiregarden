@@ -20,12 +20,12 @@ type Peers struct {
 
 // PeersRegistrationHook is an interface that defines the hook function to do when the peers' registration has done successfully.
 type PeersRegistrationHook interface {
-	Do(req *messages.RegisterPeersRequest) error
+	Do(ctx context.Context, req *messages.RegisterPeersRequest) error
 }
 
 // PeersDeletionHook is an interface that defines the hook function to do when the peers' deletion has done successfully.
 type PeersDeletionHook interface {
-	Do(req *messages.DeletePeersRequest) error
+	Do(ctx context.Context, req *messages.DeletePeersRequest) error
 }
 
 func NewPeers(
@@ -82,7 +82,7 @@ func (h *Peers) RegisterPeers(ctx context.Context, req *messages.RegisterPeersRe
 	}
 
 	for _, hook := range h.peersRegistrationHooks {
-		err := hook.Do(req)
+		err := hook.Do(ctx, req)
 		if err != nil {
 			log.Printf("[error] %s", err)
 			return nil, status.Error(codes.Unknown, "failed to do a hook on peers registered")
@@ -109,7 +109,7 @@ func (h *Peers) DeletePeers(ctx context.Context, req *messages.DeletePeersReques
 	}
 
 	for _, hook := range h.peersDeletionHooks {
-		err := hook.Do(req)
+		err := hook.Do(ctx, req)
 		if err != nil {
 			log.Printf("[error] %s", err)
 			return nil, status.Error(codes.Unknown, "failed to do a hook on peers deleted")
