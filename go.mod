@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/golang/protobuf v1.4.3
+	github.com/google/uuid v1.2.0
 	github.com/mdlayher/netlink v1.3.2 // indirect
 	github.com/rs/zerolog v1.20.0
 	golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83 // indirect
