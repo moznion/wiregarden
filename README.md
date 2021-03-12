@@ -76,6 +76,10 @@ Note: currently it doesn't provide a way to register the hooks by the default `w
 
 And, `RegisterPeersRequest.HooksPayload []byte` and `DeletePeersRequest.HooksPayload []byte` are the extension properties for each hook.
 
+## Logging
+
+Internally, this application / library uses [rs/zerolog](https://github.com/rs/zerolog) as a logger. You can configure the logger according to the manner of the zerolog. Please refer to the document of that.
+
 ## Development Guide
 
 ### Pre-requirements

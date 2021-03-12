@@ -3,12 +3,12 @@ package grpc
 import (
 	"context"
 	"fmt"
-	"log"
 	"net"
 
 	"github.com/moznion/wiregarden/grpc/handlers"
 	"github.com/moznion/wiregarden/grpc/messages"
 	"github.com/moznion/wiregarden/internal/service"
+	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 )
 
@@ -32,7 +32,7 @@ func (s *Server) Run(ctx context.Context) error {
 	}
 
 	port := listener.Addr().(*net.TCPAddr).Port
-	log.Printf("start to listen gRPC over TCP; port = %d", port)
+	log.Info().Int("port", port).Msg("start to listen gRPC over TCP")
 
 	return grpcServer.Serve(listener)
 }

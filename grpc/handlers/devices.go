@@ -2,10 +2,10 @@ package handlers
 
 import (
 	"context"
-	"log"
 
 	"github.com/moznion/wiregarden/grpc/messages"
 	"github.com/moznion/wiregarden/internal/service"
+	"github.com/rs/zerolog/log"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -38,7 +38,7 @@ func (h *Devices) GetDevices(ctx context.Context, req *messages.GetDevicesReques
 		return []*wgtypes.Device{gotDevice}, nil
 	}()
 	if err != nil {
-		log.Printf("[error] %s", err)
+		log.Error().Err(err).Msg("")
 		return nil, status.Errorf(codes.Internal, "failed to collect the devices")
 	}
 
