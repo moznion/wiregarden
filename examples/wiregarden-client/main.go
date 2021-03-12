@@ -4,9 +4,9 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"log"
 
 	"github.com/moznion/wiregarden/grpc/messages"
+	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 )
 
@@ -24,15 +24,15 @@ func main() {
 	flag.Parse()
 
 	if port == defaultPort {
-		log.Fatal("mandatory parameter `port` is missing")
+		log.Fatal().Msg("mandatory parameter `port` is missing")
 	}
 	if host == defaultHost {
-		log.Fatal("mandatory parameter `host` is missing")
+		log.Fatal().Msg("mandatory parameter `host` is missing")
 	}
 
 	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", host, port), grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Fatal().Err(err).Msg("did not connect: %v")
 	}
 	defer conn.Close()
 	peersClient := messages.NewPeersClient(conn)
@@ -45,7 +45,7 @@ func main() {
 func getDevices(devicesClient messages.DevicesClient) {
 	resp, err := devicesClient.GetDevices(context.Background(), &messages.GetDevicesRequest{})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal().Err(err).Msg("")
 	}
 
 	for _, device := range resp.Devices {
@@ -58,7 +58,7 @@ func getPeers(peersClient messages.PeersClient) {
 		DeviceName: "wg0",
 	})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal().Err(err).Msg("")
 	}
 
 	for _, peer := range resp.Peers {
@@ -79,9 +79,9 @@ func registerPeers(peersClient messages.PeersClient) {
 		},
 	})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal().Err(err).Msg("")
 	}
-	log.Println("registered")
+	log.Info().Msg("registered")
 }
 
 func deletePeers(peersClient messages.PeersClient) {
@@ -90,7 +90,7 @@ func deletePeers(peersClient messages.PeersClient) {
 		PublicKeys: []string{"<snip>"},
 	})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal().Err(err).Msg("")
 	}
-	log.Println("removed")
+	log.Info().Msg("removed")
 }

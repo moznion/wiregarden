@@ -2,10 +2,10 @@ package handlers
 
 import (
 	"context"
-	"log"
 
 	"github.com/moznion/wiregarden/grpc/messages"
 	"github.com/moznion/wiregarden/internal/service"
+	"github.com/rs/zerolog/log"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -48,7 +48,7 @@ func (h *Peers) GetPeers(ctx context.Context, req *messages.GetPeersRequest) (*m
 
 	gotPeers, err := h.peerService.GetPeers(ctx, deviceName, req.FilterPublicKeys)
 	if err != nil {
-		log.Printf("[error] %s", err)
+		log.Error().Err(err).Msg("")
 		return nil, status.Error(codes.Internal, "failed to collect the peers")
 	}
 
@@ -77,14 +77,14 @@ func (h *Peers) RegisterPeers(ctx context.Context, req *messages.RegisterPeersRe
 
 	err := h.peerService.RegisterPeers(ctx, deviceName, peers)
 	if err != nil {
-		log.Printf("[error] %s", err)
+		log.Error().Err(err).Msg("")
 		return nil, status.Error(codes.Internal, "failed to register peers")
 	}
 
 	for _, hook := range h.peersRegistrationHooks {
 		err := hook.Do(ctx, req)
 		if err != nil {
-			log.Printf("[error] %s", err)
+			log.Error().Err(err).Msg("")
 			return nil, status.Error(codes.Unknown, "failed to do a hook on peers registered")
 		}
 	}
@@ -104,14 +104,14 @@ func (h *Peers) DeletePeers(ctx context.Context, req *messages.DeletePeersReques
 
 	err := h.peerService.DeletePeers(ctx, deviceName, publicKeys)
 	if err != nil {
-		log.Printf("[error] %s", err)
+		log.Error().Err(err).Msg("")
 		return nil, status.Error(codes.Internal, "failed to delete peers")
 	}
 
 	for _, hook := range h.peersDeletionHooks {
 		err := hook.Do(ctx, req)
 		if err != nil {
-			log.Printf("[error] %s", err)
+			log.Error().Err(err).Msg("")
 			return nil, status.Error(codes.Unknown, "failed to do a hook on peers deleted")
 		}
 	}
