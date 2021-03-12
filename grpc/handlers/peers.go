@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/moznion/wiregarden/grpc/messages"
 	"github.com/moznion/wiregarden/internal/service"
 	"github.com/rs/zerolog/log"
@@ -41,6 +42,14 @@ func NewPeers(
 }
 
 func (h *Peers) GetPeers(ctx context.Context, req *messages.GetPeersRequest) (*messages.GetPeersResponse, error) {
+	l := log.With().
+		Str("requestID", uuid.NewString()).
+		Str("request", "get-peers").
+		Str("deviceName", req.DeviceName).
+		Strs("filterPublicKeys", req.FilterPublicKeys).
+		Logger()
+	l.Info().Msg("received request")
+
 	deviceName := req.DeviceName
 	if deviceName == "" {
 		return nil, status.Errorf(codes.InvalidArgument, "device_name is a mandatory parameter, but missing")
@@ -48,7 +57,7 @@ func (h *Peers) GetPeers(ctx context.Context, req *messages.GetPeersRequest) (*m
 
 	gotPeers, err := h.peerService.GetPeers(ctx, deviceName, req.FilterPublicKeys)
 	if err != nil {
-		log.Error().Err(err).Msg("")
+		l.Error().Err(err).Msg("")
 		return nil, status.Error(codes.Internal, "failed to collect the peers")
 	}
 
@@ -57,10 +66,20 @@ func (h *Peers) GetPeers(ctx context.Context, req *messages.GetPeersRequest) (*m
 		peers[i] = messages.ConvertFromWgctrlPeer(&gotPeers[i])
 	}
 
+	l.Info().Msg("return successfully")
 	return &messages.GetPeersResponse{Peers: peers}, nil
 }
 
 func (h *Peers) RegisterPeers(ctx context.Context, req *messages.RegisterPeersRequest) (*messages.RegisterPeersResponse, error) {
+	l := log.With().
+		Str("requestID", uuid.NewString()).
+		Str("request", "register-peers").
+		Str("deviceName", req.DeviceName).
+		Bytes("hooksPayload", req.HooksPayload).
+		Interface("peers", req.Peers).
+		Logger()
+	l.Info().Msg("received request")
+
 	deviceName := req.DeviceName
 	if deviceName == "" {
 		return nil, status.Errorf(codes.InvalidArgument, "device_name is a mandatory parameter, but missing")
@@ -89,10 +108,20 @@ func (h *Peers) RegisterPeers(ctx context.Context, req *messages.RegisterPeersRe
 		}
 	}
 
+	l.Info().Msg("return successfully")
 	return &messages.RegisterPeersResponse{}, nil
 }
 
 func (h *Peers) DeletePeers(ctx context.Context, req *messages.DeletePeersRequest) (*messages.DeletePeersResponse, error) {
+	l := log.With().
+		Str("requestID", uuid.NewString()).
+		Str("request", "register-peers").
+		Str("deviceName", req.DeviceName).
+		Strs("publicKeys", req.PublicKeys).
+		Bytes("hooksPayload", req.HooksPayload).
+		Logger()
+	l.Info().Msg("received request")
+
 	deviceName := req.DeviceName
 	if deviceName == "" {
 		return nil, status.Errorf(codes.InvalidArgument, "device_name is a mandatory parameter, but missing")
@@ -116,5 +145,6 @@ func (h *Peers) DeletePeers(ctx context.Context, req *messages.DeletePeersReques
 		}
 	}
 
+	l.Info().Msg("return successfully")
 	return &messages.DeletePeersResponse{}, nil
 }

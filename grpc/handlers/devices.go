@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/moznion/wiregarden/grpc/messages"
 	"github.com/moznion/wiregarden/internal/service"
 	"github.com/rs/zerolog/log"
@@ -23,6 +24,14 @@ func NewDevices(deviceService *service.Device) *Devices {
 }
 
 func (h *Devices) GetDevices(ctx context.Context, req *messages.GetDevicesRequest) (*messages.GetDevicesResponse, error) {
+	l := log.With().
+		Str("requestID", uuid.NewString()).
+		Str("request", "get-devices").
+		Str("name", req.Name).
+		Strs("filterPublicKeys", req.FilterPublicKeys).
+		Logger()
+	l.Info().Msg("received")
+
 	gotDevices, err := func() ([]*wgtypes.Device, error) {
 		if req.Name == "" {
 			return h.deviceService.GetDevices(ctx, req.FilterPublicKeys)
@@ -38,7 +47,7 @@ func (h *Devices) GetDevices(ctx context.Context, req *messages.GetDevicesReques
 		return []*wgtypes.Device{gotDevice}, nil
 	}()
 	if err != nil {
-		log.Error().Err(err).Msg("")
+		l.Error().Err(err).Msg("")
 		return nil, status.Errorf(codes.Internal, "failed to collect the devices")
 	}
 
@@ -47,6 +56,7 @@ func (h *Devices) GetDevices(ctx context.Context, req *messages.GetDevicesReques
 		devices[i] = messages.ConvertFromWgctrlDevice(gotDevice)
 	}
 
+	l.Info().Msg("return successfully")
 	return &messages.GetDevicesResponse{
 		Devices: devices,
 	}, nil
