@@ -10,11 +10,12 @@ proto:
 	docker run -it -v $(PWD):/wiregarden -w /wiregarden $(WG_PROTO_GEN_CONTAINER) make _proto
 
 _proto:
-	protoc --go_out=. \
-		--go_opt=paths=source_relative \
+	protoc \
+		--go_out=. \
+		--go_opt=module=github.com/moznion/wiregarden \
 		--go-grpc_out=. \
-		--go-grpc_opt=paths=source_relative \
-		grpc/messages/*.proto
+		--go-grpc_opt=module=github.com/moznion/wiregarden \
+		protos/*.proto
 
 container4protogen:
 	docker build . -f devtools/Dockerfile -t $(WG_PROTO_GEN_CONTAINER)

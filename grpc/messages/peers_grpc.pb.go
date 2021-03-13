@@ -169,5 +169,5 @@ var Peers_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "grpc/messages/peers.proto",
+	Metadata: "protos/peers.proto",
 }
