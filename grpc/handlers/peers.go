@@ -3,6 +3,8 @@ package handlers
 import (
 	"context"
 
+	"github.com/rs/zerolog"
+
 	"github.com/google/uuid"
 	"github.com/moznion/wiregarden/grpc/messages"
 	"github.com/moznion/wiregarden/internal/service"
@@ -50,15 +52,26 @@ func (h *Peers) GetPeers(ctx context.Context, req *messages.GetPeersRequest) (*m
 		Logger()
 	l.Info().Msg("received request")
 
+	resp, errStatus := h.getPeers(ctx, &l, req)
+	if errStatus != nil {
+		l.Info().Uint32("statusCode", uint32(errStatus.Code())).Msgf("return not successfully: %s", errStatus.Message())
+		return nil, errStatus.Err()
+	}
+
+	l.Info().Msg("return successfully")
+	return resp, nil
+}
+
+func (h *Peers) getPeers(ctx context.Context, l *zerolog.Logger, req *messages.GetPeersRequest) (*messages.GetPeersResponse, *status.Status) {
 	deviceName := req.DeviceName
 	if deviceName == "" {
-		return nil, status.Errorf(codes.InvalidArgument, "device_name is a mandatory parameter, but missing")
+		return nil, status.Newf(codes.InvalidArgument, "device_name is a mandatory parameter, but missing")
 	}
 
 	gotPeers, err := h.peerService.GetPeers(ctx, deviceName, req.FilterPublicKeys)
 	if err != nil {
-		l.Error().Err(err).Msg("")
-		return nil, status.Error(codes.Internal, "failed to collect the peers")
+		l.Error().Err(err).Msg("failed to collect the peers")
+		return nil, status.Newf(codes.Internal, "failed to collect the peers")
 	}
 
 	peers := make([]*messages.Peer, len(gotPeers))
@@ -66,7 +79,6 @@ func (h *Peers) GetPeers(ctx context.Context, req *messages.GetPeersRequest) (*m
 		peers[i] = messages.ConvertFromWgctrlPeer(&gotPeers[i])
 	}
 
-	l.Info().Msg("return successfully")
 	return &messages.GetPeersResponse{Peers: peers}, nil
 }
 
@@ -80,35 +92,48 @@ func (h *Peers) RegisterPeers(ctx context.Context, req *messages.RegisterPeersRe
 		Logger()
 	l.Info().Msg("received request")
 
+	resp, errStatus := h.registerPeers(ctx, &l, req)
+	if errStatus != nil {
+		l.Info().Uint32("statusCode", uint32(errStatus.Code())).Msgf("return not successfully: %s", errStatus.Message())
+		return nil, errStatus.Err()
+	}
+
+	l.Info().Msg("return successfully")
+	return resp, nil
+}
+
+func (h *Peers) registerPeers(ctx context.Context, l *zerolog.Logger, req *messages.RegisterPeersRequest) (*messages.RegisterPeersResponse, *status.Status) {
 	deviceName := req.DeviceName
 	if deviceName == "" {
-		return nil, status.Errorf(codes.InvalidArgument, "device_name is a mandatory parameter, but missing")
+		return nil, status.Newf(codes.InvalidArgument, "device_name is a mandatory parameter, but missing")
 	}
 
 	peers := make([]wgtypes.Peer, len(req.Peers))
 	for i, reqPeer := range req.Peers {
 		peer, err := reqPeer.ToWgctrlPeer()
 		if err != nil {
-			return nil, err
+			// TODO more client friendly error message
+			return nil, status.Newf(codes.InvalidArgument, "peers parameter contains invalid parameter")
 		}
 		peers[i] = *peer
 	}
 
 	err := h.peerService.RegisterPeers(ctx, deviceName, peers)
 	if err != nil {
-		log.Error().Err(err).Msg("")
-		return nil, status.Error(codes.Internal, "failed to register peers")
+		errMsg := "failed to register peers"
+		l.Error().Err(err).Msg(errMsg)
+		return nil, status.Newf(codes.Internal, errMsg)
 	}
 
 	for _, hook := range h.peersRegistrationHooks {
 		err := hook.Do(ctx, req)
 		if err != nil {
-			log.Error().Err(err).Msg("")
-			return nil, status.Error(codes.Unknown, "failed to do a hook on peers registered")
+			errMsg := "failed to do a hook on peers registered, but peers registration has been succeeded"
+			l.Error().Err(err).Msg(errMsg)
+			return nil, status.Newf(codes.Unknown, errMsg)
 		}
 	}
 
-	l.Info().Msg("return successfully")
 	return &messages.RegisterPeersResponse{}, nil
 }
 
@@ -122,29 +147,41 @@ func (h *Peers) DeletePeers(ctx context.Context, req *messages.DeletePeersReques
 		Logger()
 	l.Info().Msg("received request")
 
+	resp, errStatus := h.deletePeers(ctx, &l, req)
+	if errStatus != nil {
+		l.Info().Uint32("statusCode", uint32(errStatus.Code())).Msgf("return not successfully: %s", errStatus.Message())
+		return nil, errStatus.Err()
+	}
+
+	l.Info().Msg("return successfully")
+	return resp, nil
+}
+
+func (h *Peers) deletePeers(ctx context.Context, l *zerolog.Logger, req *messages.DeletePeersRequest) (*messages.DeletePeersResponse, *status.Status) {
 	deviceName := req.DeviceName
 	if deviceName == "" {
-		return nil, status.Errorf(codes.InvalidArgument, "device_name is a mandatory parameter, but missing")
+		return nil, status.Newf(codes.InvalidArgument, "device_name is a mandatory parameter, but missing")
 	}
 	publicKeys := req.PublicKeys
 	if len(publicKeys) <= 0 {
-		return nil, status.Errorf(codes.InvalidArgument, "public_keys parameter is mandatory, but missing or empty")
+		return nil, status.Newf(codes.InvalidArgument, "public_keys parameter is mandatory, but missing or empty")
 	}
 
 	err := h.peerService.DeletePeers(ctx, deviceName, publicKeys)
 	if err != nil {
-		log.Error().Err(err).Msg("")
-		return nil, status.Error(codes.Internal, "failed to delete peers")
+		errMsg := "failed to delete peers"
+		l.Error().Err(err).Msg(errMsg)
+		return nil, status.Newf(codes.Internal, errMsg)
 	}
 
 	for _, hook := range h.peersDeletionHooks {
 		err := hook.Do(ctx, req)
 		if err != nil {
-			log.Error().Err(err).Msg("")
-			return nil, status.Error(codes.Unknown, "failed to do a hook on peers deleted")
+			errMsg := "failed to do a hook on peers deleted, but peers deletion has been succeeded"
+			l.Error().Err(err).Msg(errMsg)
+			return nil, status.Newf(codes.Unknown, errMsg)
 		}
 	}
 
-	l.Info().Msg("return successfully")
 	return &messages.DeletePeersResponse{}, nil
 }

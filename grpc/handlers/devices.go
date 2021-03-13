@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/moznion/wiregarden/grpc/messages"
 	"github.com/moznion/wiregarden/internal/service"
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 	"google.golang.org/grpc/codes"
@@ -32,6 +33,17 @@ func (h *Devices) GetDevices(ctx context.Context, req *messages.GetDevicesReques
 		Logger()
 	l.Info().Msg("received")
 
+	resp, errStatus := h.getDevices(ctx, &l, req)
+	if errStatus != nil {
+		l.Info().Uint32("statusCode", uint32(errStatus.Code())).Msgf("return not successfully: %s", errStatus.Message())
+		return nil, errStatus.Err()
+	}
+
+	l.Info().Msg("return successfully")
+	return resp, nil
+}
+
+func (h *Devices) getDevices(ctx context.Context, l *zerolog.Logger, req *messages.GetDevicesRequest) (*messages.GetDevicesResponse, *status.Status) {
 	gotDevices, err := func() ([]*wgtypes.Device, error) {
 		if req.Name == "" {
 			return h.deviceService.GetDevices(ctx, req.FilterPublicKeys)
@@ -47,8 +59,9 @@ func (h *Devices) GetDevices(ctx context.Context, req *messages.GetDevicesReques
 		return []*wgtypes.Device{gotDevice}, nil
 	}()
 	if err != nil {
-		l.Error().Err(err).Msg("")
-		return nil, status.Errorf(codes.Internal, "failed to collect the devices")
+		errMsg := "failed to collect the devices"
+		l.Error().Err(err).Msg(errMsg)
+		return nil, status.Newf(codes.Internal, errMsg)
 	}
 
 	devices := make([]*messages.Device, len(gotDevices))
@@ -56,7 +69,6 @@ func (h *Devices) GetDevices(ctx context.Context, req *messages.GetDevicesReques
 		devices[i] = messages.ConvertFromWgctrlDevice(gotDevice)
 	}
 
-	l.Info().Msg("return successfully")
 	return &messages.GetDevicesResponse{
 		Devices: devices,
 	}, nil
