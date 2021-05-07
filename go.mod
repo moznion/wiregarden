@@ -6,7 +6,7 @@ require (
 	github.com/golang/protobuf v1.4.3
 	github.com/google/uuid v1.2.0
 	github.com/mdlayher/netlink v1.3.2 // indirect
-	github.com/rs/zerolog v1.20.0
+	github.com/rs/zerolog v1.21.0
 	golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83 // indirect
 	golang.org/x/net v0.0.0-20210222171744-9060382bd457 // indirect
 	golang.org/x/sys v0.0.0-20210223095934-7937bea0104d // indirect
