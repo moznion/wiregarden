@@ -1,4 +1,4 @@
-FROM golang:1.16.2-buster
+FROM golang:1.16.4-buster
 
 RUN apt -y update && apt -y upgrade && apt install -y protobuf-compiler
 RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.25.0 \
