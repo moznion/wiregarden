@@ -7,6 +7,7 @@ import (
 
 	"github.com/moznion/wiregarden/grpc/handlers"
 	"github.com/moznion/wiregarden/grpc/messages"
+	"github.com/moznion/wiregarden/internal/infra"
 	"github.com/moznion/wiregarden/internal/service"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
@@ -14,6 +15,7 @@ import (
 
 type Server struct {
 	Port                   uint16
+	IPRouter               infra.IPRouter
 	PeersRegistrationHooks []handlers.PeersRegistrationHook
 	PeersDeletionHooks     []handlers.PeersDeletionHook
 }
@@ -42,7 +44,7 @@ func (s *Server) registerHandlers(grpcServer *grpc.Server) error {
 	if err != nil {
 		return err
 	}
-	peerService, err := service.NewPeer(deviceService)
+	peerService, err := service.NewPeer(deviceService, s.IPRouter)
 	if err != nil {
 		return err
 	}
