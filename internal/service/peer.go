@@ -10,9 +10,10 @@ import (
 type Peer struct {
 	wgctrl        *infra.WGCtrl
 	deviceService *Device
+	ipRouter      infra.IPRouter
 }
 
-func NewPeer(device *Device) (*Peer, error) {
+func NewPeer(device *Device, ipRouter infra.IPRouter) (*Peer, error) {
 	wgctrl, err := infra.NewWGCtrl()
 	if err != nil {
 		return nil, err
@@ -21,6 +22,7 @@ func NewPeer(device *Device) (*Peer, error) {
 	return &Peer{
 		wgctrl:        wgctrl,
 		deviceService: device,
+		ipRouter:      ipRouter,
 	}, nil
 }
 
@@ -68,12 +70,39 @@ func (p *Peer) RegisterPeers(ctx context.Context, deviceName string, peers []wgt
 
 	err := p.wgctrl.RegisterPeers(ctx, deviceName, peerConfigurations)
 	if err != nil {
-		return nil
+		return err
 	}
+
+	if p.ipRouter != nil {
+		for _, peer := range peers {
+			for _, ip := range peer.AllowedIPs {
+				err := p.ipRouter.AddRoute(ip.String(), deviceName)
+				if err != nil {
+					return err
+				}
+			}
+		}
+	}
+
 	return err
 }
 
 func (p *Peer) DeletePeers(ctx context.Context, deviceName string, publicKeys []string) error {
+	if p.ipRouter != nil {
+		peers, err := p.GetPeers(ctx, deviceName, publicKeys)
+		if err != nil {
+			return err
+		}
+		for _, peer := range peers {
+			for _, ip := range peer.AllowedIPs {
+				err := p.ipRouter.DelRoute(ip.String(), deviceName)
+				if err != nil {
+					return err
+				}
+			}
+		}
+	}
+
 	err := p.wgctrl.DeletePeers(ctx, deviceName, publicKeys)
 	if err != nil {
 		return err
