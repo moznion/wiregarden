@@ -4,16 +4,17 @@ import (
 	"context"
 
 	"github.com/moznion/wiregarden/internal/infra"
+	"github.com/moznion/wiregarden/routes"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 )
 
 type Peer struct {
 	wgctrl        *infra.WGCtrl
 	deviceService *Device
-	ipRouter      infra.IPRouter
+	ipRouter      routes.IPRouter
 }
 
-func NewPeer(device *Device, ipRouter infra.IPRouter) (*Peer, error) {
+func NewPeer(device *Device, ipRouter routes.IPRouter) (*Peer, error) {
 	wgctrl, err := infra.NewWGCtrl()
 	if err != nil {
 		return nil, err

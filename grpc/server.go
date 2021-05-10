@@ -7,15 +7,15 @@ import (
 
 	"github.com/moznion/wiregarden/grpc/handlers"
 	"github.com/moznion/wiregarden/grpc/messages"
-	"github.com/moznion/wiregarden/internal/infra"
 	"github.com/moznion/wiregarden/internal/service"
+	"github.com/moznion/wiregarden/routes"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 )
 
 type Server struct {
 	Port                   uint16
-	IPRouter               infra.IPRouter
+	IPRouter               routes.IPRouter
 	PeersRegistrationHooks []handlers.PeersRegistrationHook
 	PeersDeletionHooks     []handlers.PeersDeletionHook
 }

@@ -8,7 +8,7 @@ import (
 	"runtime"
 
 	"github.com/moznion/wiregarden/grpc"
-	"github.com/moznion/wiregarden/internal/infra"
+	"github.com/moznion/wiregarden/routes"
 	"github.com/rs/zerolog/log"
 )
 
@@ -20,7 +20,7 @@ func main() {
 	portUsage := "the port number to listen gRPC over TCP"
 	ipRouteUsage := fmt.Sprintf(
 		`the IP routing policy name (supported policies: "%s"). if this parameter is specified, this server manages ip route table automatically`,
-		infra.IPRoutingPolicyIpcmd,
+		routes.IPRoutingPolicyIpcmd,
 	)
 	var port uint
 	var ipRoutingPolicyName string
@@ -31,8 +31,8 @@ func main() {
 
 	s := grpc.Server{
 		Port: uint16(port),
-		IPRouter: func() infra.IPRouter {
-			r := infra.IPRouterFrom(ipRoutingPolicyName)
+		IPRouter: func() routes.IPRouter {
+			r := routes.IPRouterFrom(ipRoutingPolicyName)
 			if r == nil {
 				log.Info().Msg("ip routing policy is not specified")
 			} else {

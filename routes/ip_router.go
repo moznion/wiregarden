@@ -1,4 +1,4 @@
-package infra
+package routes
 
 type IPRouter interface {
 	AddRoute(ip string, deviceName string) error
