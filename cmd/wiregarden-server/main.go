@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"os"
@@ -12,22 +13,37 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+var revision string
+
 func main() {
 	defer leaveDyingMessageOnPanic()
 
 	defaultPort := uint(0)
 	defaultIPRoutingPolicyUsage := ""
+	versionUsage := "show the version information"
 	portUsage := "the port number to listen gRPC over TCP"
 	ipRouteUsage := fmt.Sprintf(
 		`the IP routing policy name (supported policies: "%s"). if this parameter is specified, this server manages ip route table automatically`,
 		routes.IPRoutingPolicyIpcmd,
 	)
+	var shouldShowVersionInfo bool
 	var port uint
 	var ipRoutingPolicyName string
+	flag.BoolVar(&shouldShowVersionInfo, "version", false, versionUsage)
+	flag.BoolVar(&shouldShowVersionInfo, "v", false, versionUsage+" (shorthand)")
 	flag.UintVar(&port, "port", defaultPort, portUsage)
 	flag.UintVar(&port, "p", defaultPort, portUsage+" (shorthand)")
 	flag.StringVar(&ipRoutingPolicyName, "ip-route", defaultIPRoutingPolicyUsage, ipRouteUsage)
 	flag.Parse()
+
+	if shouldShowVersionInfo {
+		v, _ := json.Marshal(map[string]string{
+			"revision":  revision,
+			"goVersion": runtime.Version(),
+		})
+		fmt.Printf("%s\n", v)
+		os.Exit(0)
+	}
 
 	s := grpc.Server{
 		Port: uint16(port),

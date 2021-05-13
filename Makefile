@@ -29,12 +29,13 @@ ifndef GOARCH
 	@echo "[error] \$$GOARCH must be specified"
 	@exit 1
 endif
-
 	docker run -it -v $(PWD):/wiregarden -w /wiregarden \
 		-e GOOS=$(GOOS) \
 		-e GOARCH=$(GOARCH) \
 		$(GO_BUILD_CONTAINER) \
-		go build -o ./bin/wiregarden-server_$(GOOS)_$(GOARCH) ./cmd/wiregarden-server
+		go build \
+			-ldflags '-X "main.revision=$(shell git rev-parse HEAD)"' \
+			-o ./bin/wiregarden-server_$(GOOS)_$(GOARCH) ./cmd/wiregarden-server
 
 clean:
 	rm -f ./bin/wiregarden-server*
