@@ -5,11 +5,14 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"net/http"
 	"os"
 	"runtime"
 
 	"github.com/moznion/wiregarden/grpc"
 	"github.com/moznion/wiregarden/routes"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rs/zerolog/log"
 )
 
@@ -28,12 +31,14 @@ func main() {
 	)
 	var shouldShowVersionInfo bool
 	var port uint
+	var prometheusExporterPort uint
 	var ipRoutingPolicyName string
 	flag.BoolVar(&shouldShowVersionInfo, "version", false, versionUsage)
 	flag.BoolVar(&shouldShowVersionInfo, "v", false, versionUsage+" (shorthand)")
 	flag.UintVar(&port, "port", defaultPort, portUsage)
 	flag.UintVar(&port, "p", defaultPort, portUsage+" (shorthand)")
 	flag.StringVar(&ipRoutingPolicyName, "ip-route", defaultIPRoutingPolicyUsage, ipRouteUsage)
+	flag.UintVar(&prometheusExporterPort, "prom-port", defaultPort, "the port number to export the prometheus metrics")
 	flag.Parse()
 
 	if shouldShowVersionInfo {
@@ -43,6 +48,19 @@ func main() {
 		})
 		fmt.Printf("%s\n", v)
 		os.Exit(0)
+	}
+
+	if prometheusExporterPort > 0 {
+		go func() {
+			http.Handle("/metrics", promhttp.HandlerFor(
+				prometheus.DefaultGatherer,
+				promhttp.HandlerOpts{
+					EnableOpenMetrics: true,
+				},
+			))
+			log.Info().Uint("port", prometheusExporterPort).Msg("start the HTTP prometheus metrics exporter; you can retrieve metrics by 'GET /metrics'")
+			log.Err(http.ListenAndServe(fmt.Sprintf(":%d", prometheusExporterPort), nil)).Send()
+		}()
 	}
 
 	s := grpc.Server{
