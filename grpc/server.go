@@ -7,6 +7,7 @@ import (
 
 	"github.com/moznion/wiregarden/grpc/handlers"
 	"github.com/moznion/wiregarden/grpc/messages"
+	"github.com/moznion/wiregarden/grpc/metrics"
 	"github.com/moznion/wiregarden/internal/service"
 	"github.com/moznion/wiregarden/routes"
 	"github.com/rs/zerolog/log"
@@ -14,10 +15,11 @@ import (
 )
 
 type Server struct {
-	Port                   uint16
-	IPRouter               routes.IPRouter
-	PeersRegistrationHooks []handlers.PeersRegistrationHook
-	PeersDeletionHooks     []handlers.PeersDeletionHook
+	Port                      uint16
+	IPRouter                  routes.IPRouter
+	PeersRegistrationHooks    []handlers.PeersRegistrationHook
+	PeersDeletionHooks        []handlers.PeersDeletionHook
+	PrometheusMetricsRegister metrics.PrometheusMetricsRegisterable
 }
 
 func (s *Server) Run(ctx context.Context) error {
@@ -49,8 +51,8 @@ func (s *Server) registerHandlers(grpcServer *grpc.Server) error {
 		return err
 	}
 
-	messages.RegisterDevicesServer(grpcServer, handlers.NewDevices(deviceService))
-	messages.RegisterPeersServer(grpcServer, handlers.NewPeers(peerService, s.PeersRegistrationHooks, s.PeersDeletionHooks))
+	messages.RegisterDevicesServer(grpcServer, handlers.NewDevices(deviceService, s.PrometheusMetricsRegister))
+	messages.RegisterPeersServer(grpcServer, handlers.NewPeers(peerService, s.PeersRegistrationHooks, s.PeersDeletionHooks, s.PrometheusMetricsRegister))
 
 	return nil
 }

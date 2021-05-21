@@ -5,6 +5,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/moznion/wiregarden/grpc/messages"
+	"github.com/moznion/wiregarden/grpc/metrics"
 	"github.com/moznion/wiregarden/internal/service"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -14,30 +15,39 @@ import (
 )
 
 type Devices struct {
-	deviceService *service.Device
+	deviceService             *service.Device
+	prometheusMetricsRegister metrics.PrometheusMetricsRegisterable
 	messages.UnimplementedDevicesServer
 }
 
-func NewDevices(deviceService *service.Device) *Devices {
+func NewDevices(deviceService *service.Device, prometheusMetricsRegister metrics.PrometheusMetricsRegisterable) *Devices {
 	return &Devices{
-		deviceService: deviceService,
+		deviceService:             deviceService,
+		prometheusMetricsRegister: prometheusMetricsRegister,
 	}
 }
 
 func (h *Devices) GetDevices(ctx context.Context, req *messages.GetDevicesRequest) (*messages.GetDevicesResponse, error) {
+	const requestName = "get-devices"
+
 	l := log.With().
 		Str("requestID", uuid.NewString()).
-		Str("request", "get-devices").
+		Str("request", requestName).
 		Str("name", req.Name).
 		Strs("filterPublicKeys", req.FilterPublicKeys).
 		Logger()
 	l.Info().Msg("received")
 
+	h.prometheusMetricsRegister.IncrementRequestCount(requestName)
+
 	resp, errStatus := h.getDevices(ctx, &l, req)
 	if errStatus != nil {
 		l.Info().Uint32("statusCode", uint32(errStatus.Code())).Msgf("return not successfully: %s", errStatus.Message())
+		h.prometheusMetricsRegister.IncrementFailureResponseCount(requestName, uint32(errStatus.Code()))
 		return nil, errStatus.Err()
 	}
+
+	h.prometheusMetricsRegister.IncrementSuccessResponseCount(requestName)
 
 	l.Info().Msg("return successfully")
 	return resp, nil

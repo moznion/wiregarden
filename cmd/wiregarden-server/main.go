@@ -10,6 +10,7 @@ import (
 	"runtime"
 
 	"github.com/moznion/wiregarden/grpc"
+	"github.com/moznion/wiregarden/grpc/metrics"
 	"github.com/moznion/wiregarden/routes"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -50,6 +51,7 @@ func main() {
 		os.Exit(0)
 	}
 
+	var grpcPrometheusMetricsRegister metrics.PrometheusMetricsRegisterable = &metrics.NOPPrometheusMetricsRegister{}
 	if prometheusExporterPort > 0 {
 		go func() {
 			http.Handle("/metrics", promhttp.HandlerFor(
@@ -61,6 +63,7 @@ func main() {
 			log.Info().Uint("port", prometheusExporterPort).Msg("start the HTTP prometheus metrics exporter; you can retrieve metrics by 'GET /metrics'")
 			log.Err(http.ListenAndServe(fmt.Sprintf(":%d", prometheusExporterPort), nil)).Send()
 		}()
+		grpcPrometheusMetricsRegister = metrics.NewPrometheusMetricsRegister()
 	}
 
 	s := grpc.Server{
@@ -74,6 +77,7 @@ func main() {
 			}
 			return r
 		}(),
+		PrometheusMetricsRegister: grpcPrometheusMetricsRegister,
 	}
 
 	ctx := context.Background()
