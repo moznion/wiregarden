@@ -3,11 +3,11 @@ package handlers
 import (
 	"context"
 
-	"github.com/rs/zerolog"
-
 	"github.com/google/uuid"
 	"github.com/moznion/wiregarden/grpc/messages"
+	"github.com/moznion/wiregarden/grpc/metrics"
 	"github.com/moznion/wiregarden/internal/service"
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 	"google.golang.org/grpc/codes"
@@ -15,9 +15,10 @@ import (
 )
 
 type Peers struct {
-	peerService            *service.Peer
-	peersRegistrationHooks []PeersRegistrationHook
-	peersDeletionHooks     []PeersDeletionHook
+	peerService               *service.Peer
+	peersRegistrationHooks    []PeersRegistrationHook
+	peersDeletionHooks        []PeersDeletionHook
+	prometheusMetricsRegister metrics.PrometheusMetricsRegisterable
 	messages.UnimplementedPeersServer
 }
 
@@ -35,28 +36,37 @@ func NewPeers(
 	peerService *service.Peer,
 	peersRegistrationHooks []PeersRegistrationHook,
 	peersDeletionHooks []PeersDeletionHook,
+	prometheusMetricsRegister metrics.PrometheusMetricsRegisterable,
 ) *Peers {
 	return &Peers{
-		peerService:            peerService,
-		peersRegistrationHooks: peersRegistrationHooks,
-		peersDeletionHooks:     peersDeletionHooks,
+		peerService:               peerService,
+		peersRegistrationHooks:    peersRegistrationHooks,
+		peersDeletionHooks:        peersDeletionHooks,
+		prometheusMetricsRegister: prometheusMetricsRegister,
 	}
 }
 
 func (h *Peers) GetPeers(ctx context.Context, req *messages.GetPeersRequest) (*messages.GetPeersResponse, error) {
+	const requestName = "get-peers"
+
 	l := log.With().
 		Str("requestID", uuid.NewString()).
-		Str("request", "get-peers").
+		Str("request", requestName).
 		Str("deviceName", req.DeviceName).
 		Strs("filterPublicKeys", req.FilterPublicKeys).
 		Logger()
 	l.Info().Msg("received request")
 
+	h.prometheusMetricsRegister.IncrementRequestCount(requestName)
+
 	resp, errStatus := h.getPeers(ctx, &l, req)
 	if errStatus != nil {
 		l.Info().Uint32("statusCode", uint32(errStatus.Code())).Msgf("return not successfully: %s", errStatus.Message())
+		h.prometheusMetricsRegister.IncrementFailureResponseCount(requestName, uint32(errStatus.Code()))
 		return nil, errStatus.Err()
 	}
+
+	h.prometheusMetricsRegister.IncrementSuccessResponseCount(requestName)
 
 	l.Info().Msg("return successfully")
 	return resp, nil
@@ -83,20 +93,27 @@ func (h *Peers) getPeers(ctx context.Context, l *zerolog.Logger, req *messages.G
 }
 
 func (h *Peers) RegisterPeers(ctx context.Context, req *messages.RegisterPeersRequest) (*messages.RegisterPeersResponse, error) {
+	const requestName = "register-peers"
+
 	l := log.With().
 		Str("requestID", uuid.NewString()).
-		Str("request", "register-peers").
+		Str("request", requestName).
 		Str("deviceName", req.DeviceName).
 		Bytes("hooksPayload", req.HooksPayload).
 		Interface("peers", req.Peers).
 		Logger()
 	l.Info().Msg("received request")
 
+	h.prometheusMetricsRegister.IncrementRequestCount(requestName)
+
 	resp, errStatus := h.registerPeers(ctx, &l, req)
 	if errStatus != nil {
 		l.Info().Uint32("statusCode", uint32(errStatus.Code())).Msgf("return not successfully: %s", errStatus.Message())
+		h.prometheusMetricsRegister.IncrementFailureResponseCount(requestName, uint32(errStatus.Code()))
 		return nil, errStatus.Err()
 	}
+
+	h.prometheusMetricsRegister.IncrementSuccessResponseCount(requestName)
 
 	l.Info().Msg("return successfully")
 	return resp, nil
@@ -138,20 +155,27 @@ func (h *Peers) registerPeers(ctx context.Context, l *zerolog.Logger, req *messa
 }
 
 func (h *Peers) DeletePeers(ctx context.Context, req *messages.DeletePeersRequest) (*messages.DeletePeersResponse, error) {
+	const requestName = "delete-peers"
+
 	l := log.With().
 		Str("requestID", uuid.NewString()).
-		Str("request", "register-peers").
+		Str("request", requestName).
 		Str("deviceName", req.DeviceName).
 		Strs("publicKeys", req.PublicKeys).
 		Bytes("hooksPayload", req.HooksPayload).
 		Logger()
 	l.Info().Msg("received request")
 
+	h.prometheusMetricsRegister.IncrementRequestCount(requestName)
+
 	resp, errStatus := h.deletePeers(ctx, &l, req)
 	if errStatus != nil {
 		l.Info().Uint32("statusCode", uint32(errStatus.Code())).Msgf("return not successfully: %s", errStatus.Message())
+		h.prometheusMetricsRegister.IncrementFailureResponseCount(requestName, uint32(errStatus.Code()))
 		return nil, errStatus.Err()
 	}
+
+	h.prometheusMetricsRegister.IncrementSuccessResponseCount(requestName)
 
 	l.Info().Msg("return successfully")
 	return resp, nil
