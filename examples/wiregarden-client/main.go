@@ -41,15 +41,15 @@ func main() {
 
 	ctx := context.Background()
 
-	getDevices(devicesClient)
-	getPeers(peersClient)
+	getDevices(ctx, devicesClient)
+	getPeers(ctx, peersClient)
 	updatePrivateKey(ctx, devicesClient)
 }
 
-func getDevices(devicesClient messages.DevicesClient) {
-	resp, err := devicesClient.GetDevices(context.Background(), &messages.GetDevicesRequest{})
+func getDevices(ctx context.Context, devicesClient messages.DevicesClient) {
+	resp, err := devicesClient.GetDevices(ctx, &messages.GetDevicesRequest{})
 	if err != nil {
-		log.Fatal().Err(err).Msg("")
+		log.Fatal().Err(err).Send()
 	}
 
 	for _, device := range resp.Devices {
@@ -57,12 +57,12 @@ func getDevices(devicesClient messages.DevicesClient) {
 	}
 }
 
-func getPeers(peersClient messages.PeersClient) {
-	resp, err := peersClient.GetPeers(context.Background(), &messages.GetPeersRequest{
+func getPeers(ctx context.Context, peersClient messages.PeersClient) {
+	resp, err := peersClient.GetPeers(ctx, &messages.GetPeersRequest{
 		DeviceName: "wg0",
 	})
 	if err != nil {
-		log.Fatal().Err(err).Msg("")
+		log.Fatal().Err(err).Send()
 	}
 
 	for _, peer := range resp.Peers {
@@ -70,8 +70,8 @@ func getPeers(peersClient messages.PeersClient) {
 	}
 }
 
-func registerPeers(peersClient messages.PeersClient) {
-	_, err := peersClient.RegisterPeers(context.Background(), &messages.RegisterPeersRequest{
+func registerPeers(ctx context.Context, peersClient messages.PeersClient) {
+	_, err := peersClient.RegisterPeers(ctx, &messages.RegisterPeersRequest{
 		DeviceName: "wg0",
 		Peers: []*messages.Peer{
 			{
@@ -83,18 +83,18 @@ func registerPeers(peersClient messages.PeersClient) {
 		},
 	})
 	if err != nil {
-		log.Fatal().Err(err).Msg("")
+		log.Fatal().Err(err).Send()
 	}
 	log.Info().Msg("registered")
 }
 
-func deletePeers(peersClient messages.PeersClient) {
-	_, err := peersClient.DeletePeers(context.Background(), &messages.DeletePeersRequest{
+func deletePeers(ctx context.Context, peersClient messages.PeersClient) {
+	_, err := peersClient.DeletePeers(ctx, &messages.DeletePeersRequest{
 		DeviceName: "wg0",
 		PublicKeys: []string{"<snip>"},
 	})
 	if err != nil {
-		log.Fatal().Err(err).Msg("")
+		log.Fatal().Err(err).Send()
 	}
 	log.Info().Msg("removed")
 }
