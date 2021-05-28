@@ -7,7 +7,7 @@ _java:
 	protoc --java_out=lib/src/main/java protos/*.proto
 
 sync:
-	cp ../protos/* ./protos/
+	cp ../../../protos/* ./protos/
 
 container4protogen:
 	docker build . -f Dockerfile -t $(PROTO_GEN_CONTAINER)
