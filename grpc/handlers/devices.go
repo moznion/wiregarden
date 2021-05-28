@@ -83,3 +83,50 @@ func (h *Devices) getDevices(ctx context.Context, l *zerolog.Logger, req *messag
 		Devices: devices,
 	}, nil
 }
+
+func (h *Devices) UpdatePrivateKey(ctx context.Context, req *messages.UpdatePrivateKeyRequest) (*messages.UpdatePrivateKeyResponse, error) {
+	const requestName = "update-private-key"
+
+	l := log.With().
+		Str("requestID", uuid.NewString()).
+		Str("request", requestName).
+		Logger()
+	l.Info().Msg("received")
+
+	h.prometheusMetricsRegister.IncrementRequestCount(requestName)
+
+	resp, errStatus := h.updatePrivateKey(ctx, &l, req)
+
+	if errStatus != nil {
+		l.Info().Uint32("statusCode", uint32(errStatus.Code())).Msgf("update not successfully: %s", errStatus.Message())
+		h.prometheusMetricsRegister.IncrementFailureResponseCount(requestName, uint32(errStatus.Code()))
+		return nil, errStatus.Err()
+	}
+
+	h.prometheusMetricsRegister.IncrementSuccessResponseCount(requestName)
+
+	l.Info().Msg("updated successfully")
+	return resp, nil
+}
+
+func (h *Devices) updatePrivateKey(ctx context.Context, l *zerolog.Logger, req *messages.UpdatePrivateKeyRequest) (*messages.UpdatePrivateKeyResponse, *status.Status) {
+	if req.Name == "" {
+		return nil, status.Newf(codes.InvalidArgument, "`name` is mandatory parameter to update the private key")
+	}
+
+	err := h.deviceService.UpdatePrivateKey(ctx, req.Name, req.PrivateKey)
+	if err != nil {
+		switch err {
+		case service.ErrInvalidPrivateKey:
+			return nil, status.Newf(codes.InvalidArgument, "invalid private key")
+		case service.ErrDeviceNotFound:
+			return nil, status.Newf(codes.NotFound, "device not found")
+		default:
+			errMsg := "failed to update the private key"
+			l.Err(err).Msg(errMsg)
+			return nil, status.Newf(codes.Internal, errMsg)
+		}
+	}
+
+	return &messages.UpdatePrivateKeyResponse{}, nil
+}
