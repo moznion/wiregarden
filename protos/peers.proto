@@ -1,6 +1,8 @@
 syntax = "proto3";
 
 option go_package = "github.com/moznion/wiregarden/grpc/messages";
+option java_package = "net.moznion.wiregarden";
+option java_outer_classname = "PeersProto";
 
 service Peers {
     rpc GetPeers (GetPeersRequest) returns (GetPeersResponse);
