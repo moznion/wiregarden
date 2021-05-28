@@ -4,5 +4,5 @@
 # Ignore Gradle build output directory
 build
 
-/workdir/*
-!/workdir/.gitkeep
+/protos/*
+!/protos/.gitkeep

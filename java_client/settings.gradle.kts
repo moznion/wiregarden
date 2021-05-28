@@ -1,2 +1,2 @@
-rootProject.name = "wiregarden_client"
+rootProject.name = "wiregarden"
 include("lib")
