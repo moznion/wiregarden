@@ -2,6 +2,8 @@ package infra
 
 import (
 	"context"
+	"errors"
+	"sync"
 
 	"golang.zx2c4.com/wireguard/wgctrl"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
@@ -9,6 +11,7 @@ import (
 
 type WGCtrl struct {
 	client *wgctrl.Client
+	mu     sync.Mutex
 }
 
 func NewWGCtrl() (*WGCtrl, error) {
@@ -62,6 +65,9 @@ func (w *WGCtrl) GetDevices(ctx context.Context, filterPublicKeys []string) ([]*
 }
 
 func (w *WGCtrl) RegisterPeers(ctx context.Context, deviceName string, peers []wgtypes.PeerConfig) error {
+	w.mu.Lock()
+	defer w.mu.Unlock()
+
 	err := w.client.ConfigureDevice(deviceName, wgtypes.Config{
 		ReplacePeers: false,
 		Peers:        peers,
@@ -72,8 +78,46 @@ func (w *WGCtrl) RegisterPeers(ctx context.Context, deviceName string, peers []w
 	return nil
 }
 
+var ErrInvalidPrivateKey = errors.New("invalid private key")
+
+func (w *WGCtrl) UpdatePrivateKey(ctx context.Context, deviceName string, device *wgtypes.Device, privateKey []byte) error {
+	w.mu.Lock()
+	defer w.mu.Unlock()
+
+	k, err := wgtypes.NewKey(privateKey)
+	if err != nil {
+		return ErrInvalidPrivateKey
+	}
+
+	return w.client.ConfigureDevice(deviceName, wgtypes.Config{
+		PrivateKey:   &k,
+		ListenPort:   &device.ListenPort,
+		FirewallMark: &device.FirewallMark,
+		ReplacePeers: true,
+		Peers: func() []wgtypes.PeerConfig {
+			peerConfigs := make([]wgtypes.PeerConfig, len(device.Peers))
+			for i, peer := range device.Peers {
+				peerConfigs[i] = wgtypes.PeerConfig{
+					PublicKey:                   peer.PublicKey,
+					Remove:                      false,
+					UpdateOnly:                  false,
+					PresharedKey:                &peer.PresharedKey,
+					Endpoint:                    peer.Endpoint,
+					PersistentKeepaliveInterval: &peer.PersistentKeepaliveInterval,
+					ReplaceAllowedIPs:           true,
+					AllowedIPs:                  peer.AllowedIPs,
+				}
+			}
+			return peerConfigs
+		}(),
+	})
+}
+
 // FIXME unify with RegisterPeers?
 func (w *WGCtrl) DeletePeers(ctx context.Context, deviceName string, publicKeys []string) error {
+	w.mu.Lock()
+	defer w.mu.Unlock()
+
 	peersToRemove := make([]wgtypes.PeerConfig, len(publicKeys))
 
 	for i, publicKey := range publicKeys {

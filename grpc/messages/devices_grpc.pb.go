@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DevicesClient interface {
 	GetDevices(ctx context.Context, in *GetDevicesRequest, opts ...grpc.CallOption) (*GetDevicesResponse, error)
+	UpdatePrivateKey(ctx context.Context, in *UpdatePrivateKeyRequest, opts ...grpc.CallOption) (*UpdatePrivateKeyResponse, error)
 }
 
 type devicesClient struct {
@@ -38,11 +39,21 @@ func (c *devicesClient) GetDevices(ctx context.Context, in *GetDevicesRequest, o
 	return out, nil
 }
 
+func (c *devicesClient) UpdatePrivateKey(ctx context.Context, in *UpdatePrivateKeyRequest, opts ...grpc.CallOption) (*UpdatePrivateKeyResponse, error) {
+	out := new(UpdatePrivateKeyResponse)
+	err := c.cc.Invoke(ctx, "/devices/UpdatePrivateKey", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DevicesServer is the server API for Devices service.
 // All implementations must embed UnimplementedDevicesServer
 // for forward compatibility
 type DevicesServer interface {
 	GetDevices(context.Context, *GetDevicesRequest) (*GetDevicesResponse, error)
+	UpdatePrivateKey(context.Context, *UpdatePrivateKeyRequest) (*UpdatePrivateKeyResponse, error)
 	mustEmbedUnimplementedDevicesServer()
 }
 
@@ -52,6 +63,9 @@ type UnimplementedDevicesServer struct {
 
 func (UnimplementedDevicesServer) GetDevices(context.Context, *GetDevicesRequest) (*GetDevicesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDevices not implemented")
+}
+func (UnimplementedDevicesServer) UpdatePrivateKey(context.Context, *UpdatePrivateKeyRequest) (*UpdatePrivateKeyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePrivateKey not implemented")
 }
 func (UnimplementedDevicesServer) mustEmbedUnimplementedDevicesServer() {}
 
@@ -84,6 +98,24 @@ func _Devices_GetDevices_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Devices_UpdatePrivateKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdatePrivateKeyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DevicesServer).UpdatePrivateKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/devices/UpdatePrivateKey",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DevicesServer).UpdatePrivateKey(ctx, req.(*UpdatePrivateKeyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Devices_ServiceDesc is the grpc.ServiceDesc for Devices service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +126,10 @@ var Devices_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetDevices",
 			Handler:    _Devices_GetDevices_Handler,
+		},
+		{
+			MethodName: "UpdatePrivateKey",
+			Handler:    _Devices_UpdatePrivateKey_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 
 	"github.com/moznion/wiregarden/internal/infra"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
@@ -40,4 +41,27 @@ func (d *Device) GetDevices(ctx context.Context, filterPublicKeys []string) ([]*
 		return nil, err
 	}
 	return gotDevices, nil
+}
+
+var ErrInvalidPrivateKey = errors.New("invalid private key")
+var ErrDeviceNotFound = errors.New("device not found")
+
+func (d *Device) UpdatePrivateKey(ctx context.Context, name string, privateKey []byte) error {
+	device, err := d.GetDevice(ctx, name, nil)
+	if err != nil {
+		return err
+	}
+
+	if device == nil {
+		return ErrDeviceNotFound
+	}
+
+	err = d.wgctrl.UpdatePrivateKey(ctx, name, device, privateKey)
+	if err != nil {
+		if err == infra.ErrInvalidPrivateKey {
+			return ErrInvalidPrivateKey
+		}
+		return err
+	}
+	return nil
 }

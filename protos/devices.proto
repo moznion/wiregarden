@@ -6,6 +6,7 @@ option go_package = "github.com/moznion/wiregarden/grpc/messages";
 
 service devices {
     rpc GetDevices (GetDevicesRequest) returns (GetDevicesResponse);
+    rpc UpdatePrivateKey (UpdatePrivateKeyRequest) returns (UpdatePrivateKeyResponse);
 }
 
 message GetDevicesRequest {
@@ -15,6 +16,14 @@ message GetDevicesRequest {
 
 message GetDevicesResponse {
     repeated Device devices = 1;
+}
+
+message UpdatePrivateKeyRequest {
+    string name = 1;
+    bytes private_key = 2;
+}
+
+message UpdatePrivateKeyResponse {
 }
 
 message Device {

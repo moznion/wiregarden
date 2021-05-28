@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/base64"
 	"flag"
 	"fmt"
 
@@ -20,7 +21,7 @@ func main() {
 	flag.UintVar(&port, "port", defaultPort, portUsage)
 	flag.UintVar(&port, "p", defaultPort, portUsage+" (shorthand)")
 	flag.StringVar(&host, "host", defaultHost, hostUsage)
-	flag.StringVar(&host, "H", defaultHost, hostUsage)
+	flag.StringVar(&host, "H", defaultHost, hostUsage+" (shorthand)")
 	flag.Parse()
 
 	if port == defaultPort {
@@ -38,8 +39,11 @@ func main() {
 	peersClient := messages.NewPeersClient(conn)
 	devicesClient := messages.NewDevicesClient(conn)
 
+	ctx := context.Background()
+
 	getDevices(devicesClient)
 	getPeers(peersClient)
+	updatePrivateKey(ctx, devicesClient)
 }
 
 func getDevices(devicesClient messages.DevicesClient) {
@@ -93,4 +97,20 @@ func deletePeers(peersClient messages.PeersClient) {
 		log.Fatal().Err(err).Msg("")
 	}
 	log.Info().Msg("removed")
+}
+
+func updatePrivateKey(ctx context.Context, devicesClient messages.DevicesClient) {
+	privateKey, err := base64.StdEncoding.DecodeString("<snip>")
+	if err != nil {
+		log.Fatal().Err(err).Send()
+	}
+
+	_, err = devicesClient.UpdatePrivateKey(ctx, &messages.UpdatePrivateKeyRequest{
+		Name:       "wg0",
+		PrivateKey: privateKey,
+	})
+	if err != nil {
+		log.Fatal().Err(err).Send()
+	}
+	log.Info().Msg("private key updated")
 }
