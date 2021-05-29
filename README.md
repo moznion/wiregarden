@@ -80,6 +80,10 @@ And, `RegisterPeersRequest.HooksPayload []byte` and `DeletePeersRequest.HooksPay
 
 Internally, this application / library uses [rs/zerolog](https://github.com/rs/zerolog) as a logger. You can configure the logger according to the manner of the zerolog. Please refer to the document of that.
 
+## gRPC Library
+
+It provides the wiregarden gRPC library for Java. Please refer to [this page](./ext/lib/java).
+
 ## Development Guide
 
 ### Pre-requirements
