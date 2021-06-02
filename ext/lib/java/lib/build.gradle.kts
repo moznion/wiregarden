@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     implementation("com.google.protobuf:protobuf-java:3.17.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
