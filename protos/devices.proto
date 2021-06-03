@@ -6,7 +6,7 @@ option go_package = "github.com/moznion/wiregarden/grpc/messages";
 option java_package = "net.moznion.wiregarden";
 option java_outer_classname = "DevicesProto";
 
-service devices {
+service Devices {
     rpc GetDevices (GetDevicesRequest) returns (GetDevicesResponse);
     rpc UpdatePrivateKey (UpdatePrivateKeyRequest) returns (UpdatePrivateKeyResponse);
 }
