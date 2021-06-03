@@ -32,7 +32,7 @@ func NewDevicesClient(cc grpc.ClientConnInterface) DevicesClient {
 
 func (c *devicesClient) GetDevices(ctx context.Context, in *GetDevicesRequest, opts ...grpc.CallOption) (*GetDevicesResponse, error) {
 	out := new(GetDevicesResponse)
-	err := c.cc.Invoke(ctx, "/devices/GetDevices", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Devices/GetDevices", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ func (c *devicesClient) GetDevices(ctx context.Context, in *GetDevicesRequest, o
 
 func (c *devicesClient) UpdatePrivateKey(ctx context.Context, in *UpdatePrivateKeyRequest, opts ...grpc.CallOption) (*UpdatePrivateKeyResponse, error) {
 	out := new(UpdatePrivateKeyResponse)
-	err := c.cc.Invoke(ctx, "/devices/UpdatePrivateKey", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Devices/UpdatePrivateKey", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ func _Devices_GetDevices_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/devices/GetDevices",
+		FullMethod: "/Devices/GetDevices",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DevicesServer).GetDevices(ctx, req.(*GetDevicesRequest))
@@ -108,7 +108,7 @@ func _Devices_UpdatePrivateKey_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/devices/UpdatePrivateKey",
+		FullMethod: "/Devices/UpdatePrivateKey",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DevicesServer).UpdatePrivateKey(ctx, req.(*UpdatePrivateKeyRequest))
@@ -120,7 +120,7 @@ func _Devices_UpdatePrivateKey_Handler(srv interface{}, ctx context.Context, dec
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Devices_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "devices",
+	ServiceName: "Devices",
 	HandlerType: (*DevicesServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
