@@ -3998,7 +3998,7 @@ public final class DevicesProto {
       "ype\030\002 \001(\r\022\030\n\020device_type_name\030\003 \001(\t\022\022\n\np" +
       "ublic_key\030\004 \001(\t\022\023\n\013listen_port\030\005 \001(\r\022\025\n\r" +
       "firewall_mark\030\006 \001(\003\022\024\n\005peers\030\007 \003(\0132\005.Pee" +
-      "r2\211\001\n\007devices\0225\n\nGetDevices\022\022.GetDevices" +
+      "r2\211\001\n\007Devices\0225\n\nGetDevices\022\022.GetDevices" +
       "Request\032\023.GetDevicesResponse\022G\n\020UpdatePr" +
       "ivateKey\022\030.UpdatePrivateKeyRequest\032\031.Upd" +
       "atePrivateKeyResponseBS\n\026net.moznion.wir" +
