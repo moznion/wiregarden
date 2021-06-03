@@ -1,1 +1,1 @@
-../java/Dockerfile
+../../../devtools/Dockerfile
