@@ -6,11 +6,11 @@
   "directories": {
     "lib": "lib"
   },
-  "config" : {
-    "proto_gen_container" : "wiregarden-proto-gen:latest"
+  "config": {
+    "proto_gen_container": "wiregarden-proto-gen:latest"
   },
   "scripts": {
-    "gen": "npm run clean && npm run sync && docker run -it -v ${PWD}:/wiregarden -w /wiregarden $npm_package_config_proto_gen_container protoc --js_out=import_style=commonjs,binary:lib --grpc_out=lib --plugin=protoc-gen-grpc=/usr/bin/grpc_tools_node_protoc_plugin protos/*",
+    "gen": "npm run clean && npm run sync && docker run -it -v ${PWD}:/wiregarden -w /wiregarden $npm_package_config_proto_gen_container protoc --js_out=import_style=commonjs,binary:lib --grpc_out=grpc_js:lib --plugin=protoc-gen-grpc=/usr/bin/grpc_tools_node_protoc_plugin protos/*",
     "sync": "cp ${PWD}/../../../protos/* ${PWD}/protos/",
     "clean": "rm -rf ${PWD}/protos/*.proto ${PWD}/lib/protos",
     "build-container": "docker build . -f Dockerfile -t $npm_package_config_proto_gen_container"
@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/moznion/wiregarden#readme",
   "dependencies": {
+    "@grpc/grpc-js": "^1.3.2",
     "google-protobuf": "^3.17.1"
   }
 }
