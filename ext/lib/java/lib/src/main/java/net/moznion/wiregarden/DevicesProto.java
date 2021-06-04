@@ -1555,9 +1555,14 @@ public final class DevicesProto {
         getNameBytes();
 
     /**
-     * <code>bytes private_key = 2;</code>
+     * <code>string private_key = 2;</code>
      */
-    com.google.protobuf.ByteString getPrivateKey();
+    java.lang.String getPrivateKey();
+    /**
+     * <code>string private_key = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getPrivateKeyBytes();
   }
   /**
    * Protobuf type {@code UpdatePrivateKeyRequest}
@@ -1573,7 +1578,7 @@ public final class DevicesProto {
     }
     private UpdatePrivateKeyRequest() {
       name_ = "";
-      privateKey_ = com.google.protobuf.ByteString.EMPTY;
+      privateKey_ = "";
     }
 
     @java.lang.Override
@@ -1607,8 +1612,9 @@ public final class DevicesProto {
               break;
             }
             case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
 
-              privateKey_ = input.readBytes();
+              privateKey_ = s;
               break;
             }
             default: {
@@ -1678,12 +1684,37 @@ public final class DevicesProto {
     }
 
     public static final int PRIVATE_KEY_FIELD_NUMBER = 2;
-    private com.google.protobuf.ByteString privateKey_;
+    private volatile java.lang.Object privateKey_;
     /**
-     * <code>bytes private_key = 2;</code>
+     * <code>string private_key = 2;</code>
      */
-    public com.google.protobuf.ByteString getPrivateKey() {
-      return privateKey_;
+    public java.lang.String getPrivateKey() {
+      java.lang.Object ref = privateKey_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        privateKey_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string private_key = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getPrivateKeyBytes() {
+      java.lang.Object ref = privateKey_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        privateKey_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1703,8 +1734,8 @@ public final class DevicesProto {
       if (!getNameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
       }
-      if (!privateKey_.isEmpty()) {
-        output.writeBytes(2, privateKey_);
+      if (!getPrivateKeyBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, privateKey_);
       }
       unknownFields.writeTo(output);
     }
@@ -1718,9 +1749,8 @@ public final class DevicesProto {
       if (!getNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
       }
-      if (!privateKey_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, privateKey_);
+      if (!getPrivateKeyBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, privateKey_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1892,7 +1922,7 @@ public final class DevicesProto {
         super.clear();
         name_ = "";
 
-        privateKey_ = com.google.protobuf.ByteString.EMPTY;
+        privateKey_ = "";
 
         return this;
       }
@@ -1974,8 +2004,9 @@ public final class DevicesProto {
           name_ = other.name_;
           onChanged();
         }
-        if (other.getPrivateKey() != com.google.protobuf.ByteString.EMPTY) {
-          setPrivateKey(other.getPrivateKey());
+        if (!other.getPrivateKey().isEmpty()) {
+          privateKey_ = other.privateKey_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2075,17 +2106,43 @@ public final class DevicesProto {
         return this;
       }
 
-      private com.google.protobuf.ByteString privateKey_ = com.google.protobuf.ByteString.EMPTY;
+      private java.lang.Object privateKey_ = "";
       /**
-       * <code>bytes private_key = 2;</code>
+       * <code>string private_key = 2;</code>
        */
-      public com.google.protobuf.ByteString getPrivateKey() {
-        return privateKey_;
+      public java.lang.String getPrivateKey() {
+        java.lang.Object ref = privateKey_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          privateKey_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
-       * <code>bytes private_key = 2;</code>
+       * <code>string private_key = 2;</code>
        */
-      public Builder setPrivateKey(com.google.protobuf.ByteString value) {
+      public com.google.protobuf.ByteString
+          getPrivateKeyBytes() {
+        java.lang.Object ref = privateKey_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          privateKey_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string private_key = 2;</code>
+       */
+      public Builder setPrivateKey(
+          java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -2095,11 +2152,25 @@ public final class DevicesProto {
         return this;
       }
       /**
-       * <code>bytes private_key = 2;</code>
+       * <code>string private_key = 2;</code>
        */
       public Builder clearPrivateKey() {
         
         privateKey_ = getDefaultInstance().getPrivateKey();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string private_key = 2;</code>
+       */
+      public Builder setPrivateKeyBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        privateKey_ = value;
         onChanged();
         return this;
       }
@@ -3993,7 +4064,7 @@ public final class DevicesProto {
       "\022filter_public_keys\030\002 \003(\t\".\n\022GetDevicesR" +
       "esponse\022\030\n\007devices\030\001 \003(\0132\007.Device\"<\n\027Upd" +
       "atePrivateKeyRequest\022\014\n\004name\030\001 \001(\t\022\023\n\013pr" +
-      "ivate_key\030\002 \001(\014\"\032\n\030UpdatePrivateKeyRespo" +
+      "ivate_key\030\002 \001(\t\"\032\n\030UpdatePrivateKeyRespo" +
       "nse\"\233\001\n\006Device\022\014\n\004name\030\001 \001(\t\022\023\n\013device_t" +
       "ype\030\002 \001(\r\022\030\n\020device_type_name\030\003 \001(\t\022\022\n\np" +
       "ublic_key\030\004 \001(\t\022\023\n\013listen_port\030\005 \001(\r\022\025\n\r" +

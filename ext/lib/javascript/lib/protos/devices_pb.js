@@ -423,7 +423,7 @@ proto.UpdatePrivateKeyRequest.prototype.toObject = function(opt_includeInstance)
 proto.UpdatePrivateKeyRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    privateKey: msg.getPrivateKey_asB64()
+    privateKey: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -465,7 +465,7 @@ proto.UpdatePrivateKeyRequest.deserializeBinaryFromReader = function(msg, reader
       msg.setName(value);
       break;
     case 2:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      var value = /** @type {string} */ (reader.readString());
       msg.setPrivateKey(value);
       break;
     default:
@@ -504,9 +504,9 @@ proto.UpdatePrivateKeyRequest.serializeBinaryToWriter = function(message, writer
       f
     );
   }
-  f = message.getPrivateKey_asU8();
+  f = message.getPrivateKey();
   if (f.length > 0) {
-    writer.writeBytes(
+    writer.writeString(
       2,
       f
     );
@@ -530,41 +530,17 @@ proto.UpdatePrivateKeyRequest.prototype.setName = function(value) {
 
 
 /**
- * optional bytes private_key = 2;
- * @return {!(string|Uint8Array)}
- */
-proto.UpdatePrivateKeyRequest.prototype.getPrivateKey = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/**
- * optional bytes private_key = 2;
- * This is a type-conversion wrapper around `getPrivateKey()`
+ * optional string private_key = 2;
  * @return {string}
  */
-proto.UpdatePrivateKeyRequest.prototype.getPrivateKey_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getPrivateKey()));
+proto.UpdatePrivateKeyRequest.prototype.getPrivateKey = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
-/**
- * optional bytes private_key = 2;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getPrivateKey()`
- * @return {!Uint8Array}
- */
-proto.UpdatePrivateKeyRequest.prototype.getPrivateKey_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getPrivateKey()));
-};
-
-
-/** @param {!(string|Uint8Array)} value */
+/** @param {string} value */
 proto.UpdatePrivateKeyRequest.prototype.setPrivateKey = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
