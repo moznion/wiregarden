@@ -46,7 +46,7 @@ func (d *Device) GetDevices(ctx context.Context, filterPublicKeys []string) ([]*
 var ErrInvalidPrivateKey = errors.New("invalid private key")
 var ErrDeviceNotFound = errors.New("device not found")
 
-func (d *Device) UpdatePrivateKey(ctx context.Context, name string, privateKey []byte) error {
+func (d *Device) UpdatePrivateKey(ctx context.Context, name string, privateKey string) error {
 	device, err := d.GetDevice(ctx, name, nil)
 	if err != nil {
 		return err

@@ -2,6 +2,7 @@ package infra
 
 import (
 	"context"
+	"encoding/base64"
 	"errors"
 	"sync"
 
@@ -80,11 +81,16 @@ func (w *WGCtrl) RegisterPeers(ctx context.Context, deviceName string, peers []w
 
 var ErrInvalidPrivateKey = errors.New("invalid private key")
 
-func (w *WGCtrl) UpdatePrivateKey(ctx context.Context, deviceName string, device *wgtypes.Device, privateKey []byte) error {
+func (w *WGCtrl) UpdatePrivateKey(ctx context.Context, deviceName string, device *wgtypes.Device, privateKey string) error {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 
-	k, err := wgtypes.NewKey(privateKey)
+	decodedPrivateKey, err := base64.StdEncoding.DecodeString(privateKey)
+	if err != nil {
+		return ErrInvalidPrivateKey
+	}
+
+	k, err := wgtypes.NewKey(decodedPrivateKey)
 	if err != nil {
 		return ErrInvalidPrivateKey
 	}
