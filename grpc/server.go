@@ -20,6 +20,7 @@ type Server struct {
 	PeersRegistrationHooks    []handlers.PeersRegistrationHook
 	PeersDeletionHooks        []handlers.PeersDeletionHook
 	PrometheusMetricsRegister metrics.PrometheusMetricsRegisterable
+	server                    *grpc.Server
 }
 
 func (s *Server) Run(ctx context.Context) error {
@@ -28,9 +29,9 @@ func (s *Server) Run(ctx context.Context) error {
 		return err
 	}
 
-	grpcServer := grpc.NewServer()
+	s.server = grpc.NewServer()
 
-	err = s.registerHandlers(grpcServer)
+	err = s.registerHandlers(s.server)
 	if err != nil {
 		return err
 	}
@@ -38,7 +39,17 @@ func (s *Server) Run(ctx context.Context) error {
 	port := listener.Addr().(*net.TCPAddr).Port
 	log.Info().Int("port", port).Msg("start to listen gRPC over TCP")
 
-	return grpcServer.Serve(listener)
+	return s.server.Serve(listener)
+}
+
+func (s *Server) Stop() {
+	log.Info().Msg("received a gRPC server stopping instruction")
+	if s.server == nil {
+		log.Info().Msg("received a gRPC server stopping instruction, but the server has already been missing; nothing to do")
+		return
+	}
+	s.server.Stop()
+	log.Info().Msg("gRPC server stopped")
 }
 
 func (s *Server) registerHandlers(grpcServer *grpc.Server) error {
@@ -49,6 +60,11 @@ func (s *Server) registerHandlers(grpcServer *grpc.Server) error {
 	peerService, err := service.NewPeer(deviceService, s.IPRouter)
 	if err != nil {
 		return err
+	}
+
+	if s.PrometheusMetricsRegister == nil {
+		log.Info().Msg("no Prometheus metrics register is specified, it'll use the NOP register")
+		s.PrometheusMetricsRegister = &metrics.NOPPrometheusMetricsRegister{}
 	}
 
 	messages.RegisterDevicesServer(grpcServer, handlers.NewDevices(deviceService, s.PrometheusMetricsRegister))
