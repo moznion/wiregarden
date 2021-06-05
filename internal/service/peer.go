@@ -59,13 +59,17 @@ func (p *Peer) GetPeers(ctx context.Context, deviceName string, filterPublicKeys
 func (p *Peer) RegisterPeers(ctx context.Context, deviceName string, peers []wgtypes.Peer) error { // FIXME don't pass wgtypes.peer directly
 	peerConfigurations := make([]wgtypes.PeerConfig, len(peers))
 	for i, peer := range peers {
+		psk := peer.PresharedKey
+		keepaliveInterval := peer.PersistentKeepaliveInterval
 		peerConfigurations[i] = wgtypes.PeerConfig{
-			PublicKey:         peer.PublicKey,
-			Remove:            false,
-			UpdateOnly:        false,
-			Endpoint:          peer.Endpoint,
-			ReplaceAllowedIPs: true,
-			AllowedIPs:        peer.AllowedIPs,
+			PublicKey:                   peer.PublicKey,
+			Endpoint:                    peer.Endpoint,
+			AllowedIPs:                  peer.AllowedIPs,
+			PresharedKey:                &psk,
+			PersistentKeepaliveInterval: &keepaliveInterval,
+			Remove:                      false,
+			UpdateOnly:                  false,
+			ReplaceAllowedIPs:           true,
 		}
 	}
 
