@@ -14,9 +14,11 @@ func ConvertFromWgctrlPeer(peer *wgtypes.Peer) *Peer {
 	}
 
 	return &Peer{
-		PublicKey:  peer.PublicKey.String(),
-		AllowedIps: allowedIPs,
-		Endpoint:   peer.Endpoint.String(),
+		PublicKey:                          peer.PublicKey.String(),
+		AllowedIps:                         allowedIPs,
+		Endpoint:                           peer.Endpoint.String(),
+		PresharedKey:                       peer.PresharedKey.String(),
+		PersistentKeepaliveIntervalSeconds: uint32(peer.PersistentKeepaliveInterval.Seconds()),
 	}
 }
 
