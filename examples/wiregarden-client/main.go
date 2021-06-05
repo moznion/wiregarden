@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/base64"
 	"flag"
 	"fmt"
 
@@ -100,14 +99,9 @@ func deletePeers(ctx context.Context, peersClient messages.PeersClient) {
 }
 
 func updatePrivateKey(ctx context.Context, devicesClient messages.DevicesClient) {
-	privateKey, err := base64.StdEncoding.DecodeString("<snip>")
-	if err != nil {
-		log.Fatal().Err(err).Send()
-	}
-
-	_, err = devicesClient.UpdatePrivateKey(ctx, &messages.UpdatePrivateKeyRequest{
+	_, err := devicesClient.UpdatePrivateKey(ctx, &messages.UpdatePrivateKeyRequest{
 		Name:       "wg0",
-		PrivateKey: privateKey,
+		PrivateKey: "<snip>",
 	})
 	if err != nil {
 		log.Fatal().Err(err).Send()
