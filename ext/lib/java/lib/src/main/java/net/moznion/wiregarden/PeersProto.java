@@ -4332,9 +4332,9 @@ public final class PeersProto {
         getPresharedKeyBytes();
 
     /**
-     * <code>uint64 persistent_keepalive_interval_milliseconds = 6;</code>
+     * <code>uint32 persistent_keepalive_interval_seconds = 6;</code>
      */
-    long getPersistentKeepaliveIntervalMilliseconds();
+    int getPersistentKeepaliveIntervalSeconds();
 
     /**
      * <code>uint64 protocol_version = 7;</code>
@@ -4359,7 +4359,7 @@ public final class PeersProto {
       endpointUdpType_ = 0;
       endpoint_ = "";
       presharedKey_ = "";
-      persistentKeepaliveIntervalMilliseconds_ = 0L;
+      persistentKeepaliveIntervalSeconds_ = 0;
       protocolVersion_ = 0L;
     }
 
@@ -4422,7 +4422,7 @@ public final class PeersProto {
             }
             case 48: {
 
-              persistentKeepaliveIntervalMilliseconds_ = input.readUInt64();
+              persistentKeepaliveIntervalSeconds_ = input.readUInt32();
               break;
             }
             case 56: {
@@ -4614,13 +4614,13 @@ public final class PeersProto {
       }
     }
 
-    public static final int PERSISTENT_KEEPALIVE_INTERVAL_MILLISECONDS_FIELD_NUMBER = 6;
-    private long persistentKeepaliveIntervalMilliseconds_;
+    public static final int PERSISTENT_KEEPALIVE_INTERVAL_SECONDS_FIELD_NUMBER = 6;
+    private int persistentKeepaliveIntervalSeconds_;
     /**
-     * <code>uint64 persistent_keepalive_interval_milliseconds = 6;</code>
+     * <code>uint32 persistent_keepalive_interval_seconds = 6;</code>
      */
-    public long getPersistentKeepaliveIntervalMilliseconds() {
-      return persistentKeepaliveIntervalMilliseconds_;
+    public int getPersistentKeepaliveIntervalSeconds() {
+      return persistentKeepaliveIntervalSeconds_;
     }
 
     public static final int PROTOCOL_VERSION_FIELD_NUMBER = 7;
@@ -4661,8 +4661,8 @@ public final class PeersProto {
       if (!getPresharedKeyBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 5, presharedKey_);
       }
-      if (persistentKeepaliveIntervalMilliseconds_ != 0L) {
-        output.writeUInt64(6, persistentKeepaliveIntervalMilliseconds_);
+      if (persistentKeepaliveIntervalSeconds_ != 0) {
+        output.writeUInt32(6, persistentKeepaliveIntervalSeconds_);
       }
       if (protocolVersion_ != 0L) {
         output.writeUInt64(7, protocolVersion_);
@@ -4697,9 +4697,9 @@ public final class PeersProto {
       if (!getPresharedKeyBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, presharedKey_);
       }
-      if (persistentKeepaliveIntervalMilliseconds_ != 0L) {
+      if (persistentKeepaliveIntervalSeconds_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(6, persistentKeepaliveIntervalMilliseconds_);
+          .computeUInt32Size(6, persistentKeepaliveIntervalSeconds_);
       }
       if (protocolVersion_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
@@ -4730,8 +4730,8 @@ public final class PeersProto {
           .equals(other.getEndpoint());
       result = result && getPresharedKey()
           .equals(other.getPresharedKey());
-      result = result && (getPersistentKeepaliveIntervalMilliseconds()
-          == other.getPersistentKeepaliveIntervalMilliseconds());
+      result = result && (getPersistentKeepaliveIntervalSeconds()
+          == other.getPersistentKeepaliveIntervalSeconds());
       result = result && (getProtocolVersion()
           == other.getProtocolVersion());
       result = result && unknownFields.equals(other.unknownFields);
@@ -4757,9 +4757,8 @@ public final class PeersProto {
       hash = (53 * hash) + getEndpoint().hashCode();
       hash = (37 * hash) + PRESHARED_KEY_FIELD_NUMBER;
       hash = (53 * hash) + getPresharedKey().hashCode();
-      hash = (37 * hash) + PERSISTENT_KEEPALIVE_INTERVAL_MILLISECONDS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getPersistentKeepaliveIntervalMilliseconds());
+      hash = (37 * hash) + PERSISTENT_KEEPALIVE_INTERVAL_SECONDS_FIELD_NUMBER;
+      hash = (53 * hash) + getPersistentKeepaliveIntervalSeconds();
       hash = (37 * hash) + PROTOCOL_VERSION_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getProtocolVersion());
@@ -4906,7 +4905,7 @@ public final class PeersProto {
 
         presharedKey_ = "";
 
-        persistentKeepaliveIntervalMilliseconds_ = 0L;
+        persistentKeepaliveIntervalSeconds_ = 0;
 
         protocolVersion_ = 0L;
 
@@ -4947,7 +4946,7 @@ public final class PeersProto {
         result.endpointUdpType_ = endpointUdpType_;
         result.endpoint_ = endpoint_;
         result.presharedKey_ = presharedKey_;
-        result.persistentKeepaliveIntervalMilliseconds_ = persistentKeepaliveIntervalMilliseconds_;
+        result.persistentKeepaliveIntervalSeconds_ = persistentKeepaliveIntervalSeconds_;
         result.protocolVersion_ = protocolVersion_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -5023,8 +5022,8 @@ public final class PeersProto {
           presharedKey_ = other.presharedKey_;
           onChanged();
         }
-        if (other.getPersistentKeepaliveIntervalMilliseconds() != 0L) {
-          setPersistentKeepaliveIntervalMilliseconds(other.getPersistentKeepaliveIntervalMilliseconds());
+        if (other.getPersistentKeepaliveIntervalSeconds() != 0) {
+          setPersistentKeepaliveIntervalSeconds(other.getPersistentKeepaliveIntervalSeconds());
         }
         if (other.getProtocolVersion() != 0L) {
           setProtocolVersion(other.getProtocolVersion());
@@ -5405,28 +5404,28 @@ public final class PeersProto {
         return this;
       }
 
-      private long persistentKeepaliveIntervalMilliseconds_ ;
+      private int persistentKeepaliveIntervalSeconds_ ;
       /**
-       * <code>uint64 persistent_keepalive_interval_milliseconds = 6;</code>
+       * <code>uint32 persistent_keepalive_interval_seconds = 6;</code>
        */
-      public long getPersistentKeepaliveIntervalMilliseconds() {
-        return persistentKeepaliveIntervalMilliseconds_;
+      public int getPersistentKeepaliveIntervalSeconds() {
+        return persistentKeepaliveIntervalSeconds_;
       }
       /**
-       * <code>uint64 persistent_keepalive_interval_milliseconds = 6;</code>
+       * <code>uint32 persistent_keepalive_interval_seconds = 6;</code>
        */
-      public Builder setPersistentKeepaliveIntervalMilliseconds(long value) {
+      public Builder setPersistentKeepaliveIntervalSeconds(int value) {
         
-        persistentKeepaliveIntervalMilliseconds_ = value;
+        persistentKeepaliveIntervalSeconds_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>uint64 persistent_keepalive_interval_milliseconds = 6;</code>
+       * <code>uint32 persistent_keepalive_interval_seconds = 6;</code>
        */
-      public Builder clearPersistentKeepaliveIntervalMilliseconds() {
+      public Builder clearPersistentKeepaliveIntervalSeconds() {
         
-        persistentKeepaliveIntervalMilliseconds_ = 0L;
+        persistentKeepaliveIntervalSeconds_ = 0;
         onChanged();
         return this;
       }
@@ -5561,21 +5560,21 @@ public final class PeersProto {
       "\rhooks_payload\030\003 \001(\014\"\027\n\025RegisterPeersRes" +
       "ponse\"U\n\022DeletePeersRequest\022\023\n\013device_na" +
       "me\030\001 \001(\t\022\023\n\013public_keys\030\002 \003(\t\022\025\n\rhooks_p" +
-      "ayload\030\003 \001(\014\"\025\n\023DeletePeersResponse\"\322\001\n\004" +
+      "ayload\030\003 \001(\014\"\025\n\023DeletePeersResponse\"\315\001\n\004" +
       "Peer\022\022\n\npublic_key\030\001 \001(\t\022\023\n\013allowed_ips\030" +
       "\002 \003(\t\022*\n\021endpoint_udp_type\030\003 \001(\0162\017.UDPNe" +
       "tworkType\022\020\n\010endpoint\030\004 \001(\t\022\025\n\rpreshared" +
-      "_key\030\005 \001(\t\0222\n*persistent_keepalive_inter" +
-      "val_milliseconds\030\006 \001(\004\022\030\n\020protocol_versi" +
-      "on\030\007 \001(\004*-\n\016UDPNetworkType\022\007\n\003udp\020\000\022\010\n\004u" +
-      "dp4\020\001\022\010\n\004udp6\020\0022\262\001\n\005Peers\022/\n\010GetPeers\022\020." +
-      "GetPeersRequest\032\021.GetPeersResponse\022>\n\rRe" +
-      "gisterPeers\022\025.RegisterPeersRequest\032\026.Reg" +
-      "isterPeersResponse\0228\n\013DeletePeers\022\023.Dele" +
-      "tePeersRequest\032\024.DeletePeersResponseBQ\n\026" +
-      "net.moznion.wiregardenB\nPeersProtoZ+gith" +
-      "ub.com/moznion/wiregarden/grpc/messagesb" +
-      "\006proto3"
+      "_key\030\005 \001(\t\022-\n%persistent_keepalive_inter" +
+      "val_seconds\030\006 \001(\r\022\030\n\020protocol_version\030\007 " +
+      "\001(\004*-\n\016UDPNetworkType\022\007\n\003udp\020\000\022\010\n\004udp4\020\001" +
+      "\022\010\n\004udp6\020\0022\262\001\n\005Peers\022/\n\010GetPeers\022\020.GetPe" +
+      "ersRequest\032\021.GetPeersResponse\022>\n\rRegiste" +
+      "rPeers\022\025.RegisterPeersRequest\032\026.Register" +
+      "PeersResponse\0228\n\013DeletePeers\022\023.DeletePee" +
+      "rsRequest\032\024.DeletePeersResponseBQ\n\026net.m" +
+      "oznion.wiregardenB\nPeersProtoZ+github.co" +
+      "m/moznion/wiregarden/grpc/messagesb\006prot" +
+      "o3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5630,7 +5629,7 @@ public final class PeersProto {
     internal_static_Peer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Peer_descriptor,
-        new java.lang.String[] { "PublicKey", "AllowedIps", "EndpointUdpType", "Endpoint", "PresharedKey", "PersistentKeepaliveIntervalMilliseconds", "ProtocolVersion", });
+        new java.lang.String[] { "PublicKey", "AllowedIps", "EndpointUdpType", "Endpoint", "PresharedKey", "PersistentKeepaliveIntervalSeconds", "ProtocolVersion", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
