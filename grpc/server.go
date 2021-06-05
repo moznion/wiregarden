@@ -62,6 +62,11 @@ func (s *Server) registerHandlers(grpcServer *grpc.Server) error {
 		return err
 	}
 
+	if s.PrometheusMetricsRegister == nil {
+		log.Info().Msg("no Prometheus metrics register is specified, it'll use the NOP register")
+		s.PrometheusMetricsRegister = &metrics.NOPPrometheusMetricsRegister{}
+	}
+
 	messages.RegisterDevicesServer(grpcServer, handlers.NewDevices(deviceService, s.PrometheusMetricsRegister))
 	messages.RegisterPeersServer(grpcServer, handlers.NewPeers(peerService, s.PeersRegistrationHooks, s.PeersDeletionHooks, s.PrometheusMetricsRegister))
 
