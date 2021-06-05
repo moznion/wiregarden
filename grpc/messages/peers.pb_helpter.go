@@ -61,7 +61,7 @@ func (x *Peer) ToWgctrlPeer() (*wgtypes.Peer, error) {
 		PresharedKey:                presharedKey,
 		Endpoint:                    endpoint,
 		AllowedIPs:                  allowIPs,
-		PersistentKeepaliveInterval: time.Duration(x.PersistentKeepaliveIntervalMilliseconds) * time.Millisecond,
+		PersistentKeepaliveInterval: time.Duration(x.PersistentKeepaliveIntervalSeconds) * time.Second,
 		ProtocolVersion:             int(x.ProtocolVersion),
 	}, nil
 }

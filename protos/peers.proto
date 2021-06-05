@@ -49,6 +49,6 @@ message Peer {
     UDPNetworkType endpoint_udp_type = 3;
     string endpoint = 4;
     string preshared_key = 5;
-    uint64 persistent_keepalive_interval_milliseconds = 6;
+    uint32 persistent_keepalive_interval_seconds = 6;
     uint64 protocol_version = 7;
 }

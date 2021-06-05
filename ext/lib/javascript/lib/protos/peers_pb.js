@@ -1155,7 +1155,7 @@ proto.Peer.toObject = function(includeInstance, msg) {
     endpointUdpType: jspb.Message.getFieldWithDefault(msg, 3, 0),
     endpoint: jspb.Message.getFieldWithDefault(msg, 4, ""),
     presharedKey: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    persistentKeepaliveIntervalMilliseconds: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    persistentKeepaliveIntervalSeconds: jspb.Message.getFieldWithDefault(msg, 6, 0),
     protocolVersion: jspb.Message.getFieldWithDefault(msg, 7, 0)
   };
 
@@ -1214,8 +1214,8 @@ proto.Peer.deserializeBinaryFromReader = function(msg, reader) {
       msg.setPresharedKey(value);
       break;
     case 6:
-      var value = /** @type {number} */ (reader.readUint64());
-      msg.setPersistentKeepaliveIntervalMilliseconds(value);
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setPersistentKeepaliveIntervalSeconds(value);
       break;
     case 7:
       var value = /** @type {number} */ (reader.readUint64());
@@ -1285,9 +1285,9 @@ proto.Peer.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getPersistentKeepaliveIntervalMilliseconds();
+  f = message.getPersistentKeepaliveIntervalSeconds();
   if (f !== 0) {
-    writer.writeUint64(
+    writer.writeUint32(
       6,
       f
     );
@@ -1392,16 +1392,16 @@ proto.Peer.prototype.setPresharedKey = function(value) {
 
 
 /**
- * optional uint64 persistent_keepalive_interval_milliseconds = 6;
+ * optional uint32 persistent_keepalive_interval_seconds = 6;
  * @return {number}
  */
-proto.Peer.prototype.getPersistentKeepaliveIntervalMilliseconds = function() {
+proto.Peer.prototype.getPersistentKeepaliveIntervalSeconds = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
 };
 
 
 /** @param {number} value */
-proto.Peer.prototype.setPersistentKeepaliveIntervalMilliseconds = function(value) {
+proto.Peer.prototype.setPersistentKeepaliveIntervalSeconds = function(value) {
   jspb.Message.setProto3IntField(this, 6, value);
 };
 
