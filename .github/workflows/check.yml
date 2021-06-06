@@ -1,0 +1,23 @@
+name: Check
+on: [push]
+jobs:
+  check:
+    name: check with E2E tests
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/moznion/wiregarden/wiregarden-e2e-test:latest
+      env:
+        E2E_TEST: enabled
+      options: --cap-add=NET_ADMIN --cap-add=SYS_MODULE -e PUID=1000 -e PGID=1000 -e TZ=UTC --sysctl="net.ipv4.conf.all.src_valid_mark=1"
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+    - name: Prepare the wireguard
+      run: touch /etc/wireguard/wg0.conf && wg-quick up wg0
+    - name: Do checking
+      run: make check-ci
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v2
+      with:
+        version: v1.40
+

@@ -5,6 +5,7 @@ WG_PROTO_GEN_CONTAINER := "wiregarden-proto-gen:latest"
 GO_BUILD_CONTAINER := "golang:1.16.4-buster"
 
 check: fmt-check test lint vet sec
+check-ci: fmt-check test vet sec
 
 proto:
 	docker run -it -v $(PWD):/wiregarden -w /wiregarden $(WG_PROTO_GEN_CONTAINER) make _proto
@@ -67,3 +68,22 @@ lint-fix:
 fix:
 	$(MAKE) fmt
 	$(MAKE) lint-fix
+
+github-docker-login:
+ifndef DOCKER_USER
+	@echo "[error] \$$DOCKER_USER must be specified"
+	@exit 1
+endif
+ifndef DOCKER_PSWD_FILE
+	@echo "[error] \$$DOCKER_PSWD_FILE must be specified"
+	@exit 1
+endif
+	cat $(DOCKER_PSWD_FILE) | docker login ghcr.io --username $(DOCKER_USER) --password-stdin
+
+e2e-docker-container:
+	docker build . -f ./devtools/e2etest/Dockerfile -t wiregarden-e2e-test:latest
+	docker tag wiregarden-e2e-test:latest ghcr.io/moznion/wiregarden/wiregarden-e2e-test:latest
+
+e2e-docker-push: github-docker-login
+	docker push ghcr.io/moznion/wiregarden/wiregarden-e2e-test:latest
+

@@ -1,4 +1,4 @@
-# wiregarden [![Go Reference](https://pkg.go.dev/badge/github.com/moznion/wiregarden.svg)](https://pkg.go.dev/github.com/moznion/wiregarden)
+# wiregarden [![Go Reference](https://pkg.go.dev/badge/github.com/moznion/wiregarden.svg)](https://pkg.go.dev/github.com/moznion/wiregarden) [![Check](https://github.com/moznion/wiregarden/actions/workflows/check.yml/badge.svg)](https://github.com/moznion/wiregarden/actions/workflows/check.yml)
 
 A broker daemon to provision the [WireGuard](https://www.wireguard.com/) peers over [gRPC](https://grpc.io/).
 
@@ -115,6 +115,18 @@ $ make proto
 ### E2E Testing
 
 If you'd like to run the E2E tests, please set the environment value `E2E_TEST` with the non-empty value.
+
+#### Build a container image for E2E testing
+
+```
+$ make e2e-docker-container
+```
+
+#### Push a container image to GitHub Docker Registry
+
+```
+$ make e2e-docker-push DOCKER_USER=${GITHUB_USERNAME} DOCKER_PSWD_FILE=/path/to/your/github/token/file
+```
 
 ## Author
 
