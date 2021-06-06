@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"net"
 	"os"
-	"os/exec"
 	"strings"
 	"testing"
 	"time"
 
 	wiregardenGrpc "github.com/moznion/wiregarden/grpc"
 	"github.com/moznion/wiregarden/grpc/messages"
+	"github.com/moznion/wiregarden/routes"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
@@ -25,59 +25,25 @@ func init() {
 	log = zerolog.New(output).With().Timestamp().Logger()
 }
 
-func TestRun(t *testing.T) {
-	if !shouldExecute() {
-		log.Info().Msg("skips the E2E testing. if you'd like to enable the E2E testing, please set the environment value `E2E_TEST` with non-empty value")
-		return
-	}
+func TestDevices_UpdatePrivateKey(t *testing.T) {
+	assertSkip(t)
 
-	listener, err := net.Listen("tcp", ":0")
-	assert.NoError(t, err)
-	port := listener.Addr().(*net.TCPAddr).Port
-	_ = listener.Close()
-
-	s := wiregardenGrpc.Server{
-		Port: uint16(port),
-	}
-	defer s.Stop()
-	go func() {
-		ctx := context.Background()
-		_ = s.Run(ctx)
-	}()
-
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
-	conn, err := grpc.DialContext(ctx, fmt.Sprintf("127.0.0.1:%d", port), grpc.WithInsecure(), grpc.WithBlock())
-	assert.NoError(t, err)
-	defer func() {
-		_ = conn.Close()
-	}()
-
-	peersClient := messages.NewPeersClient(conn)
+	conn := setupServerAndConn(t, nil)
 	devicesClient := messages.NewDevicesClient(conn)
-
-	testDevicesUpdatePrivateKey(t, devicesClient)
-	testPeersRegisterPeersAndRemovePeers(t, peersClient)
-}
-
-func testDevicesUpdatePrivateKey(t *testing.T, devicesClient messages.DevicesClient) {
-	log.Info().Msg("Devices UpdatePrivateKey")
 
 	numOfAttempts := 3
 	for i := 0; i < numOfAttempts; i++ {
-		wgPrivateKey, err := exec.Command("wg", "genkey").Output()
+		wgPrivateKey, err := wgtypes.GeneratePrivateKey()
 		assert.NoError(t, err)
-		wgPublicKey, err := exec.Command("bash", "-c", fmt.Sprintf(`echo "%s" | wg pubkey`, wgPrivateKey)).Output()
-		assert.NoError(t, err)
-		log.Debug().Str("publicKey", string(wgPublicKey)).Send()
+		wgPublicKey := wgPrivateKey.PublicKey()
+		log.Debug().Str("publicKey", wgPublicKey.String()).Send()
 
 		ctx := context.Background()
 		deviceName := "wg0"
 
 		_, err = devicesClient.UpdatePrivateKey(ctx, &messages.UpdatePrivateKeyRequest{
 			Name:       deviceName,
-			PrivateKey: strings.TrimSpace(string(wgPrivateKey)),
+			PrivateKey: strings.TrimSpace(wgPrivateKey.String()),
 		})
 		assert.NoError(t, err)
 
@@ -87,17 +53,20 @@ func testDevicesUpdatePrivateKey(t *testing.T, devicesClient messages.DevicesCli
 		assert.NoError(t, err)
 		devices := devicesResp.GetDevices()
 		assert.Len(t, devices, 1)
-		assert.Equal(t, strings.TrimSpace(string(wgPublicKey)), devices[0].GetPublicKey())
+		assert.Equal(t, strings.TrimSpace(wgPublicKey.String()), devices[0].GetPublicKey())
 	}
 }
 
-func testPeersRegisterPeersAndRemovePeers(t *testing.T, peersClient messages.PeersClient) {
-	log.Info().Msg("Peers RegisterPeers")
+func TestPeers_RegisterPeersAndRemovePeers(t *testing.T) {
+	assertSkip(t)
+
+	conn := setupServerAndConn(t, nil)
+	peersClient := messages.NewPeersClient(conn)
 
 	ctx := context.Background()
 	deviceName := "wg0"
 
-	psk, err := exec.Command("wg", "genkey").Output()
+	psk, err := wgtypes.GenerateKey()
 	assert.NoError(t, err)
 
 	peer1 := &messages.Peer{
@@ -111,7 +80,7 @@ func testPeersRegisterPeersAndRemovePeers(t *testing.T, peersClient messages.Pee
 		AllowedIps:                         []string{"192.0.2.20/32", "192.0.2.30/32"},
 		EndpointUdpType:                    messages.UDPNetworkType_udp4,
 		Endpoint:                           "198.51.100.20:51820",
-		PresharedKey:                       strings.TrimSpace(string(psk)),
+		PresharedKey:                       strings.TrimSpace(psk.String()),
 		PersistentKeepaliveIntervalSeconds: 30,
 	}
 
@@ -172,6 +141,46 @@ func testPeersRegisterPeersAndRemovePeers(t *testing.T, peersClient messages.Pee
 
 func shouldExecute() bool {
 	return os.Getenv("E2E_TEST") != ""
+}
+
+func assertSkip(t *testing.T) {
+	if !shouldExecute() {
+		log.Info().Msg("skips the E2E testing. if you'd like to enable the E2E testing, please set the environment value `E2E_TEST` with non-empty value")
+		t.Skip()
+	}
+}
+
+func setupServerAndConn(t *testing.T, ipRouter routes.IPRouter) *grpc.ClientConn {
+	listener, err := net.Listen("tcp", ":0")
+	assert.NoError(t, err)
+	port := listener.Addr().(*net.TCPAddr).Port
+	_ = listener.Close()
+
+	s := wiregardenGrpc.Server{
+		Port:     uint16(port),
+		IPRouter: ipRouter,
+	}
+	t.Cleanup(func() {
+		s.Stop()
+	})
+
+	go func() {
+		ctx := context.Background()
+		_ = s.Run(ctx)
+	}()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	t.Cleanup(func() {
+		cancel()
+	})
+
+	conn, err := grpc.DialContext(ctx, fmt.Sprintf("127.0.0.1:%d", port), grpc.WithInsecure(), grpc.WithBlock())
+	assert.NoError(t, err)
+	t.Cleanup(func() {
+		_ = conn.Close()
+	})
+
+	return conn
 }
 
 func generateWgPublicKey(t *testing.T) string {
