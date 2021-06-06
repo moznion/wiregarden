@@ -32,7 +32,7 @@ publishing {
         create<MavenPublication>("maven") {
             group = "net.moznion"
             artifactId = "wiregarden"
-            version = "0.3.0"
+            version = "0.4.0"
             from(components["java"])
             pom {
                 name.set("wiregarden")
