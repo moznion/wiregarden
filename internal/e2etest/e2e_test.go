@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"os/exec"
 	"strings"
 	"testing"
 	"time"
@@ -28,6 +29,9 @@ func init() {
 func TestDevices_UpdatePrivateKey(t *testing.T) {
 	assertSkip(t)
 
+	deviceName := "wg0"
+	flushWireGuardConfig(t, deviceName)
+
 	conn := setupServerAndConn(t, nil)
 	devicesClient := messages.NewDevicesClient(conn)
 
@@ -39,7 +43,6 @@ func TestDevices_UpdatePrivateKey(t *testing.T) {
 		log.Debug().Str("publicKey", wgPublicKey.String()).Send()
 
 		ctx := context.Background()
-		deviceName := "wg0"
 
 		_, err = devicesClient.UpdatePrivateKey(ctx, &messages.UpdatePrivateKeyRequest{
 			Name:       deviceName,
@@ -55,16 +58,20 @@ func TestDevices_UpdatePrivateKey(t *testing.T) {
 		assert.Len(t, devices, 1)
 		assert.Equal(t, strings.TrimSpace(wgPublicKey.String()), devices[0].GetPublicKey())
 	}
+
+	flushWireGuardConfig(t, deviceName)
 }
 
 func TestPeers_RegisterPeersAndRemovePeers(t *testing.T) {
 	assertSkip(t)
 
+	deviceName := "wg0"
+	flushWireGuardConfig(t, deviceName)
+
 	conn := setupServerAndConn(t, nil)
 	peersClient := messages.NewPeersClient(conn)
 
 	ctx := context.Background()
-	deviceName := "wg0"
 
 	psk, err := wgtypes.GenerateKey()
 	assert.NoError(t, err)
@@ -137,6 +144,52 @@ func TestPeers_RegisterPeersAndRemovePeers(t *testing.T) {
 	})
 	assert.NoError(t, err)
 	assert.Len(t, peersResp.GetPeers(), 0)
+
+	flushWireGuardConfig(t, deviceName)
+}
+
+func TestPeers_RegisterPeersAndRemovePeersWithIPCmdRouter(t *testing.T) {
+	assertSkip(t)
+
+	deviceName := "wg0"
+	flushIpRoute(t, deviceName)
+	flushWireGuardConfig(t, deviceName)
+
+	conn := setupServerAndConn(t, routes.IPRouterFrom(routes.IPRoutingPolicyIpcmd))
+	peersClient := messages.NewPeersClient(conn)
+
+	ctx := context.Background()
+
+	ipaddr := "192.0.2.10"
+	peer1 := &messages.Peer{
+		PublicKey:       generateWgPublicKey(t),
+		AllowedIps:      []string{ipaddr + "/32"},
+		EndpointUdpType: messages.UDPNetworkType_udp,
+		Endpoint:        "198.51.100.10:51820",
+	}
+
+	_, err := peersClient.RegisterPeers(ctx, &messages.RegisterPeersRequest{
+		DeviceName: deviceName,
+		Peers:      []*messages.Peer{peer1},
+	})
+	assert.NoError(t, err)
+
+	output, err := exec.Command("ip", "route", "list", "dev", deviceName).Output()
+	assert.NoError(t, err)
+	assert.Equal(t, ipaddr, strings.Split(string(output), " ")[0], "route added for wg0")
+
+	_, err = peersClient.DeletePeers(ctx, &messages.DeletePeersRequest{
+		DeviceName: deviceName,
+		PublicKeys: []string{peer1.GetPublicKey()},
+	})
+	assert.NoError(t, err)
+
+	output, err = exec.Command("ip", "route", "list", "dev", deviceName).Output()
+	assert.NoError(t, err)
+	assert.Empty(t, output, "route removed for wg0")
+
+	flushIpRoute(t, deviceName)
+	flushWireGuardConfig(t, deviceName)
 }
 
 func shouldExecute() bool {
@@ -181,6 +234,17 @@ func setupServerAndConn(t *testing.T, ipRouter routes.IPRouter) *grpc.ClientConn
 	})
 
 	return conn
+}
+
+func flushIpRoute(t *testing.T, deviceName string) {
+	err := exec.Command("ip", "route", "flush", "dev", deviceName).Run()
+	assert.NoError(t, err)
+}
+
+func flushWireGuardConfig(t *testing.T, deviceName string) {
+	_ = exec.Command("wg-quick", "down", deviceName).Run()
+	err := exec.Command("wg-quick", "up", deviceName).Run()
+	assert.NoError(t, err)
 }
 
 func generateWgPublicKey(t *testing.T) string {
