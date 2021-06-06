@@ -112,6 +112,10 @@ $ make container4protogen
 $ make proto
 ```
 
+### E2E Testing
+
+If you'd like to run the E2E tests, please set the environment value `E2E_TEST` with the non-empty value.
+
 ## Author
 
 moznion (<moznion@mail.moznion.net>)
