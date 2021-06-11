@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.google.protobuf:protobuf-java:3.17.2")
+    implementation("com.google.protobuf:protobuf-java:3.17.3")
     implementation("io.grpc:grpc-protobuf:1.38.0")
     implementation("io.grpc:grpc-stub:1.38.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
