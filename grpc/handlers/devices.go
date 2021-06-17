@@ -6,9 +6,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/moznion/wiregarden/grpc/messages"
 	"github.com/moznion/wiregarden/grpc/metrics"
+	"github.com/moznion/wiregarden/internal"
 	"github.com/moznion/wiregarden/internal/service"
 	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/log"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -30,7 +30,7 @@ func NewDevices(deviceService *service.Device, prometheusMetricsRegister metrics
 func (h *Devices) GetDevices(ctx context.Context, req *messages.GetDevicesRequest) (*messages.GetDevicesResponse, error) {
 	const requestName = "get-devices"
 
-	l := log.With().
+	l := internal.Logger.With().
 		Str("requestID", uuid.NewString()).
 		Str("request", requestName).
 		Str("name", req.Name).
@@ -87,7 +87,7 @@ func (h *Devices) getDevices(ctx context.Context, l *zerolog.Logger, req *messag
 func (h *Devices) UpdatePrivateKey(ctx context.Context, req *messages.UpdatePrivateKeyRequest) (*messages.UpdatePrivateKeyResponse, error) {
 	const requestName = "update-private-key"
 
-	l := log.With().
+	l := internal.Logger.With().
 		Str("requestID", uuid.NewString()).
 		Str("request", requestName).
 		Logger()

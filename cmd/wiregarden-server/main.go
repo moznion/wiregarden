@@ -11,13 +11,11 @@ import (
 
 	"github.com/moznion/wiregarden/grpc"
 	"github.com/moznion/wiregarden/grpc/metrics"
+	"github.com/moznion/wiregarden/internal"
 	"github.com/moznion/wiregarden/routes"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/rs/zerolog/log"
 )
-
-var revision string
 
 func main() {
 	defer leaveDyingMessageOnPanic()
@@ -44,7 +42,7 @@ func main() {
 
 	if shouldShowVersionInfo {
 		v, _ := json.Marshal(map[string]string{
-			"revision":  revision,
+			"revision":  internal.Revision,
 			"goVersion": runtime.Version(),
 		})
 		fmt.Printf("%s\n", v)
@@ -60,8 +58,8 @@ func main() {
 					EnableOpenMetrics: true,
 				},
 			))
-			log.Info().Uint("port", prometheusExporterPort).Msg("start the HTTP prometheus metrics exporter; you can retrieve metrics by 'GET /metrics'")
-			log.Err(http.ListenAndServe(fmt.Sprintf(":%d", prometheusExporterPort), nil)).Send()
+			internal.Logger.Info().Uint("port", prometheusExporterPort).Msg("start the HTTP prometheus metrics exporter; you can retrieve metrics by 'GET /metrics'")
+			internal.Logger.Err(http.ListenAndServe(fmt.Sprintf(":%d", prometheusExporterPort), nil)).Send()
 		}()
 		grpcPrometheusMetricsRegister = metrics.NewPrometheusMetricsRegister()
 	}
@@ -71,9 +69,9 @@ func main() {
 		IPRouter: func() routes.IPRouter {
 			r := routes.IPRouterFrom(ipRoutingPolicyName)
 			if r == nil {
-				log.Info().Msg("ip routing policy is not specified")
+				internal.Logger.Info().Msg("ip routing policy is not specified")
 			} else {
-				log.Info().Str("policy", ipRoutingPolicyName).Msg("ip routing policy is specified; it starts auto ip route table management")
+				internal.Logger.Info().Str("policy", ipRoutingPolicyName).Msg("ip routing policy is specified; it starts auto ip route table management")
 			}
 			return r
 		}(),
@@ -82,18 +80,18 @@ func main() {
 
 	ctx := context.Background()
 	err := s.Run(ctx)
-	log.Fatal().Err(err).Msg("")
+	internal.Logger.Fatal().Err(err).Msg("")
 }
 
 func leaveDyingMessageOnPanic() {
 	if err := recover(); err != nil {
-		log.Error().Interface("recoveredErr", err).Msg("panic occurred; show stacktrace")
+		internal.Logger.Error().Interface("recoveredErr", err).Msg("panic occurred; show stacktrace")
 		for depth := 0; ; depth++ {
 			_, filename, line, ok := runtime.Caller(depth)
 			if !ok {
 				break
 			}
-			log.Error().Str("filename", filename).Int("lineNumber", line).Msg("")
+			internal.Logger.Error().Str("filename", filename).Int("lineNumber", line).Msg("")
 		}
 		os.Exit(1)
 	}

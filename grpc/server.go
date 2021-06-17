@@ -8,9 +8,9 @@ import (
 	"github.com/moznion/wiregarden/grpc/handlers"
 	"github.com/moznion/wiregarden/grpc/messages"
 	"github.com/moznion/wiregarden/grpc/metrics"
+	"github.com/moznion/wiregarden/internal"
 	"github.com/moznion/wiregarden/internal/service"
 	"github.com/moznion/wiregarden/routes"
-	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 )
 
@@ -37,19 +37,19 @@ func (s *Server) Run(ctx context.Context) error {
 	}
 
 	port := listener.Addr().(*net.TCPAddr).Port
-	log.Info().Int("port", port).Msg("start to listen gRPC over TCP")
+	internal.Logger.Info().Int("port", port).Msg("start to listen gRPC over TCP")
 
 	return s.server.Serve(listener)
 }
 
 func (s *Server) Stop() {
-	log.Info().Msg("received a gRPC server stopping instruction")
+	internal.Logger.Info().Msg("received a gRPC server stopping instruction")
 	if s.server == nil {
-		log.Info().Msg("received a gRPC server stopping instruction, but the server has already been missing; nothing to do")
+		internal.Logger.Info().Msg("received a gRPC server stopping instruction, but the server has already been missing; nothing to do")
 		return
 	}
 	s.server.Stop()
-	log.Info().Msg("gRPC server stopped")
+	internal.Logger.Info().Msg("gRPC server stopped")
 }
 
 func (s *Server) registerHandlers(grpcServer *grpc.Server) error {
@@ -63,7 +63,7 @@ func (s *Server) registerHandlers(grpcServer *grpc.Server) error {
 	}
 
 	if s.PrometheusMetricsRegister == nil {
-		log.Info().Msg("no Prometheus metrics register is specified, it'll use the NOP register")
+		internal.Logger.Info().Msg("no Prometheus metrics register is specified, it'll use the NOP register")
 		s.PrometheusMetricsRegister = &metrics.NOPPrometheusMetricsRegister{}
 	}
 
