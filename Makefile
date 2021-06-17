@@ -35,7 +35,7 @@ endif
 		-e GOARCH=$(GOARCH) \
 		$(GO_BUILD_CONTAINER) \
 		go build \
-			-ldflags '-X "main.revision=$(shell git rev-parse HEAD)"' \
+			-ldflags '-X "github.com/moznion/wiregarden/internal.Revision=$(shell git rev-parse HEAD)"' \
 			-o ./bin/wiregarden-server_$(GOOS)_$(GOARCH) ./cmd/wiregarden-server
 
 clean:

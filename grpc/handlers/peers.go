@@ -6,9 +6,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/moznion/wiregarden/grpc/messages"
 	"github.com/moznion/wiregarden/grpc/metrics"
+	"github.com/moznion/wiregarden/internal"
 	"github.com/moznion/wiregarden/internal/service"
 	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/log"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -49,7 +49,7 @@ func NewPeers(
 func (h *Peers) GetPeers(ctx context.Context, req *messages.GetPeersRequest) (*messages.GetPeersResponse, error) {
 	const requestName = "get-peers"
 
-	l := log.With().
+	l := internal.Logger.With().
 		Str("requestID", uuid.NewString()).
 		Str("request", requestName).
 		Str("deviceName", req.DeviceName).
@@ -95,7 +95,7 @@ func (h *Peers) getPeers(ctx context.Context, l *zerolog.Logger, req *messages.G
 func (h *Peers) RegisterPeers(ctx context.Context, req *messages.RegisterPeersRequest) (*messages.RegisterPeersResponse, error) {
 	const requestName = "register-peers"
 
-	l := log.With().
+	l := internal.Logger.With().
 		Str("requestID", uuid.NewString()).
 		Str("request", requestName).
 		Str("deviceName", req.DeviceName).
@@ -157,7 +157,7 @@ func (h *Peers) registerPeers(ctx context.Context, l *zerolog.Logger, req *messa
 func (h *Peers) DeletePeers(ctx context.Context, req *messages.DeletePeersRequest) (*messages.DeletePeersResponse, error) {
 	const requestName = "delete-peers"
 
-	l := log.With().
+	l := internal.Logger.With().
 		Str("requestID", uuid.NewString()).
 		Str("request", requestName).
 		Str("deviceName", req.DeviceName).
