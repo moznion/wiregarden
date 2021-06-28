@@ -19,6 +19,9 @@ func ConvertFromWgctrlPeer(peer *wgtypes.Peer) *Peer {
 		Endpoint:                           peer.Endpoint.String(),
 		PresharedKey:                       peer.PresharedKey.String(),
 		PersistentKeepaliveIntervalSeconds: uint32(peer.PersistentKeepaliveInterval.Seconds()),
+		ReceiveBytes:                       peer.ReceiveBytes,
+		TransmitBytes:                      peer.TransmitBytes,
+		LastHandshakeTimeUnixSec:           peer.LastHandshakeTime.Unix(),
 	}
 }
 

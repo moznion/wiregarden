@@ -51,4 +51,7 @@ message Peer {
     string preshared_key = 5;
     uint32 persistent_keepalive_interval_seconds = 6;
     uint64 protocol_version = 7;
+    int64 receive_bytes = 8;
+    int64 transmit_bytes = 9;
+    int64 last_handshake_time_unix_sec = 10;
 }

@@ -1156,7 +1156,10 @@ proto.Peer.toObject = function(includeInstance, msg) {
     endpoint: jspb.Message.getFieldWithDefault(msg, 4, ""),
     presharedKey: jspb.Message.getFieldWithDefault(msg, 5, ""),
     persistentKeepaliveIntervalSeconds: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    protocolVersion: jspb.Message.getFieldWithDefault(msg, 7, 0)
+    protocolVersion: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    receiveBytes: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    transmitBytes: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    lastHandshakeTimeUnixSec: jspb.Message.getFieldWithDefault(msg, 10, 0)
   };
 
   if (includeInstance) {
@@ -1220,6 +1223,18 @@ proto.Peer.deserializeBinaryFromReader = function(msg, reader) {
     case 7:
       var value = /** @type {number} */ (reader.readUint64());
       msg.setProtocolVersion(value);
+      break;
+    case 8:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setReceiveBytes(value);
+      break;
+    case 9:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setTransmitBytes(value);
+      break;
+    case 10:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setLastHandshakeTimeUnixSec(value);
       break;
     default:
       reader.skipField();
@@ -1296,6 +1311,27 @@ proto.Peer.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0) {
     writer.writeUint64(
       7,
+      f
+    );
+  }
+  f = message.getReceiveBytes();
+  if (f !== 0) {
+    writer.writeInt64(
+      8,
+      f
+    );
+  }
+  f = message.getTransmitBytes();
+  if (f !== 0) {
+    writer.writeInt64(
+      9,
+      f
+    );
+  }
+  f = message.getLastHandshakeTimeUnixSec();
+  if (f !== 0) {
+    writer.writeInt64(
+      10,
       f
     );
   }
@@ -1418,6 +1454,51 @@ proto.Peer.prototype.getProtocolVersion = function() {
 /** @param {number} value */
 proto.Peer.prototype.setProtocolVersion = function(value) {
   jspb.Message.setProto3IntField(this, 7, value);
+};
+
+
+/**
+ * optional int64 receive_bytes = 8;
+ * @return {number}
+ */
+proto.Peer.prototype.getReceiveBytes = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+};
+
+
+/** @param {number} value */
+proto.Peer.prototype.setReceiveBytes = function(value) {
+  jspb.Message.setProto3IntField(this, 8, value);
+};
+
+
+/**
+ * optional int64 transmit_bytes = 9;
+ * @return {number}
+ */
+proto.Peer.prototype.getTransmitBytes = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
+};
+
+
+/** @param {number} value */
+proto.Peer.prototype.setTransmitBytes = function(value) {
+  jspb.Message.setProto3IntField(this, 9, value);
+};
+
+
+/**
+ * optional int64 last_handshake_time_unix_sec = 10;
+ * @return {number}
+ */
+proto.Peer.prototype.getLastHandshakeTimeUnixSec = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+};
+
+
+/** @param {number} value */
+proto.Peer.prototype.setLastHandshakeTimeUnixSec = function(value) {
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
