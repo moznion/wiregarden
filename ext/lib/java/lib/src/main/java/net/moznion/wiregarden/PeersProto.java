@@ -4340,6 +4340,21 @@ public final class PeersProto {
      * <code>uint64 protocol_version = 7;</code>
      */
     long getProtocolVersion();
+
+    /**
+     * <code>int64 receive_bytes = 8;</code>
+     */
+    long getReceiveBytes();
+
+    /**
+     * <code>int64 transmit_bytes = 9;</code>
+     */
+    long getTransmitBytes();
+
+    /**
+     * <code>int64 last_handshake_time_unix_sec = 10;</code>
+     */
+    long getLastHandshakeTimeUnixSec();
   }
   /**
    * Protobuf type {@code Peer}
@@ -4361,6 +4376,9 @@ public final class PeersProto {
       presharedKey_ = "";
       persistentKeepaliveIntervalSeconds_ = 0;
       protocolVersion_ = 0L;
+      receiveBytes_ = 0L;
+      transmitBytes_ = 0L;
+      lastHandshakeTimeUnixSec_ = 0L;
     }
 
     @java.lang.Override
@@ -4428,6 +4446,21 @@ public final class PeersProto {
             case 56: {
 
               protocolVersion_ = input.readUInt64();
+              break;
+            }
+            case 64: {
+
+              receiveBytes_ = input.readInt64();
+              break;
+            }
+            case 72: {
+
+              transmitBytes_ = input.readInt64();
+              break;
+            }
+            case 80: {
+
+              lastHandshakeTimeUnixSec_ = input.readInt64();
               break;
             }
             default: {
@@ -4632,6 +4665,33 @@ public final class PeersProto {
       return protocolVersion_;
     }
 
+    public static final int RECEIVE_BYTES_FIELD_NUMBER = 8;
+    private long receiveBytes_;
+    /**
+     * <code>int64 receive_bytes = 8;</code>
+     */
+    public long getReceiveBytes() {
+      return receiveBytes_;
+    }
+
+    public static final int TRANSMIT_BYTES_FIELD_NUMBER = 9;
+    private long transmitBytes_;
+    /**
+     * <code>int64 transmit_bytes = 9;</code>
+     */
+    public long getTransmitBytes() {
+      return transmitBytes_;
+    }
+
+    public static final int LAST_HANDSHAKE_TIME_UNIX_SEC_FIELD_NUMBER = 10;
+    private long lastHandshakeTimeUnixSec_;
+    /**
+     * <code>int64 last_handshake_time_unix_sec = 10;</code>
+     */
+    public long getLastHandshakeTimeUnixSec() {
+      return lastHandshakeTimeUnixSec_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -4666,6 +4726,15 @@ public final class PeersProto {
       }
       if (protocolVersion_ != 0L) {
         output.writeUInt64(7, protocolVersion_);
+      }
+      if (receiveBytes_ != 0L) {
+        output.writeInt64(8, receiveBytes_);
+      }
+      if (transmitBytes_ != 0L) {
+        output.writeInt64(9, transmitBytes_);
+      }
+      if (lastHandshakeTimeUnixSec_ != 0L) {
+        output.writeInt64(10, lastHandshakeTimeUnixSec_);
       }
       unknownFields.writeTo(output);
     }
@@ -4705,6 +4774,18 @@ public final class PeersProto {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(7, protocolVersion_);
       }
+      if (receiveBytes_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(8, receiveBytes_);
+      }
+      if (transmitBytes_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(9, transmitBytes_);
+      }
+      if (lastHandshakeTimeUnixSec_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(10, lastHandshakeTimeUnixSec_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -4734,6 +4815,12 @@ public final class PeersProto {
           == other.getPersistentKeepaliveIntervalSeconds());
       result = result && (getProtocolVersion()
           == other.getProtocolVersion());
+      result = result && (getReceiveBytes()
+          == other.getReceiveBytes());
+      result = result && (getTransmitBytes()
+          == other.getTransmitBytes());
+      result = result && (getLastHandshakeTimeUnixSec()
+          == other.getLastHandshakeTimeUnixSec());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -4762,6 +4849,15 @@ public final class PeersProto {
       hash = (37 * hash) + PROTOCOL_VERSION_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getProtocolVersion());
+      hash = (37 * hash) + RECEIVE_BYTES_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getReceiveBytes());
+      hash = (37 * hash) + TRANSMIT_BYTES_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTransmitBytes());
+      hash = (37 * hash) + LAST_HANDSHAKE_TIME_UNIX_SEC_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getLastHandshakeTimeUnixSec());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -4909,6 +5005,12 @@ public final class PeersProto {
 
         protocolVersion_ = 0L;
 
+        receiveBytes_ = 0L;
+
+        transmitBytes_ = 0L;
+
+        lastHandshakeTimeUnixSec_ = 0L;
+
         return this;
       }
 
@@ -4948,6 +5050,9 @@ public final class PeersProto {
         result.presharedKey_ = presharedKey_;
         result.persistentKeepaliveIntervalSeconds_ = persistentKeepaliveIntervalSeconds_;
         result.protocolVersion_ = protocolVersion_;
+        result.receiveBytes_ = receiveBytes_;
+        result.transmitBytes_ = transmitBytes_;
+        result.lastHandshakeTimeUnixSec_ = lastHandshakeTimeUnixSec_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -5027,6 +5132,15 @@ public final class PeersProto {
         }
         if (other.getProtocolVersion() != 0L) {
           setProtocolVersion(other.getProtocolVersion());
+        }
+        if (other.getReceiveBytes() != 0L) {
+          setReceiveBytes(other.getReceiveBytes());
+        }
+        if (other.getTransmitBytes() != 0L) {
+          setTransmitBytes(other.getTransmitBytes());
+        }
+        if (other.getLastHandshakeTimeUnixSec() != 0L) {
+          setLastHandshakeTimeUnixSec(other.getLastHandshakeTimeUnixSec());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -5455,6 +5569,84 @@ public final class PeersProto {
         onChanged();
         return this;
       }
+
+      private long receiveBytes_ ;
+      /**
+       * <code>int64 receive_bytes = 8;</code>
+       */
+      public long getReceiveBytes() {
+        return receiveBytes_;
+      }
+      /**
+       * <code>int64 receive_bytes = 8;</code>
+       */
+      public Builder setReceiveBytes(long value) {
+        
+        receiveBytes_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 receive_bytes = 8;</code>
+       */
+      public Builder clearReceiveBytes() {
+        
+        receiveBytes_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private long transmitBytes_ ;
+      /**
+       * <code>int64 transmit_bytes = 9;</code>
+       */
+      public long getTransmitBytes() {
+        return transmitBytes_;
+      }
+      /**
+       * <code>int64 transmit_bytes = 9;</code>
+       */
+      public Builder setTransmitBytes(long value) {
+        
+        transmitBytes_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 transmit_bytes = 9;</code>
+       */
+      public Builder clearTransmitBytes() {
+        
+        transmitBytes_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private long lastHandshakeTimeUnixSec_ ;
+      /**
+       * <code>int64 last_handshake_time_unix_sec = 10;</code>
+       */
+      public long getLastHandshakeTimeUnixSec() {
+        return lastHandshakeTimeUnixSec_;
+      }
+      /**
+       * <code>int64 last_handshake_time_unix_sec = 10;</code>
+       */
+      public Builder setLastHandshakeTimeUnixSec(long value) {
+        
+        lastHandshakeTimeUnixSec_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 last_handshake_time_unix_sec = 10;</code>
+       */
+      public Builder clearLastHandshakeTimeUnixSec() {
+        
+        lastHandshakeTimeUnixSec_ = 0L;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -5560,21 +5752,23 @@ public final class PeersProto {
       "\rhooks_payload\030\003 \001(\014\"\027\n\025RegisterPeersRes" +
       "ponse\"U\n\022DeletePeersRequest\022\023\n\013device_na" +
       "me\030\001 \001(\t\022\023\n\013public_keys\030\002 \003(\t\022\025\n\rhooks_p" +
-      "ayload\030\003 \001(\014\"\025\n\023DeletePeersResponse\"\315\001\n\004" +
+      "ayload\030\003 \001(\014\"\025\n\023DeletePeersResponse\"\242\002\n\004" +
       "Peer\022\022\n\npublic_key\030\001 \001(\t\022\023\n\013allowed_ips\030" +
       "\002 \003(\t\022*\n\021endpoint_udp_type\030\003 \001(\0162\017.UDPNe" +
       "tworkType\022\020\n\010endpoint\030\004 \001(\t\022\025\n\rpreshared" +
       "_key\030\005 \001(\t\022-\n%persistent_keepalive_inter" +
       "val_seconds\030\006 \001(\r\022\030\n\020protocol_version\030\007 " +
-      "\001(\004*-\n\016UDPNetworkType\022\007\n\003udp\020\000\022\010\n\004udp4\020\001" +
-      "\022\010\n\004udp6\020\0022\262\001\n\005Peers\022/\n\010GetPeers\022\020.GetPe" +
-      "ersRequest\032\021.GetPeersResponse\022>\n\rRegiste" +
-      "rPeers\022\025.RegisterPeersRequest\032\026.Register" +
-      "PeersResponse\0228\n\013DeletePeers\022\023.DeletePee" +
-      "rsRequest\032\024.DeletePeersResponseBQ\n\026net.m" +
-      "oznion.wiregardenB\nPeersProtoZ+github.co" +
-      "m/moznion/wiregarden/grpc/messagesb\006prot" +
-      "o3"
+      "\001(\004\022\025\n\rreceive_bytes\030\010 \001(\003\022\026\n\016transmit_b" +
+      "ytes\030\t \001(\003\022$\n\034last_handshake_time_unix_s" +
+      "ec\030\n \001(\003*-\n\016UDPNetworkType\022\007\n\003udp\020\000\022\010\n\004u" +
+      "dp4\020\001\022\010\n\004udp6\020\0022\262\001\n\005Peers\022/\n\010GetPeers\022\020." +
+      "GetPeersRequest\032\021.GetPeersResponse\022>\n\rRe" +
+      "gisterPeers\022\025.RegisterPeersRequest\032\026.Reg" +
+      "isterPeersResponse\0228\n\013DeletePeers\022\023.Dele" +
+      "tePeersRequest\032\024.DeletePeersResponseBQ\n\026" +
+      "net.moznion.wiregardenB\nPeersProtoZ+gith" +
+      "ub.com/moznion/wiregarden/grpc/messagesb" +
+      "\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5629,7 +5823,7 @@ public final class PeersProto {
     internal_static_Peer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Peer_descriptor,
-        new java.lang.String[] { "PublicKey", "AllowedIps", "EndpointUdpType", "Endpoint", "PresharedKey", "PersistentKeepaliveIntervalSeconds", "ProtocolVersion", });
+        new java.lang.String[] { "PublicKey", "AllowedIps", "EndpointUdpType", "Endpoint", "PresharedKey", "PersistentKeepaliveIntervalSeconds", "ProtocolVersion", "ReceiveBytes", "TransmitBytes", "LastHandshakeTimeUnixSec", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
