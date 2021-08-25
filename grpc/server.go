@@ -45,8 +45,14 @@ func (s *Server) Run(ctx context.Context) error {
 		return err
 	}
 
-	port := listener.Addr().(*net.TCPAddr).Port
-	internal.Logger.Info().Int("port", port).Msg("start to listen gRPC over TCP")
+	l := internal.Logger.Info()
+	if tcpAddr, ok := listener.Addr().(*net.TCPAddr); ok {
+		l.Int("port", tcpAddr.Port)
+	}
+	if unixAddr, ok := listener.Addr().(*net.UnixAddr); ok {
+		l.Str("unixSocket", unixAddr.String())
+	}
+	l.Msg("start to listen gRPC over TCP")
 
 	return s.server.Serve(listener)
 }
