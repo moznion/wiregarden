@@ -45,6 +45,7 @@ func main() {
 
 	if shouldShowVersionInfo {
 		v, _ := json.Marshal(map[string]string{
+			"version":   internal.Version,
 			"revision":  internal.Revision,
 			"goVersion": runtime.Version(),
 		})
