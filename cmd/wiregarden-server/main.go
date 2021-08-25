@@ -22,6 +22,7 @@ func main() {
 
 	defaultPort := uint(0)
 	defaultIPRoutingPolicyUsage := ""
+	defaultUnixSocketPath := ""
 	versionUsage := "show the version information"
 	portUsage := "the port number to listen gRPC over TCP"
 	ipRouteUsage := fmt.Sprintf(
@@ -32,12 +33,14 @@ func main() {
 	var port uint
 	var prometheusExporterPort uint
 	var ipRoutingPolicyName string
+	var unixSocketPath string
 	flag.BoolVar(&shouldShowVersionInfo, "version", false, versionUsage)
 	flag.BoolVar(&shouldShowVersionInfo, "v", false, versionUsage+" (shorthand)")
 	flag.UintVar(&port, "port", defaultPort, portUsage)
 	flag.UintVar(&port, "p", defaultPort, portUsage+" (shorthand)")
 	flag.StringVar(&ipRoutingPolicyName, "ip-route", defaultIPRoutingPolicyUsage, ipRouteUsage)
 	flag.UintVar(&prometheusExporterPort, "prom-port", defaultPort, "the port number to export the prometheus metrics")
+	flag.StringVar(&unixSocketPath, "unix-socket", defaultUnixSocketPath, "path to a UNIX domain socket to listen")
 	flag.Parse()
 
 	if shouldShowVersionInfo {
@@ -47,6 +50,11 @@ func main() {
 		})
 		fmt.Printf("%s\n", v)
 		os.Exit(0)
+	}
+
+	if port != defaultPort && unixSocketPath != defaultUnixSocketPath {
+		internal.Logger.Fatal().Msg("port and unix-socket options are exclusive; it must be used either one")
+		os.Exit(1)
 	}
 
 	var grpcPrometheusMetricsRegister metrics.PrometheusMetricsRegisterable = &metrics.NOPPrometheusMetricsRegister{}
