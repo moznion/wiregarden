@@ -1,6 +1,6 @@
 FROM adoptopenjdk:11.0.11_9-jdk-hotspot-focal
 
-ARG go_tar_file_name="go1.16.4.linux-amd64.tar.gz"
+ARG go_tar_file_name="go1.17.linux-amd64.tar.gz"
 
 ENV TZ=UTC
 RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -

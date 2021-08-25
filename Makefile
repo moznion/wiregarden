@@ -2,7 +2,7 @@
 
 PKGS := $(shell go list ./...)
 WG_PROTO_GEN_CONTAINER := "wiregarden-proto-gen:latest"
-GO_BUILD_CONTAINER := "golang:1.16.4-buster"
+GO_BUILD_CONTAINER := "golang:1.17-buster"
 
 check: fmt-check test lint vet sec
 check-ci: fmt-check test vet sec
