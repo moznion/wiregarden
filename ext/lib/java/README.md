@@ -6,6 +6,6 @@
 
 ```
 $ make container4protogen
-$ make java
+$ make gen
 ```
 
