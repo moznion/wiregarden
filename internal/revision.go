@@ -1,6 +1,7 @@
 package internal
 
 var (
+	Version  string
 	Revision string
 )
 
