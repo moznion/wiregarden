@@ -75,6 +75,7 @@ func main() {
 
 	s := grpc.Server{
 		Port: uint16(port),
+		UnixSocketPath: unixSocketPath,
 		IPRouter: func() routes.IPRouter {
 			r := routes.IPRouterFrom(ipRoutingPolicyName)
 			if r == nil {
