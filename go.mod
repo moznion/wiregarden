@@ -7,7 +7,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/mdlayher/netlink v1.3.2 // indirect
 	github.com/prometheus/client_golang v1.11.0
-	github.com/rs/zerolog v1.24.0
+	github.com/rs/zerolog v1.25.0
 	github.com/stretchr/testify v1.7.0
 	golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83 // indirect
 	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4 // indirect
