@@ -8,8 +8,10 @@ builds:
   -
     main: ./cmd/wiregarden-server/main.go
     ldflags:
-    - "-X github.com/moznion/wiregarden/internal.Revision={{ .FullCommit }}"
-    - "-X github.com/moznion/wiregarden/internal.Version={{ .Version }}"
+      - "-w"
+      - "-s"
+      - "-X github.com/moznion/wiregarden/internal.Revision={{ .FullCommit }}"
+      - "-X github.com/moznion/wiregarden/internal.Version={{ .Version }}"
     env:
       - CGO_ENABLED=0
     goos:
