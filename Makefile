@@ -30,14 +30,17 @@ ifndef GOARCH
 	@echo "[error] \$$GOARCH must be specified"
 	@exit 1
 endif
-	docker run -it -v $(PWD):/wiregarden -w /wiregarden \
+	docker run -it --rm -v $(shell pwd):/wiregarden -w /wiregarden \
 		-e GOOS=$(GOOS) \
 		-e GOARCH=$(GOARCH) \
 		$(GO_BUILD_CONTAINER) \
-		go mod vendor && \
-		go build \
-			-ldflags '-X "github.com/moznion/wiregarden/internal.Revision=$(shell git rev-parse HEAD)" -X "github.com/moznion/wiregarden/internal.Version=$(shell git describe --abbrev=0 --tags)"' \
-			-o ./bin/wiregarden-server_$(GOOS)_$(GOARCH) ./cmd/wiregarden-server
+		bash -c " \
+			go mod vendor && \
+			go build \
+				-buildvcs=false \
+				-ldflags '-w -s -X "github.com/moznion/wiregarden/internal.Revision=$(shell git rev-parse HEAD)" -X "github.com/moznion/wiregarden/internal.Version=$(shell git describe --abbrev=0 --tags)"' \
+				-o ./bin/wiregarden-server_$(GOOS)_$(GOARCH) ./cmd/wiregarden-server \
+		"
 
 clean:
 	rm -f ./bin/wiregarden-server*
