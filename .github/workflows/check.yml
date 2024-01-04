@@ -13,7 +13,7 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v4
     - name: Prepare the wireguard
-      run: touch /etc/wireguard/wg0.conf && wg-quick up wg0
+      run: wg-quick up wg0
     - name: Do checking
       run: make check-ci
     - name: golangci-lint
