@@ -11,13 +11,13 @@ jobs:
       options: --cap-add=NET_ADMIN --cap-add=SYS_MODULE -e PUID=1000 -e PGID=1000 -e TZ=UTC --sysctl="net.ipv4.conf.all.src_valid_mark=1"
     steps:
     - name: Check out code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Prepare the wireguard
       run: touch /etc/wireguard/wg0.conf && wg-quick up wg0
     - name: Do checking
       run: make check-ci
     - name: golangci-lint
-      uses: golangci/golangci-lint-action@v2
+      uses: golangci/golangci-lint-action@v3
       with:
-        version: v1.40
+        version: latest
 
