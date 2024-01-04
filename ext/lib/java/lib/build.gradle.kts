@@ -12,7 +12,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-java:3.25.1")
     implementation("io.grpc:grpc-protobuf:1.40.1")
     implementation("io.grpc:grpc-stub:1.60.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
