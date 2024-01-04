@@ -6,7 +6,7 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/uuid v1.3.1
 	github.com/mdlayher/netlink v1.3.2 // indirect
-	github.com/prometheus/client_golang v1.11.0
+	github.com/prometheus/client_golang v1.11.1
 	github.com/rs/zerolog v1.25.0
 	github.com/stretchr/testify v1.7.1
 	golang.org/x/crypto v0.14.0 // indirect
