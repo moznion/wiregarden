@@ -2,13 +2,13 @@
 
 PKGS := $(shell go list ./...)
 WG_PROTO_GEN_CONTAINER := "wiregarden-proto-gen:latest"
-GO_BUILD_CONTAINER := "golang:1.17.0-buster"
+GO_BUILD_CONTAINER := "golang:1.21.5-bookworm"
 
 check: fmt-check test lint vet sec
 check-ci: fmt-check test vet sec
 
 proto:
-	docker run -it -v $(PWD):/wiregarden -w /wiregarden $(WG_PROTO_GEN_CONTAINER) make _proto
+	docker run -it -v $(shell pwd):/wiregarden -w /wiregarden $(WG_PROTO_GEN_CONTAINER) make _proto
 
 _proto:
 	protoc \
