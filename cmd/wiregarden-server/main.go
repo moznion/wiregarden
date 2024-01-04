@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"runtime"
+	"time"
 
 	"github.com/moznion/wiregarden/grpc"
 	"github.com/moznion/wiregarden/grpc/metrics"
@@ -61,20 +62,32 @@ func main() {
 	var grpcPrometheusMetricsRegister metrics.PrometheusMetricsRegisterable = &metrics.NOPPrometheusMetricsRegister{}
 	if prometheusExporterPort > 0 {
 		go func() {
-			http.Handle("/metrics", promhttp.HandlerFor(
+			handler := http.NewServeMux()
+			handler.Handle("/metrics", promhttp.HandlerFor(
 				prometheus.DefaultGatherer,
 				promhttp.HandlerOpts{
 					EnableOpenMetrics: true,
 				},
 			))
+
+			timeout := 5 * time.Second
+			srv := http.Server{
+				Addr:              fmt.Sprintf(":%d", prometheusExporterPort),
+				Handler:           handler,
+				ReadTimeout:       timeout,
+				ReadHeaderTimeout: timeout,
+				WriteTimeout:      timeout,
+				IdleTimeout:       timeout,
+			}
+
 			internal.Logger.Info().Uint("port", prometheusExporterPort).Msg("start the HTTP prometheus metrics exporter; you can retrieve metrics by 'GET /metrics'")
-			internal.Logger.Err(http.ListenAndServe(fmt.Sprintf(":%d", prometheusExporterPort), nil)).Send()
+			internal.Logger.Err(srv.ListenAndServe()).Send()
 		}()
 		grpcPrometheusMetricsRegister = metrics.NewPrometheusMetricsRegister()
 	}
 
 	s := grpc.Server{
-		Port: uint16(port),
+		Port:           uint16(port),
 		UnixSocketPath: unixSocketPath,
 		IPRouter: func() routes.IPRouter {
 			r := routes.IPRouterFrom(ipRoutingPolicyName)

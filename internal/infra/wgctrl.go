@@ -103,13 +103,16 @@ func (w *WGCtrl) UpdatePrivateKey(ctx context.Context, deviceName string, device
 		Peers: func() []wgtypes.PeerConfig {
 			peerConfigs := make([]wgtypes.PeerConfig, len(device.Peers))
 			for i, peer := range device.Peers {
+				psk := peer.PresharedKey
+				keepaliveInterval := peer.PersistentKeepaliveInterval
+
 				peerConfigs[i] = wgtypes.PeerConfig{
 					PublicKey:                   peer.PublicKey,
 					Remove:                      false,
 					UpdateOnly:                  false,
-					PresharedKey:                &peer.PresharedKey,
+					PresharedKey:                &psk,
 					Endpoint:                    peer.Endpoint,
-					PersistentKeepaliveInterval: &peer.PersistentKeepaliveInterval,
+					PersistentKeepaliveInterval: &keepaliveInterval,
 					ReplaceAllowedIPs:           true,
 					AllowedIPs:                  peer.AllowedIPs,
 				}
