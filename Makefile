@@ -9,6 +9,8 @@ check-ci: fmt-check test vet sec
 
 proto:
 	docker run -it -v $(shell pwd):/wiregarden -w /wiregarden $(WG_PROTO_GEN_CONTAINER) make _proto
+	(cd ./ext/lib/java/ && make gen)
+	(cd ./ext/lib/javascript/ && npm run gen)
 
 _proto:
 	protoc \

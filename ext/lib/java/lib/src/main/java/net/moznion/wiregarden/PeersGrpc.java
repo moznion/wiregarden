@@ -5,13 +5,14 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
 /**
  */
 @javax.annotation.Generated(
-    value = "by gRPC proto compiler (version 1.38.0)",
+    value = "by gRPC proto compiler (version 1.60.1)",
     comments = "Source: protos/peers.proto")
+@io.grpc.stub.annotations.GrpcGenerated
 public final class PeersGrpc {
 
   private PeersGrpc() {}
 
-  public static final String SERVICE_NAME = "Peers";
+  public static final java.lang.String SERVICE_NAME = "Peers";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<net.moznion.wiregarden.PeersProto.GetPeersRequest,
@@ -153,59 +154,46 @@ public final class PeersGrpc {
 
   /**
    */
-  public static abstract class PeersImplBase implements io.grpc.BindableService {
+  public interface AsyncService {
 
     /**
      */
-    public void getPeers(net.moznion.wiregarden.PeersProto.GetPeersRequest request,
+    default void getPeers(net.moznion.wiregarden.PeersProto.GetPeersRequest request,
         io.grpc.stub.StreamObserver<net.moznion.wiregarden.PeersProto.GetPeersResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetPeersMethod(), responseObserver);
     }
 
     /**
      */
-    public void registerPeers(net.moznion.wiregarden.PeersProto.RegisterPeersRequest request,
+    default void registerPeers(net.moznion.wiregarden.PeersProto.RegisterPeersRequest request,
         io.grpc.stub.StreamObserver<net.moznion.wiregarden.PeersProto.RegisterPeersResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRegisterPeersMethod(), responseObserver);
     }
 
     /**
      */
-    public void deletePeers(net.moznion.wiregarden.PeersProto.DeletePeersRequest request,
+    default void deletePeers(net.moznion.wiregarden.PeersProto.DeletePeersRequest request,
         io.grpc.stub.StreamObserver<net.moznion.wiregarden.PeersProto.DeletePeersResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeletePeersMethod(), responseObserver);
-    }
-
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-            getGetPeersMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                net.moznion.wiregarden.PeersProto.GetPeersRequest,
-                net.moznion.wiregarden.PeersProto.GetPeersResponse>(
-                  this, METHODID_GET_PEERS)))
-          .addMethod(
-            getRegisterPeersMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                net.moznion.wiregarden.PeersProto.RegisterPeersRequest,
-                net.moznion.wiregarden.PeersProto.RegisterPeersResponse>(
-                  this, METHODID_REGISTER_PEERS)))
-          .addMethod(
-            getDeletePeersMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                net.moznion.wiregarden.PeersProto.DeletePeersRequest,
-                net.moznion.wiregarden.PeersProto.DeletePeersResponse>(
-                  this, METHODID_DELETE_PEERS)))
-          .build();
     }
   }
 
   /**
+   * Base class for the server implementation of the service Peers.
    */
-  public static final class PeersStub extends io.grpc.stub.AbstractAsyncStub<PeersStub> {
+  public static abstract class PeersImplBase
+      implements io.grpc.BindableService, AsyncService {
+
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+      return PeersGrpc.bindService(this);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do asynchronous rpc calls to service Peers.
+   */
+  public static final class PeersStub
+      extends io.grpc.stub.AbstractAsyncStub<PeersStub> {
     private PeersStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -243,8 +231,10 @@ public final class PeersGrpc {
   }
 
   /**
+   * A stub to allow clients to do synchronous rpc calls to service Peers.
    */
-  public static final class PeersBlockingStub extends io.grpc.stub.AbstractBlockingStub<PeersBlockingStub> {
+  public static final class PeersBlockingStub
+      extends io.grpc.stub.AbstractBlockingStub<PeersBlockingStub> {
     private PeersBlockingStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -279,8 +269,10 @@ public final class PeersGrpc {
   }
 
   /**
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service Peers.
    */
-  public static final class PeersFutureStub extends io.grpc.stub.AbstractFutureStub<PeersFutureStub> {
+  public static final class PeersFutureStub
+      extends io.grpc.stub.AbstractFutureStub<PeersFutureStub> {
     private PeersFutureStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -326,10 +318,10 @@ public final class PeersGrpc {
       io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final PeersImplBase serviceImpl;
+    private final AsyncService serviceImpl;
     private final int methodId;
 
-    MethodHandlers(PeersImplBase serviceImpl, int methodId) {
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -366,6 +358,32 @@ public final class PeersGrpc {
     }
   }
 
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getGetPeersMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              net.moznion.wiregarden.PeersProto.GetPeersRequest,
+              net.moznion.wiregarden.PeersProto.GetPeersResponse>(
+                service, METHODID_GET_PEERS)))
+        .addMethod(
+          getRegisterPeersMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              net.moznion.wiregarden.PeersProto.RegisterPeersRequest,
+              net.moznion.wiregarden.PeersProto.RegisterPeersResponse>(
+                service, METHODID_REGISTER_PEERS)))
+        .addMethod(
+          getDeletePeersMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              net.moznion.wiregarden.PeersProto.DeletePeersRequest,
+              net.moznion.wiregarden.PeersProto.DeletePeersResponse>(
+                service, METHODID_DELETE_PEERS)))
+        .build();
+  }
+
   private static abstract class PeersBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
     PeersBaseDescriptorSupplier() {}
@@ -389,9 +407,9 @@ public final class PeersGrpc {
   private static final class PeersMethodDescriptorSupplier
       extends PeersBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    PeersMethodDescriptorSupplier(String methodName) {
+    PeersMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 

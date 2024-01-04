@@ -57,6 +57,8 @@ public final class PeersProto {
     }
 
     /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -64,6 +66,10 @@ public final class PeersProto {
       return forNumber(value);
     }
 
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
     public static UDPNetworkType forNumber(int value) {
       switch (value) {
         case 0: return udp;
@@ -87,6 +93,10 @@ public final class PeersProto {
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
       return getDescriptor().getValues().get(ordinal());
     }
     public final com.google.protobuf.Descriptors.EnumDescriptor
@@ -127,29 +137,37 @@ public final class PeersProto {
 
     /**
      * <code>string device_name = 1;</code>
+     * @return The deviceName.
      */
     java.lang.String getDeviceName();
     /**
      * <code>string device_name = 1;</code>
+     * @return The bytes for deviceName.
      */
     com.google.protobuf.ByteString
         getDeviceNameBytes();
 
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @return A list containing the filterPublicKeys.
      */
     java.util.List<java.lang.String>
         getFilterPublicKeysList();
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @return The count of filterPublicKeys.
      */
     int getFilterPublicKeysCount();
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @param index The index of the element to return.
+     * @return The filterPublicKeys at the given index.
      */
     java.lang.String getFilterPublicKeys(int index);
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the filterPublicKeys at the given index.
      */
     com.google.protobuf.ByteString
         getFilterPublicKeysBytes(int index);
@@ -157,7 +175,7 @@ public final class PeersProto {
   /**
    * Protobuf type {@code GetPeersRequest}
    */
-  public  static final class GetPeersRequest extends
+  public static final class GetPeersRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:GetPeersRequest)
       GetPeersRequestOrBuilder {
@@ -169,6 +187,13 @@ public final class PeersProto {
     private GetPeersRequest() {
       deviceName_ = "";
       filterPublicKeys_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new GetPeersRequest();
     }
 
     @java.lang.Override
@@ -203,15 +228,15 @@ public final class PeersProto {
             }
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 filterPublicKeys_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000002;
+                mutable_bitField0_ |= 0x00000001;
               }
               filterPublicKeys_.add(s);
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -225,7 +250,7 @@ public final class PeersProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           filterPublicKeys_ = filterPublicKeys_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
@@ -245,12 +270,13 @@ public final class PeersProto {
               net.moznion.wiregarden.PeersProto.GetPeersRequest.class, net.moznion.wiregarden.PeersProto.GetPeersRequest.Builder.class);
     }
 
-    private int bitField0_;
     public static final int DEVICE_NAME_FIELD_NUMBER = 1;
     private volatile java.lang.Object deviceName_;
     /**
      * <code>string device_name = 1;</code>
+     * @return The deviceName.
      */
+    @java.lang.Override
     public java.lang.String getDeviceName() {
       java.lang.Object ref = deviceName_;
       if (ref instanceof java.lang.String) {
@@ -265,7 +291,9 @@ public final class PeersProto {
     }
     /**
      * <code>string device_name = 1;</code>
+     * @return The bytes for deviceName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getDeviceNameBytes() {
       java.lang.Object ref = deviceName_;
@@ -284,6 +312,7 @@ public final class PeersProto {
     private com.google.protobuf.LazyStringList filterPublicKeys_;
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @return A list containing the filterPublicKeys.
      */
     public com.google.protobuf.ProtocolStringList
         getFilterPublicKeysList() {
@@ -291,18 +320,23 @@ public final class PeersProto {
     }
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @return The count of filterPublicKeys.
      */
     public int getFilterPublicKeysCount() {
       return filterPublicKeys_.size();
     }
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @param index The index of the element to return.
+     * @return The filterPublicKeys at the given index.
      */
     public java.lang.String getFilterPublicKeys(int index) {
       return filterPublicKeys_.get(index);
     }
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the filterPublicKeys at the given index.
      */
     public com.google.protobuf.ByteString
         getFilterPublicKeysBytes(int index) {
@@ -364,13 +398,12 @@ public final class PeersProto {
       }
       net.moznion.wiregarden.PeersProto.GetPeersRequest other = (net.moznion.wiregarden.PeersProto.GetPeersRequest) obj;
 
-      boolean result = true;
-      result = result && getDeviceName()
-          .equals(other.getDeviceName());
-      result = result && getFilterPublicKeysList()
-          .equals(other.getFilterPublicKeysList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getDeviceName()
+          .equals(other.getDeviceName())) return false;
+      if (!getFilterPublicKeysList()
+          .equals(other.getFilterPublicKeysList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -522,7 +555,7 @@ public final class PeersProto {
         deviceName_ = "";
 
         filterPublicKeys_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
 
@@ -550,49 +583,47 @@ public final class PeersProto {
       public net.moznion.wiregarden.PeersProto.GetPeersRequest buildPartial() {
         net.moznion.wiregarden.PeersProto.GetPeersRequest result = new net.moznion.wiregarden.PeersProto.GetPeersRequest(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
         result.deviceName_ = deviceName_;
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           filterPublicKeys_ = filterPublicKeys_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.filterPublicKeys_ = filterPublicKeys_;
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -613,7 +644,7 @@ public final class PeersProto {
         if (!other.filterPublicKeys_.isEmpty()) {
           if (filterPublicKeys_.isEmpty()) {
             filterPublicKeys_ = other.filterPublicKeys_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000001);
           } else {
             ensureFilterPublicKeysIsMutable();
             filterPublicKeys_.addAll(other.filterPublicKeys_);
@@ -653,6 +684,7 @@ public final class PeersProto {
       private java.lang.Object deviceName_ = "";
       /**
        * <code>string device_name = 1;</code>
+       * @return The deviceName.
        */
       public java.lang.String getDeviceName() {
         java.lang.Object ref = deviceName_;
@@ -668,6 +700,7 @@ public final class PeersProto {
       }
       /**
        * <code>string device_name = 1;</code>
+       * @return The bytes for deviceName.
        */
       public com.google.protobuf.ByteString
           getDeviceNameBytes() {
@@ -684,6 +717,8 @@ public final class PeersProto {
       }
       /**
        * <code>string device_name = 1;</code>
+       * @param value The deviceName to set.
+       * @return This builder for chaining.
        */
       public Builder setDeviceName(
           java.lang.String value) {
@@ -697,6 +732,7 @@ public final class PeersProto {
       }
       /**
        * <code>string device_name = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearDeviceName() {
         
@@ -706,6 +742,8 @@ public final class PeersProto {
       }
       /**
        * <code>string device_name = 1;</code>
+       * @param value The bytes for deviceName to set.
+       * @return This builder for chaining.
        */
       public Builder setDeviceNameBytes(
           com.google.protobuf.ByteString value) {
@@ -721,13 +759,14 @@ public final class PeersProto {
 
       private com.google.protobuf.LazyStringList filterPublicKeys_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureFilterPublicKeysIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           filterPublicKeys_ = new com.google.protobuf.LazyStringArrayList(filterPublicKeys_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000001;
          }
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @return A list containing the filterPublicKeys.
        */
       public com.google.protobuf.ProtocolStringList
           getFilterPublicKeysList() {
@@ -735,18 +774,23 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @return The count of filterPublicKeys.
        */
       public int getFilterPublicKeysCount() {
         return filterPublicKeys_.size();
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @param index The index of the element to return.
+       * @return The filterPublicKeys at the given index.
        */
       public java.lang.String getFilterPublicKeys(int index) {
         return filterPublicKeys_.get(index);
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @param index The index of the value to return.
+       * @return The bytes of the filterPublicKeys at the given index.
        */
       public com.google.protobuf.ByteString
           getFilterPublicKeysBytes(int index) {
@@ -754,6 +798,9 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @param index The index to set the value at.
+       * @param value The filterPublicKeys to set.
+       * @return This builder for chaining.
        */
       public Builder setFilterPublicKeys(
           int index, java.lang.String value) {
@@ -767,6 +814,8 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @param value The filterPublicKeys to add.
+       * @return This builder for chaining.
        */
       public Builder addFilterPublicKeys(
           java.lang.String value) {
@@ -780,6 +829,8 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @param values The filterPublicKeys to add.
+       * @return This builder for chaining.
        */
       public Builder addAllFilterPublicKeys(
           java.lang.Iterable<java.lang.String> values) {
@@ -791,15 +842,18 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearFilterPublicKeys() {
         filterPublicKeys_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @param value The bytes of the filterPublicKeys to add.
+       * @return This builder for chaining.
        */
       public Builder addFilterPublicKeysBytes(
           com.google.protobuf.ByteString value) {
@@ -815,7 +869,7 @@ public final class PeersProto {
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -896,7 +950,7 @@ public final class PeersProto {
   /**
    * Protobuf type {@code GetPeersResponse}
    */
-  public  static final class GetPeersResponse extends
+  public static final class GetPeersResponse extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:GetPeersResponse)
       GetPeersResponseOrBuilder {
@@ -907,6 +961,13 @@ public final class PeersProto {
     }
     private GetPeersResponse() {
       peers_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new GetPeersResponse();
     }
 
     @java.lang.Override
@@ -934,7 +995,7 @@ public final class PeersProto {
               done = true;
               break;
             case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 peers_ = new java.util.ArrayList<net.moznion.wiregarden.PeersProto.Peer>();
                 mutable_bitField0_ |= 0x00000001;
               }
@@ -943,7 +1004,7 @@ public final class PeersProto {
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -957,7 +1018,7 @@ public final class PeersProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           peers_ = java.util.Collections.unmodifiableList(peers_);
         }
         this.unknownFields = unknownFields.build();
@@ -982,12 +1043,14 @@ public final class PeersProto {
     /**
      * <code>repeated .Peer peers = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<net.moznion.wiregarden.PeersProto.Peer> getPeersList() {
       return peers_;
     }
     /**
      * <code>repeated .Peer peers = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends net.moznion.wiregarden.PeersProto.PeerOrBuilder> 
         getPeersOrBuilderList() {
       return peers_;
@@ -995,18 +1058,21 @@ public final class PeersProto {
     /**
      * <code>repeated .Peer peers = 1;</code>
      */
+    @java.lang.Override
     public int getPeersCount() {
       return peers_.size();
     }
     /**
      * <code>repeated .Peer peers = 1;</code>
      */
+    @java.lang.Override
     public net.moznion.wiregarden.PeersProto.Peer getPeers(int index) {
       return peers_.get(index);
     }
     /**
      * <code>repeated .Peer peers = 1;</code>
      */
+    @java.lang.Override
     public net.moznion.wiregarden.PeersProto.PeerOrBuilder getPeersOrBuilder(
         int index) {
       return peers_.get(index);
@@ -1057,11 +1123,10 @@ public final class PeersProto {
       }
       net.moznion.wiregarden.PeersProto.GetPeersResponse other = (net.moznion.wiregarden.PeersProto.GetPeersResponse) obj;
 
-      boolean result = true;
-      result = result && getPeersList()
-          .equals(other.getPeersList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getPeersList()
+          .equals(other.getPeersList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -1243,7 +1308,7 @@ public final class PeersProto {
         net.moznion.wiregarden.PeersProto.GetPeersResponse result = new net.moznion.wiregarden.PeersProto.GetPeersResponse(this);
         int from_bitField0_ = bitField0_;
         if (peersBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             peers_ = java.util.Collections.unmodifiableList(peers_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -1257,35 +1322,35 @@ public final class PeersProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -1358,7 +1423,7 @@ public final class PeersProto {
       private java.util.List<net.moznion.wiregarden.PeersProto.Peer> peers_ =
         java.util.Collections.emptyList();
       private void ensurePeersIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           peers_ = new java.util.ArrayList<net.moznion.wiregarden.PeersProto.Peer>(peers_);
           bitField0_ |= 0x00000001;
          }
@@ -1587,7 +1652,7 @@ public final class PeersProto {
           peersBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               net.moznion.wiregarden.PeersProto.Peer, net.moznion.wiregarden.PeersProto.Peer.Builder, net.moznion.wiregarden.PeersProto.PeerOrBuilder>(
                   peers_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           peers_ = null;
@@ -1597,7 +1662,7 @@ public final class PeersProto {
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -1653,10 +1718,12 @@ public final class PeersProto {
 
     /**
      * <code>string device_name = 1;</code>
+     * @return The deviceName.
      */
     java.lang.String getDeviceName();
     /**
      * <code>string device_name = 1;</code>
+     * @return The bytes for deviceName.
      */
     com.google.protobuf.ByteString
         getDeviceNameBytes();
@@ -1687,13 +1754,14 @@ public final class PeersProto {
 
     /**
      * <code>bytes hooks_payload = 3;</code>
+     * @return The hooksPayload.
      */
     com.google.protobuf.ByteString getHooksPayload();
   }
   /**
    * Protobuf type {@code RegisterPeersRequest}
    */
-  public  static final class RegisterPeersRequest extends
+  public static final class RegisterPeersRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:RegisterPeersRequest)
       RegisterPeersRequestOrBuilder {
@@ -1706,6 +1774,13 @@ public final class PeersProto {
       deviceName_ = "";
       peers_ = java.util.Collections.emptyList();
       hooksPayload_ = com.google.protobuf.ByteString.EMPTY;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new RegisterPeersRequest();
     }
 
     @java.lang.Override
@@ -1739,9 +1814,9 @@ public final class PeersProto {
               break;
             }
             case 18: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 peers_ = new java.util.ArrayList<net.moznion.wiregarden.PeersProto.Peer>();
-                mutable_bitField0_ |= 0x00000002;
+                mutable_bitField0_ |= 0x00000001;
               }
               peers_.add(
                   input.readMessage(net.moznion.wiregarden.PeersProto.Peer.parser(), extensionRegistry));
@@ -1753,7 +1828,7 @@ public final class PeersProto {
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -1767,7 +1842,7 @@ public final class PeersProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           peers_ = java.util.Collections.unmodifiableList(peers_);
         }
         this.unknownFields = unknownFields.build();
@@ -1787,12 +1862,13 @@ public final class PeersProto {
               net.moznion.wiregarden.PeersProto.RegisterPeersRequest.class, net.moznion.wiregarden.PeersProto.RegisterPeersRequest.Builder.class);
     }
 
-    private int bitField0_;
     public static final int DEVICE_NAME_FIELD_NUMBER = 1;
     private volatile java.lang.Object deviceName_;
     /**
      * <code>string device_name = 1;</code>
+     * @return The deviceName.
      */
+    @java.lang.Override
     public java.lang.String getDeviceName() {
       java.lang.Object ref = deviceName_;
       if (ref instanceof java.lang.String) {
@@ -1807,7 +1883,9 @@ public final class PeersProto {
     }
     /**
      * <code>string device_name = 1;</code>
+     * @return The bytes for deviceName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getDeviceNameBytes() {
       java.lang.Object ref = deviceName_;
@@ -1827,12 +1905,14 @@ public final class PeersProto {
     /**
      * <code>repeated .Peer peers = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<net.moznion.wiregarden.PeersProto.Peer> getPeersList() {
       return peers_;
     }
     /**
      * <code>repeated .Peer peers = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends net.moznion.wiregarden.PeersProto.PeerOrBuilder> 
         getPeersOrBuilderList() {
       return peers_;
@@ -1840,18 +1920,21 @@ public final class PeersProto {
     /**
      * <code>repeated .Peer peers = 2;</code>
      */
+    @java.lang.Override
     public int getPeersCount() {
       return peers_.size();
     }
     /**
      * <code>repeated .Peer peers = 2;</code>
      */
+    @java.lang.Override
     public net.moznion.wiregarden.PeersProto.Peer getPeers(int index) {
       return peers_.get(index);
     }
     /**
      * <code>repeated .Peer peers = 2;</code>
      */
+    @java.lang.Override
     public net.moznion.wiregarden.PeersProto.PeerOrBuilder getPeersOrBuilder(
         int index) {
       return peers_.get(index);
@@ -1861,7 +1944,9 @@ public final class PeersProto {
     private com.google.protobuf.ByteString hooksPayload_;
     /**
      * <code>bytes hooks_payload = 3;</code>
+     * @return The hooksPayload.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getHooksPayload() {
       return hooksPayload_;
     }
@@ -1924,15 +2009,14 @@ public final class PeersProto {
       }
       net.moznion.wiregarden.PeersProto.RegisterPeersRequest other = (net.moznion.wiregarden.PeersProto.RegisterPeersRequest) obj;
 
-      boolean result = true;
-      result = result && getDeviceName()
-          .equals(other.getDeviceName());
-      result = result && getPeersList()
-          .equals(other.getPeersList());
-      result = result && getHooksPayload()
-          .equals(other.getHooksPayload());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getDeviceName()
+          .equals(other.getDeviceName())) return false;
+      if (!getPeersList()
+          .equals(other.getPeersList())) return false;
+      if (!getHooksPayload()
+          .equals(other.getHooksPayload())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -2088,7 +2172,7 @@ public final class PeersProto {
 
         if (peersBuilder_ == null) {
           peers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
           peersBuilder_.clear();
         }
@@ -2121,54 +2205,52 @@ public final class PeersProto {
       public net.moznion.wiregarden.PeersProto.RegisterPeersRequest buildPartial() {
         net.moznion.wiregarden.PeersProto.RegisterPeersRequest result = new net.moznion.wiregarden.PeersProto.RegisterPeersRequest(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
         result.deviceName_ = deviceName_;
         if (peersBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             peers_ = java.util.Collections.unmodifiableList(peers_);
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000001);
           }
           result.peers_ = peers_;
         } else {
           result.peers_ = peersBuilder_.build();
         }
         result.hooksPayload_ = hooksPayload_;
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -2190,7 +2272,7 @@ public final class PeersProto {
           if (!other.peers_.isEmpty()) {
             if (peers_.isEmpty()) {
               peers_ = other.peers_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000001);
             } else {
               ensurePeersIsMutable();
               peers_.addAll(other.peers_);
@@ -2203,7 +2285,7 @@ public final class PeersProto {
               peersBuilder_.dispose();
               peersBuilder_ = null;
               peers_ = other.peers_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000001);
               peersBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getPeersFieldBuilder() : null;
@@ -2248,6 +2330,7 @@ public final class PeersProto {
       private java.lang.Object deviceName_ = "";
       /**
        * <code>string device_name = 1;</code>
+       * @return The deviceName.
        */
       public java.lang.String getDeviceName() {
         java.lang.Object ref = deviceName_;
@@ -2263,6 +2346,7 @@ public final class PeersProto {
       }
       /**
        * <code>string device_name = 1;</code>
+       * @return The bytes for deviceName.
        */
       public com.google.protobuf.ByteString
           getDeviceNameBytes() {
@@ -2279,6 +2363,8 @@ public final class PeersProto {
       }
       /**
        * <code>string device_name = 1;</code>
+       * @param value The deviceName to set.
+       * @return This builder for chaining.
        */
       public Builder setDeviceName(
           java.lang.String value) {
@@ -2292,6 +2378,7 @@ public final class PeersProto {
       }
       /**
        * <code>string device_name = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearDeviceName() {
         
@@ -2301,6 +2388,8 @@ public final class PeersProto {
       }
       /**
        * <code>string device_name = 1;</code>
+       * @param value The bytes for deviceName to set.
+       * @return This builder for chaining.
        */
       public Builder setDeviceNameBytes(
           com.google.protobuf.ByteString value) {
@@ -2317,9 +2406,9 @@ public final class PeersProto {
       private java.util.List<net.moznion.wiregarden.PeersProto.Peer> peers_ =
         java.util.Collections.emptyList();
       private void ensurePeersIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           peers_ = new java.util.ArrayList<net.moznion.wiregarden.PeersProto.Peer>(peers_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000001;
          }
       }
 
@@ -2469,7 +2558,7 @@ public final class PeersProto {
       public Builder clearPeers() {
         if (peersBuilder_ == null) {
           peers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
           peersBuilder_.clear();
@@ -2546,7 +2635,7 @@ public final class PeersProto {
           peersBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               net.moznion.wiregarden.PeersProto.Peer, net.moznion.wiregarden.PeersProto.Peer.Builder, net.moznion.wiregarden.PeersProto.PeerOrBuilder>(
                   peers_,
-                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           peers_ = null;
@@ -2557,12 +2646,16 @@ public final class PeersProto {
       private com.google.protobuf.ByteString hooksPayload_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>bytes hooks_payload = 3;</code>
+       * @return The hooksPayload.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getHooksPayload() {
         return hooksPayload_;
       }
       /**
        * <code>bytes hooks_payload = 3;</code>
+       * @param value The hooksPayload to set.
+       * @return This builder for chaining.
        */
       public Builder setHooksPayload(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -2575,6 +2668,7 @@ public final class PeersProto {
       }
       /**
        * <code>bytes hooks_payload = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearHooksPayload() {
         
@@ -2585,7 +2679,7 @@ public final class PeersProto {
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -2642,7 +2736,7 @@ public final class PeersProto {
   /**
    * Protobuf type {@code RegisterPeersResponse}
    */
-  public  static final class RegisterPeersResponse extends
+  public static final class RegisterPeersResponse extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:RegisterPeersResponse)
       RegisterPeersResponseOrBuilder {
@@ -2652,6 +2746,13 @@ public final class PeersProto {
       super(builder);
     }
     private RegisterPeersResponse() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new RegisterPeersResponse();
     }
 
     @java.lang.Override
@@ -2678,7 +2779,7 @@ public final class PeersProto {
               done = true;
               break;
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -2747,9 +2848,8 @@ public final class PeersProto {
       }
       net.moznion.wiregarden.PeersProto.RegisterPeersResponse other = (net.moznion.wiregarden.PeersProto.RegisterPeersResponse) obj;
 
-      boolean result = true;
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -2924,35 +3024,35 @@ public final class PeersProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -2997,7 +3097,7 @@ public final class PeersProto {
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -3053,42 +3153,51 @@ public final class PeersProto {
 
     /**
      * <code>string device_name = 1;</code>
+     * @return The deviceName.
      */
     java.lang.String getDeviceName();
     /**
      * <code>string device_name = 1;</code>
+     * @return The bytes for deviceName.
      */
     com.google.protobuf.ByteString
         getDeviceNameBytes();
 
     /**
      * <code>repeated string public_keys = 2;</code>
+     * @return A list containing the publicKeys.
      */
     java.util.List<java.lang.String>
         getPublicKeysList();
     /**
      * <code>repeated string public_keys = 2;</code>
+     * @return The count of publicKeys.
      */
     int getPublicKeysCount();
     /**
      * <code>repeated string public_keys = 2;</code>
+     * @param index The index of the element to return.
+     * @return The publicKeys at the given index.
      */
     java.lang.String getPublicKeys(int index);
     /**
      * <code>repeated string public_keys = 2;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the publicKeys at the given index.
      */
     com.google.protobuf.ByteString
         getPublicKeysBytes(int index);
 
     /**
      * <code>bytes hooks_payload = 3;</code>
+     * @return The hooksPayload.
      */
     com.google.protobuf.ByteString getHooksPayload();
   }
   /**
    * Protobuf type {@code DeletePeersRequest}
    */
-  public  static final class DeletePeersRequest extends
+  public static final class DeletePeersRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:DeletePeersRequest)
       DeletePeersRequestOrBuilder {
@@ -3101,6 +3210,13 @@ public final class PeersProto {
       deviceName_ = "";
       publicKeys_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       hooksPayload_ = com.google.protobuf.ByteString.EMPTY;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new DeletePeersRequest();
     }
 
     @java.lang.Override
@@ -3135,9 +3251,9 @@ public final class PeersProto {
             }
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 publicKeys_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000002;
+                mutable_bitField0_ |= 0x00000001;
               }
               publicKeys_.add(s);
               break;
@@ -3148,7 +3264,7 @@ public final class PeersProto {
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -3162,7 +3278,7 @@ public final class PeersProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           publicKeys_ = publicKeys_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
@@ -3182,12 +3298,13 @@ public final class PeersProto {
               net.moznion.wiregarden.PeersProto.DeletePeersRequest.class, net.moznion.wiregarden.PeersProto.DeletePeersRequest.Builder.class);
     }
 
-    private int bitField0_;
     public static final int DEVICE_NAME_FIELD_NUMBER = 1;
     private volatile java.lang.Object deviceName_;
     /**
      * <code>string device_name = 1;</code>
+     * @return The deviceName.
      */
+    @java.lang.Override
     public java.lang.String getDeviceName() {
       java.lang.Object ref = deviceName_;
       if (ref instanceof java.lang.String) {
@@ -3202,7 +3319,9 @@ public final class PeersProto {
     }
     /**
      * <code>string device_name = 1;</code>
+     * @return The bytes for deviceName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getDeviceNameBytes() {
       java.lang.Object ref = deviceName_;
@@ -3221,6 +3340,7 @@ public final class PeersProto {
     private com.google.protobuf.LazyStringList publicKeys_;
     /**
      * <code>repeated string public_keys = 2;</code>
+     * @return A list containing the publicKeys.
      */
     public com.google.protobuf.ProtocolStringList
         getPublicKeysList() {
@@ -3228,18 +3348,23 @@ public final class PeersProto {
     }
     /**
      * <code>repeated string public_keys = 2;</code>
+     * @return The count of publicKeys.
      */
     public int getPublicKeysCount() {
       return publicKeys_.size();
     }
     /**
      * <code>repeated string public_keys = 2;</code>
+     * @param index The index of the element to return.
+     * @return The publicKeys at the given index.
      */
     public java.lang.String getPublicKeys(int index) {
       return publicKeys_.get(index);
     }
     /**
      * <code>repeated string public_keys = 2;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the publicKeys at the given index.
      */
     public com.google.protobuf.ByteString
         getPublicKeysBytes(int index) {
@@ -3250,7 +3375,9 @@ public final class PeersProto {
     private com.google.protobuf.ByteString hooksPayload_;
     /**
      * <code>bytes hooks_payload = 3;</code>
+     * @return The hooksPayload.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getHooksPayload() {
       return hooksPayload_;
     }
@@ -3317,15 +3444,14 @@ public final class PeersProto {
       }
       net.moznion.wiregarden.PeersProto.DeletePeersRequest other = (net.moznion.wiregarden.PeersProto.DeletePeersRequest) obj;
 
-      boolean result = true;
-      result = result && getDeviceName()
-          .equals(other.getDeviceName());
-      result = result && getPublicKeysList()
-          .equals(other.getPublicKeysList());
-      result = result && getHooksPayload()
-          .equals(other.getHooksPayload());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getDeviceName()
+          .equals(other.getDeviceName())) return false;
+      if (!getPublicKeysList()
+          .equals(other.getPublicKeysList())) return false;
+      if (!getHooksPayload()
+          .equals(other.getHooksPayload())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -3479,7 +3605,7 @@ public final class PeersProto {
         deviceName_ = "";
 
         publicKeys_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         hooksPayload_ = com.google.protobuf.ByteString.EMPTY;
 
         return this;
@@ -3509,50 +3635,48 @@ public final class PeersProto {
       public net.moznion.wiregarden.PeersProto.DeletePeersRequest buildPartial() {
         net.moznion.wiregarden.PeersProto.DeletePeersRequest result = new net.moznion.wiregarden.PeersProto.DeletePeersRequest(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
         result.deviceName_ = deviceName_;
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           publicKeys_ = publicKeys_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.publicKeys_ = publicKeys_;
         result.hooksPayload_ = hooksPayload_;
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -3573,7 +3697,7 @@ public final class PeersProto {
         if (!other.publicKeys_.isEmpty()) {
           if (publicKeys_.isEmpty()) {
             publicKeys_ = other.publicKeys_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000001);
           } else {
             ensurePublicKeysIsMutable();
             publicKeys_.addAll(other.publicKeys_);
@@ -3616,6 +3740,7 @@ public final class PeersProto {
       private java.lang.Object deviceName_ = "";
       /**
        * <code>string device_name = 1;</code>
+       * @return The deviceName.
        */
       public java.lang.String getDeviceName() {
         java.lang.Object ref = deviceName_;
@@ -3631,6 +3756,7 @@ public final class PeersProto {
       }
       /**
        * <code>string device_name = 1;</code>
+       * @return The bytes for deviceName.
        */
       public com.google.protobuf.ByteString
           getDeviceNameBytes() {
@@ -3647,6 +3773,8 @@ public final class PeersProto {
       }
       /**
        * <code>string device_name = 1;</code>
+       * @param value The deviceName to set.
+       * @return This builder for chaining.
        */
       public Builder setDeviceName(
           java.lang.String value) {
@@ -3660,6 +3788,7 @@ public final class PeersProto {
       }
       /**
        * <code>string device_name = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearDeviceName() {
         
@@ -3669,6 +3798,8 @@ public final class PeersProto {
       }
       /**
        * <code>string device_name = 1;</code>
+       * @param value The bytes for deviceName to set.
+       * @return This builder for chaining.
        */
       public Builder setDeviceNameBytes(
           com.google.protobuf.ByteString value) {
@@ -3684,13 +3815,14 @@ public final class PeersProto {
 
       private com.google.protobuf.LazyStringList publicKeys_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensurePublicKeysIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           publicKeys_ = new com.google.protobuf.LazyStringArrayList(publicKeys_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000001;
          }
       }
       /**
        * <code>repeated string public_keys = 2;</code>
+       * @return A list containing the publicKeys.
        */
       public com.google.protobuf.ProtocolStringList
           getPublicKeysList() {
@@ -3698,18 +3830,23 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string public_keys = 2;</code>
+       * @return The count of publicKeys.
        */
       public int getPublicKeysCount() {
         return publicKeys_.size();
       }
       /**
        * <code>repeated string public_keys = 2;</code>
+       * @param index The index of the element to return.
+       * @return The publicKeys at the given index.
        */
       public java.lang.String getPublicKeys(int index) {
         return publicKeys_.get(index);
       }
       /**
        * <code>repeated string public_keys = 2;</code>
+       * @param index The index of the value to return.
+       * @return The bytes of the publicKeys at the given index.
        */
       public com.google.protobuf.ByteString
           getPublicKeysBytes(int index) {
@@ -3717,6 +3854,9 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string public_keys = 2;</code>
+       * @param index The index to set the value at.
+       * @param value The publicKeys to set.
+       * @return This builder for chaining.
        */
       public Builder setPublicKeys(
           int index, java.lang.String value) {
@@ -3730,6 +3870,8 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string public_keys = 2;</code>
+       * @param value The publicKeys to add.
+       * @return This builder for chaining.
        */
       public Builder addPublicKeys(
           java.lang.String value) {
@@ -3743,6 +3885,8 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string public_keys = 2;</code>
+       * @param values The publicKeys to add.
+       * @return This builder for chaining.
        */
       public Builder addAllPublicKeys(
           java.lang.Iterable<java.lang.String> values) {
@@ -3754,15 +3898,18 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string public_keys = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearPublicKeys() {
         publicKeys_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
       /**
        * <code>repeated string public_keys = 2;</code>
+       * @param value The bytes of the publicKeys to add.
+       * @return This builder for chaining.
        */
       public Builder addPublicKeysBytes(
           com.google.protobuf.ByteString value) {
@@ -3779,12 +3926,16 @@ public final class PeersProto {
       private com.google.protobuf.ByteString hooksPayload_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>bytes hooks_payload = 3;</code>
+       * @return The hooksPayload.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getHooksPayload() {
         return hooksPayload_;
       }
       /**
        * <code>bytes hooks_payload = 3;</code>
+       * @param value The hooksPayload to set.
+       * @return This builder for chaining.
        */
       public Builder setHooksPayload(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -3797,6 +3948,7 @@ public final class PeersProto {
       }
       /**
        * <code>bytes hooks_payload = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearHooksPayload() {
         
@@ -3807,7 +3959,7 @@ public final class PeersProto {
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -3864,7 +4016,7 @@ public final class PeersProto {
   /**
    * Protobuf type {@code DeletePeersResponse}
    */
-  public  static final class DeletePeersResponse extends
+  public static final class DeletePeersResponse extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:DeletePeersResponse)
       DeletePeersResponseOrBuilder {
@@ -3874,6 +4026,13 @@ public final class PeersProto {
       super(builder);
     }
     private DeletePeersResponse() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new DeletePeersResponse();
     }
 
     @java.lang.Override
@@ -3900,7 +4059,7 @@ public final class PeersProto {
               done = true;
               break;
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -3969,9 +4128,8 @@ public final class PeersProto {
       }
       net.moznion.wiregarden.PeersProto.DeletePeersResponse other = (net.moznion.wiregarden.PeersProto.DeletePeersResponse) obj;
 
-      boolean result = true;
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -4146,35 +4304,35 @@ public final class PeersProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -4219,7 +4377,7 @@ public final class PeersProto {
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -4275,91 +4433,110 @@ public final class PeersProto {
 
     /**
      * <code>string public_key = 1;</code>
+     * @return The publicKey.
      */
     java.lang.String getPublicKey();
     /**
      * <code>string public_key = 1;</code>
+     * @return The bytes for publicKey.
      */
     com.google.protobuf.ByteString
         getPublicKeyBytes();
 
     /**
      * <code>repeated string allowed_ips = 2;</code>
+     * @return A list containing the allowedIps.
      */
     java.util.List<java.lang.String>
         getAllowedIpsList();
     /**
      * <code>repeated string allowed_ips = 2;</code>
+     * @return The count of allowedIps.
      */
     int getAllowedIpsCount();
     /**
      * <code>repeated string allowed_ips = 2;</code>
+     * @param index The index of the element to return.
+     * @return The allowedIps at the given index.
      */
     java.lang.String getAllowedIps(int index);
     /**
      * <code>repeated string allowed_ips = 2;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the allowedIps at the given index.
      */
     com.google.protobuf.ByteString
         getAllowedIpsBytes(int index);
 
     /**
      * <code>.UDPNetworkType endpoint_udp_type = 3;</code>
+     * @return The enum numeric value on the wire for endpointUdpType.
      */
     int getEndpointUdpTypeValue();
     /**
      * <code>.UDPNetworkType endpoint_udp_type = 3;</code>
+     * @return The endpointUdpType.
      */
     net.moznion.wiregarden.PeersProto.UDPNetworkType getEndpointUdpType();
 
     /**
      * <code>string endpoint = 4;</code>
+     * @return The endpoint.
      */
     java.lang.String getEndpoint();
     /**
      * <code>string endpoint = 4;</code>
+     * @return The bytes for endpoint.
      */
     com.google.protobuf.ByteString
         getEndpointBytes();
 
     /**
      * <code>string preshared_key = 5;</code>
+     * @return The presharedKey.
      */
     java.lang.String getPresharedKey();
     /**
      * <code>string preshared_key = 5;</code>
+     * @return The bytes for presharedKey.
      */
     com.google.protobuf.ByteString
         getPresharedKeyBytes();
 
     /**
      * <code>uint32 persistent_keepalive_interval_seconds = 6;</code>
+     * @return The persistentKeepaliveIntervalSeconds.
      */
     int getPersistentKeepaliveIntervalSeconds();
 
     /**
      * <code>uint64 protocol_version = 7;</code>
+     * @return The protocolVersion.
      */
     long getProtocolVersion();
 
     /**
      * <code>int64 receive_bytes = 8;</code>
+     * @return The receiveBytes.
      */
     long getReceiveBytes();
 
     /**
      * <code>int64 transmit_bytes = 9;</code>
+     * @return The transmitBytes.
      */
     long getTransmitBytes();
 
     /**
      * <code>int64 last_handshake_time_unix_sec = 10;</code>
+     * @return The lastHandshakeTimeUnixSec.
      */
     long getLastHandshakeTimeUnixSec();
   }
   /**
    * Protobuf type {@code Peer}
    */
-  public  static final class Peer extends
+  public static final class Peer extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:Peer)
       PeerOrBuilder {
@@ -4374,11 +4551,13 @@ public final class PeersProto {
       endpointUdpType_ = 0;
       endpoint_ = "";
       presharedKey_ = "";
-      persistentKeepaliveIntervalSeconds_ = 0;
-      protocolVersion_ = 0L;
-      receiveBytes_ = 0L;
-      transmitBytes_ = 0L;
-      lastHandshakeTimeUnixSec_ = 0L;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Peer();
     }
 
     @java.lang.Override
@@ -4413,9 +4592,9 @@ public final class PeersProto {
             }
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 allowedIps_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000002;
+                mutable_bitField0_ |= 0x00000001;
               }
               allowedIps_.add(s);
               break;
@@ -4464,7 +4643,7 @@ public final class PeersProto {
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -4478,7 +4657,7 @@ public final class PeersProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           allowedIps_ = allowedIps_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
@@ -4498,12 +4677,13 @@ public final class PeersProto {
               net.moznion.wiregarden.PeersProto.Peer.class, net.moznion.wiregarden.PeersProto.Peer.Builder.class);
     }
 
-    private int bitField0_;
     public static final int PUBLIC_KEY_FIELD_NUMBER = 1;
     private volatile java.lang.Object publicKey_;
     /**
      * <code>string public_key = 1;</code>
+     * @return The publicKey.
      */
+    @java.lang.Override
     public java.lang.String getPublicKey() {
       java.lang.Object ref = publicKey_;
       if (ref instanceof java.lang.String) {
@@ -4518,7 +4698,9 @@ public final class PeersProto {
     }
     /**
      * <code>string public_key = 1;</code>
+     * @return The bytes for publicKey.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getPublicKeyBytes() {
       java.lang.Object ref = publicKey_;
@@ -4537,6 +4719,7 @@ public final class PeersProto {
     private com.google.protobuf.LazyStringList allowedIps_;
     /**
      * <code>repeated string allowed_ips = 2;</code>
+     * @return A list containing the allowedIps.
      */
     public com.google.protobuf.ProtocolStringList
         getAllowedIpsList() {
@@ -4544,18 +4727,23 @@ public final class PeersProto {
     }
     /**
      * <code>repeated string allowed_ips = 2;</code>
+     * @return The count of allowedIps.
      */
     public int getAllowedIpsCount() {
       return allowedIps_.size();
     }
     /**
      * <code>repeated string allowed_ips = 2;</code>
+     * @param index The index of the element to return.
+     * @return The allowedIps at the given index.
      */
     public java.lang.String getAllowedIps(int index) {
       return allowedIps_.get(index);
     }
     /**
      * <code>repeated string allowed_ips = 2;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the allowedIps at the given index.
      */
     public com.google.protobuf.ByteString
         getAllowedIpsBytes(int index) {
@@ -4566,14 +4754,16 @@ public final class PeersProto {
     private int endpointUdpType_;
     /**
      * <code>.UDPNetworkType endpoint_udp_type = 3;</code>
+     * @return The enum numeric value on the wire for endpointUdpType.
      */
-    public int getEndpointUdpTypeValue() {
+    @java.lang.Override public int getEndpointUdpTypeValue() {
       return endpointUdpType_;
     }
     /**
      * <code>.UDPNetworkType endpoint_udp_type = 3;</code>
+     * @return The endpointUdpType.
      */
-    public net.moznion.wiregarden.PeersProto.UDPNetworkType getEndpointUdpType() {
+    @java.lang.Override public net.moznion.wiregarden.PeersProto.UDPNetworkType getEndpointUdpType() {
       @SuppressWarnings("deprecation")
       net.moznion.wiregarden.PeersProto.UDPNetworkType result = net.moznion.wiregarden.PeersProto.UDPNetworkType.valueOf(endpointUdpType_);
       return result == null ? net.moznion.wiregarden.PeersProto.UDPNetworkType.UNRECOGNIZED : result;
@@ -4583,7 +4773,9 @@ public final class PeersProto {
     private volatile java.lang.Object endpoint_;
     /**
      * <code>string endpoint = 4;</code>
+     * @return The endpoint.
      */
+    @java.lang.Override
     public java.lang.String getEndpoint() {
       java.lang.Object ref = endpoint_;
       if (ref instanceof java.lang.String) {
@@ -4598,7 +4790,9 @@ public final class PeersProto {
     }
     /**
      * <code>string endpoint = 4;</code>
+     * @return The bytes for endpoint.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getEndpointBytes() {
       java.lang.Object ref = endpoint_;
@@ -4617,7 +4811,9 @@ public final class PeersProto {
     private volatile java.lang.Object presharedKey_;
     /**
      * <code>string preshared_key = 5;</code>
+     * @return The presharedKey.
      */
+    @java.lang.Override
     public java.lang.String getPresharedKey() {
       java.lang.Object ref = presharedKey_;
       if (ref instanceof java.lang.String) {
@@ -4632,7 +4828,9 @@ public final class PeersProto {
     }
     /**
      * <code>string preshared_key = 5;</code>
+     * @return The bytes for presharedKey.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getPresharedKeyBytes() {
       java.lang.Object ref = presharedKey_;
@@ -4651,7 +4849,9 @@ public final class PeersProto {
     private int persistentKeepaliveIntervalSeconds_;
     /**
      * <code>uint32 persistent_keepalive_interval_seconds = 6;</code>
+     * @return The persistentKeepaliveIntervalSeconds.
      */
+    @java.lang.Override
     public int getPersistentKeepaliveIntervalSeconds() {
       return persistentKeepaliveIntervalSeconds_;
     }
@@ -4660,7 +4860,9 @@ public final class PeersProto {
     private long protocolVersion_;
     /**
      * <code>uint64 protocol_version = 7;</code>
+     * @return The protocolVersion.
      */
+    @java.lang.Override
     public long getProtocolVersion() {
       return protocolVersion_;
     }
@@ -4669,7 +4871,9 @@ public final class PeersProto {
     private long receiveBytes_;
     /**
      * <code>int64 receive_bytes = 8;</code>
+     * @return The receiveBytes.
      */
+    @java.lang.Override
     public long getReceiveBytes() {
       return receiveBytes_;
     }
@@ -4678,7 +4882,9 @@ public final class PeersProto {
     private long transmitBytes_;
     /**
      * <code>int64 transmit_bytes = 9;</code>
+     * @return The transmitBytes.
      */
+    @java.lang.Override
     public long getTransmitBytes() {
       return transmitBytes_;
     }
@@ -4687,7 +4893,9 @@ public final class PeersProto {
     private long lastHandshakeTimeUnixSec_;
     /**
      * <code>int64 last_handshake_time_unix_sec = 10;</code>
+     * @return The lastHandshakeTimeUnixSec.
      */
+    @java.lang.Override
     public long getLastHandshakeTimeUnixSec() {
       return lastHandshakeTimeUnixSec_;
     }
@@ -4801,28 +5009,27 @@ public final class PeersProto {
       }
       net.moznion.wiregarden.PeersProto.Peer other = (net.moznion.wiregarden.PeersProto.Peer) obj;
 
-      boolean result = true;
-      result = result && getPublicKey()
-          .equals(other.getPublicKey());
-      result = result && getAllowedIpsList()
-          .equals(other.getAllowedIpsList());
-      result = result && endpointUdpType_ == other.endpointUdpType_;
-      result = result && getEndpoint()
-          .equals(other.getEndpoint());
-      result = result && getPresharedKey()
-          .equals(other.getPresharedKey());
-      result = result && (getPersistentKeepaliveIntervalSeconds()
-          == other.getPersistentKeepaliveIntervalSeconds());
-      result = result && (getProtocolVersion()
-          == other.getProtocolVersion());
-      result = result && (getReceiveBytes()
-          == other.getReceiveBytes());
-      result = result && (getTransmitBytes()
-          == other.getTransmitBytes());
-      result = result && (getLastHandshakeTimeUnixSec()
-          == other.getLastHandshakeTimeUnixSec());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getPublicKey()
+          .equals(other.getPublicKey())) return false;
+      if (!getAllowedIpsList()
+          .equals(other.getAllowedIpsList())) return false;
+      if (endpointUdpType_ != other.endpointUdpType_) return false;
+      if (!getEndpoint()
+          .equals(other.getEndpoint())) return false;
+      if (!getPresharedKey()
+          .equals(other.getPresharedKey())) return false;
+      if (getPersistentKeepaliveIntervalSeconds()
+          != other.getPersistentKeepaliveIntervalSeconds()) return false;
+      if (getProtocolVersion()
+          != other.getProtocolVersion()) return false;
+      if (getReceiveBytes()
+          != other.getReceiveBytes()) return false;
+      if (getTransmitBytes()
+          != other.getTransmitBytes()) return false;
+      if (getLastHandshakeTimeUnixSec()
+          != other.getLastHandshakeTimeUnixSec()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -4994,7 +5201,7 @@ public final class PeersProto {
         publicKey_ = "";
 
         allowedIps_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         endpointUdpType_ = 0;
 
         endpoint_ = "";
@@ -5038,11 +5245,10 @@ public final class PeersProto {
       public net.moznion.wiregarden.PeersProto.Peer buildPartial() {
         net.moznion.wiregarden.PeersProto.Peer result = new net.moznion.wiregarden.PeersProto.Peer(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
         result.publicKey_ = publicKey_;
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           allowedIps_ = allowedIps_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.allowedIps_ = allowedIps_;
         result.endpointUdpType_ = endpointUdpType_;
@@ -5053,42 +5259,41 @@ public final class PeersProto {
         result.receiveBytes_ = receiveBytes_;
         result.transmitBytes_ = transmitBytes_;
         result.lastHandshakeTimeUnixSec_ = lastHandshakeTimeUnixSec_;
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -5109,7 +5314,7 @@ public final class PeersProto {
         if (!other.allowedIps_.isEmpty()) {
           if (allowedIps_.isEmpty()) {
             allowedIps_ = other.allowedIps_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000001);
           } else {
             ensureAllowedIpsIsMutable();
             allowedIps_.addAll(other.allowedIps_);
@@ -5175,6 +5380,7 @@ public final class PeersProto {
       private java.lang.Object publicKey_ = "";
       /**
        * <code>string public_key = 1;</code>
+       * @return The publicKey.
        */
       public java.lang.String getPublicKey() {
         java.lang.Object ref = publicKey_;
@@ -5190,6 +5396,7 @@ public final class PeersProto {
       }
       /**
        * <code>string public_key = 1;</code>
+       * @return The bytes for publicKey.
        */
       public com.google.protobuf.ByteString
           getPublicKeyBytes() {
@@ -5206,6 +5413,8 @@ public final class PeersProto {
       }
       /**
        * <code>string public_key = 1;</code>
+       * @param value The publicKey to set.
+       * @return This builder for chaining.
        */
       public Builder setPublicKey(
           java.lang.String value) {
@@ -5219,6 +5428,7 @@ public final class PeersProto {
       }
       /**
        * <code>string public_key = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearPublicKey() {
         
@@ -5228,6 +5438,8 @@ public final class PeersProto {
       }
       /**
        * <code>string public_key = 1;</code>
+       * @param value The bytes for publicKey to set.
+       * @return This builder for chaining.
        */
       public Builder setPublicKeyBytes(
           com.google.protobuf.ByteString value) {
@@ -5243,13 +5455,14 @@ public final class PeersProto {
 
       private com.google.protobuf.LazyStringList allowedIps_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureAllowedIpsIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           allowedIps_ = new com.google.protobuf.LazyStringArrayList(allowedIps_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000001;
          }
       }
       /**
        * <code>repeated string allowed_ips = 2;</code>
+       * @return A list containing the allowedIps.
        */
       public com.google.protobuf.ProtocolStringList
           getAllowedIpsList() {
@@ -5257,18 +5470,23 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string allowed_ips = 2;</code>
+       * @return The count of allowedIps.
        */
       public int getAllowedIpsCount() {
         return allowedIps_.size();
       }
       /**
        * <code>repeated string allowed_ips = 2;</code>
+       * @param index The index of the element to return.
+       * @return The allowedIps at the given index.
        */
       public java.lang.String getAllowedIps(int index) {
         return allowedIps_.get(index);
       }
       /**
        * <code>repeated string allowed_ips = 2;</code>
+       * @param index The index of the value to return.
+       * @return The bytes of the allowedIps at the given index.
        */
       public com.google.protobuf.ByteString
           getAllowedIpsBytes(int index) {
@@ -5276,6 +5494,9 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string allowed_ips = 2;</code>
+       * @param index The index to set the value at.
+       * @param value The allowedIps to set.
+       * @return This builder for chaining.
        */
       public Builder setAllowedIps(
           int index, java.lang.String value) {
@@ -5289,6 +5510,8 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string allowed_ips = 2;</code>
+       * @param value The allowedIps to add.
+       * @return This builder for chaining.
        */
       public Builder addAllowedIps(
           java.lang.String value) {
@@ -5302,6 +5525,8 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string allowed_ips = 2;</code>
+       * @param values The allowedIps to add.
+       * @return This builder for chaining.
        */
       public Builder addAllAllowedIps(
           java.lang.Iterable<java.lang.String> values) {
@@ -5313,15 +5538,18 @@ public final class PeersProto {
       }
       /**
        * <code>repeated string allowed_ips = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearAllowedIps() {
         allowedIps_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
       /**
        * <code>repeated string allowed_ips = 2;</code>
+       * @param value The bytes of the allowedIps to add.
+       * @return This builder for chaining.
        */
       public Builder addAllowedIpsBytes(
           com.google.protobuf.ByteString value) {
@@ -5338,21 +5566,27 @@ public final class PeersProto {
       private int endpointUdpType_ = 0;
       /**
        * <code>.UDPNetworkType endpoint_udp_type = 3;</code>
+       * @return The enum numeric value on the wire for endpointUdpType.
        */
-      public int getEndpointUdpTypeValue() {
+      @java.lang.Override public int getEndpointUdpTypeValue() {
         return endpointUdpType_;
       }
       /**
        * <code>.UDPNetworkType endpoint_udp_type = 3;</code>
+       * @param value The enum numeric value on the wire for endpointUdpType to set.
+       * @return This builder for chaining.
        */
       public Builder setEndpointUdpTypeValue(int value) {
+        
         endpointUdpType_ = value;
         onChanged();
         return this;
       }
       /**
        * <code>.UDPNetworkType endpoint_udp_type = 3;</code>
+       * @return The endpointUdpType.
        */
+      @java.lang.Override
       public net.moznion.wiregarden.PeersProto.UDPNetworkType getEndpointUdpType() {
         @SuppressWarnings("deprecation")
         net.moznion.wiregarden.PeersProto.UDPNetworkType result = net.moznion.wiregarden.PeersProto.UDPNetworkType.valueOf(endpointUdpType_);
@@ -5360,6 +5594,8 @@ public final class PeersProto {
       }
       /**
        * <code>.UDPNetworkType endpoint_udp_type = 3;</code>
+       * @param value The endpointUdpType to set.
+       * @return This builder for chaining.
        */
       public Builder setEndpointUdpType(net.moznion.wiregarden.PeersProto.UDPNetworkType value) {
         if (value == null) {
@@ -5372,6 +5608,7 @@ public final class PeersProto {
       }
       /**
        * <code>.UDPNetworkType endpoint_udp_type = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearEndpointUdpType() {
         
@@ -5383,6 +5620,7 @@ public final class PeersProto {
       private java.lang.Object endpoint_ = "";
       /**
        * <code>string endpoint = 4;</code>
+       * @return The endpoint.
        */
       public java.lang.String getEndpoint() {
         java.lang.Object ref = endpoint_;
@@ -5398,6 +5636,7 @@ public final class PeersProto {
       }
       /**
        * <code>string endpoint = 4;</code>
+       * @return The bytes for endpoint.
        */
       public com.google.protobuf.ByteString
           getEndpointBytes() {
@@ -5414,6 +5653,8 @@ public final class PeersProto {
       }
       /**
        * <code>string endpoint = 4;</code>
+       * @param value The endpoint to set.
+       * @return This builder for chaining.
        */
       public Builder setEndpoint(
           java.lang.String value) {
@@ -5427,6 +5668,7 @@ public final class PeersProto {
       }
       /**
        * <code>string endpoint = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearEndpoint() {
         
@@ -5436,6 +5678,8 @@ public final class PeersProto {
       }
       /**
        * <code>string endpoint = 4;</code>
+       * @param value The bytes for endpoint to set.
+       * @return This builder for chaining.
        */
       public Builder setEndpointBytes(
           com.google.protobuf.ByteString value) {
@@ -5452,6 +5696,7 @@ public final class PeersProto {
       private java.lang.Object presharedKey_ = "";
       /**
        * <code>string preshared_key = 5;</code>
+       * @return The presharedKey.
        */
       public java.lang.String getPresharedKey() {
         java.lang.Object ref = presharedKey_;
@@ -5467,6 +5712,7 @@ public final class PeersProto {
       }
       /**
        * <code>string preshared_key = 5;</code>
+       * @return The bytes for presharedKey.
        */
       public com.google.protobuf.ByteString
           getPresharedKeyBytes() {
@@ -5483,6 +5729,8 @@ public final class PeersProto {
       }
       /**
        * <code>string preshared_key = 5;</code>
+       * @param value The presharedKey to set.
+       * @return This builder for chaining.
        */
       public Builder setPresharedKey(
           java.lang.String value) {
@@ -5496,6 +5744,7 @@ public final class PeersProto {
       }
       /**
        * <code>string preshared_key = 5;</code>
+       * @return This builder for chaining.
        */
       public Builder clearPresharedKey() {
         
@@ -5505,6 +5754,8 @@ public final class PeersProto {
       }
       /**
        * <code>string preshared_key = 5;</code>
+       * @param value The bytes for presharedKey to set.
+       * @return This builder for chaining.
        */
       public Builder setPresharedKeyBytes(
           com.google.protobuf.ByteString value) {
@@ -5521,12 +5772,16 @@ public final class PeersProto {
       private int persistentKeepaliveIntervalSeconds_ ;
       /**
        * <code>uint32 persistent_keepalive_interval_seconds = 6;</code>
+       * @return The persistentKeepaliveIntervalSeconds.
        */
+      @java.lang.Override
       public int getPersistentKeepaliveIntervalSeconds() {
         return persistentKeepaliveIntervalSeconds_;
       }
       /**
        * <code>uint32 persistent_keepalive_interval_seconds = 6;</code>
+       * @param value The persistentKeepaliveIntervalSeconds to set.
+       * @return This builder for chaining.
        */
       public Builder setPersistentKeepaliveIntervalSeconds(int value) {
         
@@ -5536,6 +5791,7 @@ public final class PeersProto {
       }
       /**
        * <code>uint32 persistent_keepalive_interval_seconds = 6;</code>
+       * @return This builder for chaining.
        */
       public Builder clearPersistentKeepaliveIntervalSeconds() {
         
@@ -5547,12 +5803,16 @@ public final class PeersProto {
       private long protocolVersion_ ;
       /**
        * <code>uint64 protocol_version = 7;</code>
+       * @return The protocolVersion.
        */
+      @java.lang.Override
       public long getProtocolVersion() {
         return protocolVersion_;
       }
       /**
        * <code>uint64 protocol_version = 7;</code>
+       * @param value The protocolVersion to set.
+       * @return This builder for chaining.
        */
       public Builder setProtocolVersion(long value) {
         
@@ -5562,6 +5822,7 @@ public final class PeersProto {
       }
       /**
        * <code>uint64 protocol_version = 7;</code>
+       * @return This builder for chaining.
        */
       public Builder clearProtocolVersion() {
         
@@ -5573,12 +5834,16 @@ public final class PeersProto {
       private long receiveBytes_ ;
       /**
        * <code>int64 receive_bytes = 8;</code>
+       * @return The receiveBytes.
        */
+      @java.lang.Override
       public long getReceiveBytes() {
         return receiveBytes_;
       }
       /**
        * <code>int64 receive_bytes = 8;</code>
+       * @param value The receiveBytes to set.
+       * @return This builder for chaining.
        */
       public Builder setReceiveBytes(long value) {
         
@@ -5588,6 +5853,7 @@ public final class PeersProto {
       }
       /**
        * <code>int64 receive_bytes = 8;</code>
+       * @return This builder for chaining.
        */
       public Builder clearReceiveBytes() {
         
@@ -5599,12 +5865,16 @@ public final class PeersProto {
       private long transmitBytes_ ;
       /**
        * <code>int64 transmit_bytes = 9;</code>
+       * @return The transmitBytes.
        */
+      @java.lang.Override
       public long getTransmitBytes() {
         return transmitBytes_;
       }
       /**
        * <code>int64 transmit_bytes = 9;</code>
+       * @param value The transmitBytes to set.
+       * @return This builder for chaining.
        */
       public Builder setTransmitBytes(long value) {
         
@@ -5614,6 +5884,7 @@ public final class PeersProto {
       }
       /**
        * <code>int64 transmit_bytes = 9;</code>
+       * @return This builder for chaining.
        */
       public Builder clearTransmitBytes() {
         
@@ -5625,12 +5896,16 @@ public final class PeersProto {
       private long lastHandshakeTimeUnixSec_ ;
       /**
        * <code>int64 last_handshake_time_unix_sec = 10;</code>
+       * @return The lastHandshakeTimeUnixSec.
        */
+      @java.lang.Override
       public long getLastHandshakeTimeUnixSec() {
         return lastHandshakeTimeUnixSec_;
       }
       /**
        * <code>int64 last_handshake_time_unix_sec = 10;</code>
+       * @param value The lastHandshakeTimeUnixSec to set.
+       * @return This builder for chaining.
        */
       public Builder setLastHandshakeTimeUnixSec(long value) {
         
@@ -5640,6 +5915,7 @@ public final class PeersProto {
       }
       /**
        * <code>int64 last_handshake_time_unix_sec = 10;</code>
+       * @return This builder for chaining.
        */
       public Builder clearLastHandshakeTimeUnixSec() {
         
@@ -5650,7 +5926,7 @@ public final class PeersProto {
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -5770,18 +6046,10 @@ public final class PeersProto {
       "ub.com/moznion/wiregarden/grpc/messagesb" +
       "\006proto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
-    com.google.protobuf.Descriptors.FileDescriptor
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        }, assigner);
+        });
     internal_static_GetPeersRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_GetPeersRequest_fieldAccessorTable = new

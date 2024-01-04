@@ -5,13 +5,14 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
 /**
  */
 @javax.annotation.Generated(
-    value = "by gRPC proto compiler (version 1.38.0)",
+    value = "by gRPC proto compiler (version 1.60.1)",
     comments = "Source: protos/devices.proto")
+@io.grpc.stub.annotations.GrpcGenerated
 public final class DevicesGrpc {
 
   private DevicesGrpc() {}
 
-  public static final String SERVICE_NAME = "Devices";
+  public static final java.lang.String SERVICE_NAME = "Devices";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<net.moznion.wiregarden.DevicesProto.GetDevicesRequest,
@@ -122,45 +123,39 @@ public final class DevicesGrpc {
 
   /**
    */
-  public static abstract class DevicesImplBase implements io.grpc.BindableService {
+  public interface AsyncService {
 
     /**
      */
-    public void getDevices(net.moznion.wiregarden.DevicesProto.GetDevicesRequest request,
+    default void getDevices(net.moznion.wiregarden.DevicesProto.GetDevicesRequest request,
         io.grpc.stub.StreamObserver<net.moznion.wiregarden.DevicesProto.GetDevicesResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetDevicesMethod(), responseObserver);
     }
 
     /**
      */
-    public void updatePrivateKey(net.moznion.wiregarden.DevicesProto.UpdatePrivateKeyRequest request,
+    default void updatePrivateKey(net.moznion.wiregarden.DevicesProto.UpdatePrivateKeyRequest request,
         io.grpc.stub.StreamObserver<net.moznion.wiregarden.DevicesProto.UpdatePrivateKeyResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUpdatePrivateKeyMethod(), responseObserver);
-    }
-
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-            getGetDevicesMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                net.moznion.wiregarden.DevicesProto.GetDevicesRequest,
-                net.moznion.wiregarden.DevicesProto.GetDevicesResponse>(
-                  this, METHODID_GET_DEVICES)))
-          .addMethod(
-            getUpdatePrivateKeyMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                net.moznion.wiregarden.DevicesProto.UpdatePrivateKeyRequest,
-                net.moznion.wiregarden.DevicesProto.UpdatePrivateKeyResponse>(
-                  this, METHODID_UPDATE_PRIVATE_KEY)))
-          .build();
     }
   }
 
   /**
+   * Base class for the server implementation of the service Devices.
    */
-  public static final class DevicesStub extends io.grpc.stub.AbstractAsyncStub<DevicesStub> {
+  public static abstract class DevicesImplBase
+      implements io.grpc.BindableService, AsyncService {
+
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+      return DevicesGrpc.bindService(this);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do asynchronous rpc calls to service Devices.
+   */
+  public static final class DevicesStub
+      extends io.grpc.stub.AbstractAsyncStub<DevicesStub> {
     private DevicesStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -190,8 +185,10 @@ public final class DevicesGrpc {
   }
 
   /**
+   * A stub to allow clients to do synchronous rpc calls to service Devices.
    */
-  public static final class DevicesBlockingStub extends io.grpc.stub.AbstractBlockingStub<DevicesBlockingStub> {
+  public static final class DevicesBlockingStub
+      extends io.grpc.stub.AbstractBlockingStub<DevicesBlockingStub> {
     private DevicesBlockingStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -219,8 +216,10 @@ public final class DevicesGrpc {
   }
 
   /**
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service Devices.
    */
-  public static final class DevicesFutureStub extends io.grpc.stub.AbstractFutureStub<DevicesFutureStub> {
+  public static final class DevicesFutureStub
+      extends io.grpc.stub.AbstractFutureStub<DevicesFutureStub> {
     private DevicesFutureStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -257,10 +256,10 @@ public final class DevicesGrpc {
       io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final DevicesImplBase serviceImpl;
+    private final AsyncService serviceImpl;
     private final int methodId;
 
-    MethodHandlers(DevicesImplBase serviceImpl, int methodId) {
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -293,6 +292,25 @@ public final class DevicesGrpc {
     }
   }
 
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getGetDevicesMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              net.moznion.wiregarden.DevicesProto.GetDevicesRequest,
+              net.moznion.wiregarden.DevicesProto.GetDevicesResponse>(
+                service, METHODID_GET_DEVICES)))
+        .addMethod(
+          getUpdatePrivateKeyMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              net.moznion.wiregarden.DevicesProto.UpdatePrivateKeyRequest,
+              net.moznion.wiregarden.DevicesProto.UpdatePrivateKeyResponse>(
+                service, METHODID_UPDATE_PRIVATE_KEY)))
+        .build();
+  }
+
   private static abstract class DevicesBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
     DevicesBaseDescriptorSupplier() {}
@@ -316,9 +334,9 @@ public final class DevicesGrpc {
   private static final class DevicesMethodDescriptorSupplier
       extends DevicesBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    DevicesMethodDescriptorSupplier(String methodName) {
+    DevicesMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 

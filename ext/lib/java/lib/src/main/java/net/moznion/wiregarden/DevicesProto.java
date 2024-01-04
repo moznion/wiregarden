@@ -20,29 +20,37 @@ public final class DevicesProto {
 
     /**
      * <code>string name = 1;</code>
+     * @return The name.
      */
     java.lang.String getName();
     /**
      * <code>string name = 1;</code>
+     * @return The bytes for name.
      */
     com.google.protobuf.ByteString
         getNameBytes();
 
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @return A list containing the filterPublicKeys.
      */
     java.util.List<java.lang.String>
         getFilterPublicKeysList();
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @return The count of filterPublicKeys.
      */
     int getFilterPublicKeysCount();
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @param index The index of the element to return.
+     * @return The filterPublicKeys at the given index.
      */
     java.lang.String getFilterPublicKeys(int index);
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the filterPublicKeys at the given index.
      */
     com.google.protobuf.ByteString
         getFilterPublicKeysBytes(int index);
@@ -50,7 +58,7 @@ public final class DevicesProto {
   /**
    * Protobuf type {@code GetDevicesRequest}
    */
-  public  static final class GetDevicesRequest extends
+  public static final class GetDevicesRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:GetDevicesRequest)
       GetDevicesRequestOrBuilder {
@@ -62,6 +70,13 @@ public final class DevicesProto {
     private GetDevicesRequest() {
       name_ = "";
       filterPublicKeys_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new GetDevicesRequest();
     }
 
     @java.lang.Override
@@ -96,15 +111,15 @@ public final class DevicesProto {
             }
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 filterPublicKeys_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000002;
+                mutable_bitField0_ |= 0x00000001;
               }
               filterPublicKeys_.add(s);
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -118,7 +133,7 @@ public final class DevicesProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           filterPublicKeys_ = filterPublicKeys_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
@@ -138,12 +153,13 @@ public final class DevicesProto {
               net.moznion.wiregarden.DevicesProto.GetDevicesRequest.class, net.moznion.wiregarden.DevicesProto.GetDevicesRequest.Builder.class);
     }
 
-    private int bitField0_;
     public static final int NAME_FIELD_NUMBER = 1;
     private volatile java.lang.Object name_;
     /**
      * <code>string name = 1;</code>
+     * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
       java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
@@ -158,7 +174,9 @@ public final class DevicesProto {
     }
     /**
      * <code>string name = 1;</code>
+     * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getNameBytes() {
       java.lang.Object ref = name_;
@@ -177,6 +195,7 @@ public final class DevicesProto {
     private com.google.protobuf.LazyStringList filterPublicKeys_;
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @return A list containing the filterPublicKeys.
      */
     public com.google.protobuf.ProtocolStringList
         getFilterPublicKeysList() {
@@ -184,18 +203,23 @@ public final class DevicesProto {
     }
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @return The count of filterPublicKeys.
      */
     public int getFilterPublicKeysCount() {
       return filterPublicKeys_.size();
     }
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @param index The index of the element to return.
+     * @return The filterPublicKeys at the given index.
      */
     public java.lang.String getFilterPublicKeys(int index) {
       return filterPublicKeys_.get(index);
     }
     /**
      * <code>repeated string filter_public_keys = 2;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the filterPublicKeys at the given index.
      */
     public com.google.protobuf.ByteString
         getFilterPublicKeysBytes(int index) {
@@ -257,13 +281,12 @@ public final class DevicesProto {
       }
       net.moznion.wiregarden.DevicesProto.GetDevicesRequest other = (net.moznion.wiregarden.DevicesProto.GetDevicesRequest) obj;
 
-      boolean result = true;
-      result = result && getName()
-          .equals(other.getName());
-      result = result && getFilterPublicKeysList()
-          .equals(other.getFilterPublicKeysList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getName()
+          .equals(other.getName())) return false;
+      if (!getFilterPublicKeysList()
+          .equals(other.getFilterPublicKeysList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -415,7 +438,7 @@ public final class DevicesProto {
         name_ = "";
 
         filterPublicKeys_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
 
@@ -443,49 +466,47 @@ public final class DevicesProto {
       public net.moznion.wiregarden.DevicesProto.GetDevicesRequest buildPartial() {
         net.moznion.wiregarden.DevicesProto.GetDevicesRequest result = new net.moznion.wiregarden.DevicesProto.GetDevicesRequest(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
         result.name_ = name_;
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           filterPublicKeys_ = filterPublicKeys_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.filterPublicKeys_ = filterPublicKeys_;
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -506,7 +527,7 @@ public final class DevicesProto {
         if (!other.filterPublicKeys_.isEmpty()) {
           if (filterPublicKeys_.isEmpty()) {
             filterPublicKeys_ = other.filterPublicKeys_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000001);
           } else {
             ensureFilterPublicKeysIsMutable();
             filterPublicKeys_.addAll(other.filterPublicKeys_);
@@ -546,6 +567,7 @@ public final class DevicesProto {
       private java.lang.Object name_ = "";
       /**
        * <code>string name = 1;</code>
+       * @return The name.
        */
       public java.lang.String getName() {
         java.lang.Object ref = name_;
@@ -561,6 +583,7 @@ public final class DevicesProto {
       }
       /**
        * <code>string name = 1;</code>
+       * @return The bytes for name.
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
@@ -577,6 +600,8 @@ public final class DevicesProto {
       }
       /**
        * <code>string name = 1;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
        */
       public Builder setName(
           java.lang.String value) {
@@ -590,6 +615,7 @@ public final class DevicesProto {
       }
       /**
        * <code>string name = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearName() {
         
@@ -599,6 +625,8 @@ public final class DevicesProto {
       }
       /**
        * <code>string name = 1;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
        */
       public Builder setNameBytes(
           com.google.protobuf.ByteString value) {
@@ -614,13 +642,14 @@ public final class DevicesProto {
 
       private com.google.protobuf.LazyStringList filterPublicKeys_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureFilterPublicKeysIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           filterPublicKeys_ = new com.google.protobuf.LazyStringArrayList(filterPublicKeys_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000001;
          }
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @return A list containing the filterPublicKeys.
        */
       public com.google.protobuf.ProtocolStringList
           getFilterPublicKeysList() {
@@ -628,18 +657,23 @@ public final class DevicesProto {
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @return The count of filterPublicKeys.
        */
       public int getFilterPublicKeysCount() {
         return filterPublicKeys_.size();
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @param index The index of the element to return.
+       * @return The filterPublicKeys at the given index.
        */
       public java.lang.String getFilterPublicKeys(int index) {
         return filterPublicKeys_.get(index);
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @param index The index of the value to return.
+       * @return The bytes of the filterPublicKeys at the given index.
        */
       public com.google.protobuf.ByteString
           getFilterPublicKeysBytes(int index) {
@@ -647,6 +681,9 @@ public final class DevicesProto {
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @param index The index to set the value at.
+       * @param value The filterPublicKeys to set.
+       * @return This builder for chaining.
        */
       public Builder setFilterPublicKeys(
           int index, java.lang.String value) {
@@ -660,6 +697,8 @@ public final class DevicesProto {
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @param value The filterPublicKeys to add.
+       * @return This builder for chaining.
        */
       public Builder addFilterPublicKeys(
           java.lang.String value) {
@@ -673,6 +712,8 @@ public final class DevicesProto {
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @param values The filterPublicKeys to add.
+       * @return This builder for chaining.
        */
       public Builder addAllFilterPublicKeys(
           java.lang.Iterable<java.lang.String> values) {
@@ -684,15 +725,18 @@ public final class DevicesProto {
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearFilterPublicKeys() {
         filterPublicKeys_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
       /**
        * <code>repeated string filter_public_keys = 2;</code>
+       * @param value The bytes of the filterPublicKeys to add.
+       * @return This builder for chaining.
        */
       public Builder addFilterPublicKeysBytes(
           com.google.protobuf.ByteString value) {
@@ -708,7 +752,7 @@ public final class DevicesProto {
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -789,7 +833,7 @@ public final class DevicesProto {
   /**
    * Protobuf type {@code GetDevicesResponse}
    */
-  public  static final class GetDevicesResponse extends
+  public static final class GetDevicesResponse extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:GetDevicesResponse)
       GetDevicesResponseOrBuilder {
@@ -800,6 +844,13 @@ public final class DevicesProto {
     }
     private GetDevicesResponse() {
       devices_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new GetDevicesResponse();
     }
 
     @java.lang.Override
@@ -827,7 +878,7 @@ public final class DevicesProto {
               done = true;
               break;
             case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 devices_ = new java.util.ArrayList<net.moznion.wiregarden.DevicesProto.Device>();
                 mutable_bitField0_ |= 0x00000001;
               }
@@ -836,7 +887,7 @@ public final class DevicesProto {
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -850,7 +901,7 @@ public final class DevicesProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           devices_ = java.util.Collections.unmodifiableList(devices_);
         }
         this.unknownFields = unknownFields.build();
@@ -875,12 +926,14 @@ public final class DevicesProto {
     /**
      * <code>repeated .Device devices = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<net.moznion.wiregarden.DevicesProto.Device> getDevicesList() {
       return devices_;
     }
     /**
      * <code>repeated .Device devices = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends net.moznion.wiregarden.DevicesProto.DeviceOrBuilder> 
         getDevicesOrBuilderList() {
       return devices_;
@@ -888,18 +941,21 @@ public final class DevicesProto {
     /**
      * <code>repeated .Device devices = 1;</code>
      */
+    @java.lang.Override
     public int getDevicesCount() {
       return devices_.size();
     }
     /**
      * <code>repeated .Device devices = 1;</code>
      */
+    @java.lang.Override
     public net.moznion.wiregarden.DevicesProto.Device getDevices(int index) {
       return devices_.get(index);
     }
     /**
      * <code>repeated .Device devices = 1;</code>
      */
+    @java.lang.Override
     public net.moznion.wiregarden.DevicesProto.DeviceOrBuilder getDevicesOrBuilder(
         int index) {
       return devices_.get(index);
@@ -950,11 +1006,10 @@ public final class DevicesProto {
       }
       net.moznion.wiregarden.DevicesProto.GetDevicesResponse other = (net.moznion.wiregarden.DevicesProto.GetDevicesResponse) obj;
 
-      boolean result = true;
-      result = result && getDevicesList()
-          .equals(other.getDevicesList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getDevicesList()
+          .equals(other.getDevicesList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -1136,7 +1191,7 @@ public final class DevicesProto {
         net.moznion.wiregarden.DevicesProto.GetDevicesResponse result = new net.moznion.wiregarden.DevicesProto.GetDevicesResponse(this);
         int from_bitField0_ = bitField0_;
         if (devicesBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             devices_ = java.util.Collections.unmodifiableList(devices_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -1150,35 +1205,35 @@ public final class DevicesProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -1251,7 +1306,7 @@ public final class DevicesProto {
       private java.util.List<net.moznion.wiregarden.DevicesProto.Device> devices_ =
         java.util.Collections.emptyList();
       private void ensureDevicesIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           devices_ = new java.util.ArrayList<net.moznion.wiregarden.DevicesProto.Device>(devices_);
           bitField0_ |= 0x00000001;
          }
@@ -1480,7 +1535,7 @@ public final class DevicesProto {
           devicesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               net.moznion.wiregarden.DevicesProto.Device, net.moznion.wiregarden.DevicesProto.Device.Builder, net.moznion.wiregarden.DevicesProto.DeviceOrBuilder>(
                   devices_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           devices_ = null;
@@ -1490,7 +1545,7 @@ public final class DevicesProto {
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -1546,20 +1601,24 @@ public final class DevicesProto {
 
     /**
      * <code>string name = 1;</code>
+     * @return The name.
      */
     java.lang.String getName();
     /**
      * <code>string name = 1;</code>
+     * @return The bytes for name.
      */
     com.google.protobuf.ByteString
         getNameBytes();
 
     /**
      * <code>string private_key = 2;</code>
+     * @return The privateKey.
      */
     java.lang.String getPrivateKey();
     /**
      * <code>string private_key = 2;</code>
+     * @return The bytes for privateKey.
      */
     com.google.protobuf.ByteString
         getPrivateKeyBytes();
@@ -1567,7 +1626,7 @@ public final class DevicesProto {
   /**
    * Protobuf type {@code UpdatePrivateKeyRequest}
    */
-  public  static final class UpdatePrivateKeyRequest extends
+  public static final class UpdatePrivateKeyRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:UpdatePrivateKeyRequest)
       UpdatePrivateKeyRequestOrBuilder {
@@ -1579,6 +1638,13 @@ public final class DevicesProto {
     private UpdatePrivateKeyRequest() {
       name_ = "";
       privateKey_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UpdatePrivateKeyRequest();
     }
 
     @java.lang.Override
@@ -1594,7 +1660,6 @@ public final class DevicesProto {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
-      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -1618,7 +1683,7 @@ public final class DevicesProto {
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -1653,7 +1718,9 @@ public final class DevicesProto {
     private volatile java.lang.Object name_;
     /**
      * <code>string name = 1;</code>
+     * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
       java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
@@ -1668,7 +1735,9 @@ public final class DevicesProto {
     }
     /**
      * <code>string name = 1;</code>
+     * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getNameBytes() {
       java.lang.Object ref = name_;
@@ -1687,7 +1756,9 @@ public final class DevicesProto {
     private volatile java.lang.Object privateKey_;
     /**
      * <code>string private_key = 2;</code>
+     * @return The privateKey.
      */
+    @java.lang.Override
     public java.lang.String getPrivateKey() {
       java.lang.Object ref = privateKey_;
       if (ref instanceof java.lang.String) {
@@ -1702,7 +1773,9 @@ public final class DevicesProto {
     }
     /**
      * <code>string private_key = 2;</code>
+     * @return The bytes for privateKey.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getPrivateKeyBytes() {
       java.lang.Object ref = privateKey_;
@@ -1767,13 +1840,12 @@ public final class DevicesProto {
       }
       net.moznion.wiregarden.DevicesProto.UpdatePrivateKeyRequest other = (net.moznion.wiregarden.DevicesProto.UpdatePrivateKeyRequest) obj;
 
-      boolean result = true;
-      result = result && getName()
-          .equals(other.getName());
-      result = result && getPrivateKey()
-          .equals(other.getPrivateKey());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getName()
+          .equals(other.getName())) return false;
+      if (!getPrivateKey()
+          .equals(other.getPrivateKey())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -1958,35 +2030,35 @@ public final class DevicesProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -2040,6 +2112,7 @@ public final class DevicesProto {
       private java.lang.Object name_ = "";
       /**
        * <code>string name = 1;</code>
+       * @return The name.
        */
       public java.lang.String getName() {
         java.lang.Object ref = name_;
@@ -2055,6 +2128,7 @@ public final class DevicesProto {
       }
       /**
        * <code>string name = 1;</code>
+       * @return The bytes for name.
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
@@ -2071,6 +2145,8 @@ public final class DevicesProto {
       }
       /**
        * <code>string name = 1;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
        */
       public Builder setName(
           java.lang.String value) {
@@ -2084,6 +2160,7 @@ public final class DevicesProto {
       }
       /**
        * <code>string name = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearName() {
         
@@ -2093,6 +2170,8 @@ public final class DevicesProto {
       }
       /**
        * <code>string name = 1;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
        */
       public Builder setNameBytes(
           com.google.protobuf.ByteString value) {
@@ -2109,6 +2188,7 @@ public final class DevicesProto {
       private java.lang.Object privateKey_ = "";
       /**
        * <code>string private_key = 2;</code>
+       * @return The privateKey.
        */
       public java.lang.String getPrivateKey() {
         java.lang.Object ref = privateKey_;
@@ -2124,6 +2204,7 @@ public final class DevicesProto {
       }
       /**
        * <code>string private_key = 2;</code>
+       * @return The bytes for privateKey.
        */
       public com.google.protobuf.ByteString
           getPrivateKeyBytes() {
@@ -2140,6 +2221,8 @@ public final class DevicesProto {
       }
       /**
        * <code>string private_key = 2;</code>
+       * @param value The privateKey to set.
+       * @return This builder for chaining.
        */
       public Builder setPrivateKey(
           java.lang.String value) {
@@ -2153,6 +2236,7 @@ public final class DevicesProto {
       }
       /**
        * <code>string private_key = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearPrivateKey() {
         
@@ -2162,6 +2246,8 @@ public final class DevicesProto {
       }
       /**
        * <code>string private_key = 2;</code>
+       * @param value The bytes for privateKey to set.
+       * @return This builder for chaining.
        */
       public Builder setPrivateKeyBytes(
           com.google.protobuf.ByteString value) {
@@ -2177,7 +2263,7 @@ public final class DevicesProto {
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -2234,7 +2320,7 @@ public final class DevicesProto {
   /**
    * Protobuf type {@code UpdatePrivateKeyResponse}
    */
-  public  static final class UpdatePrivateKeyResponse extends
+  public static final class UpdatePrivateKeyResponse extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:UpdatePrivateKeyResponse)
       UpdatePrivateKeyResponseOrBuilder {
@@ -2244,6 +2330,13 @@ public final class DevicesProto {
       super(builder);
     }
     private UpdatePrivateKeyResponse() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UpdatePrivateKeyResponse();
     }
 
     @java.lang.Override
@@ -2270,7 +2363,7 @@ public final class DevicesProto {
               done = true;
               break;
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -2339,9 +2432,8 @@ public final class DevicesProto {
       }
       net.moznion.wiregarden.DevicesProto.UpdatePrivateKeyResponse other = (net.moznion.wiregarden.DevicesProto.UpdatePrivateKeyResponse) obj;
 
-      boolean result = true;
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -2516,35 +2608,35 @@ public final class DevicesProto {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -2589,7 +2681,7 @@ public final class DevicesProto {
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -2645,46 +2737,55 @@ public final class DevicesProto {
 
     /**
      * <code>string name = 1;</code>
+     * @return The name.
      */
     java.lang.String getName();
     /**
      * <code>string name = 1;</code>
+     * @return The bytes for name.
      */
     com.google.protobuf.ByteString
         getNameBytes();
 
     /**
      * <code>uint32 device_type = 2;</code>
+     * @return The deviceType.
      */
     int getDeviceType();
 
     /**
      * <code>string device_type_name = 3;</code>
+     * @return The deviceTypeName.
      */
     java.lang.String getDeviceTypeName();
     /**
      * <code>string device_type_name = 3;</code>
+     * @return The bytes for deviceTypeName.
      */
     com.google.protobuf.ByteString
         getDeviceTypeNameBytes();
 
     /**
      * <code>string public_key = 4;</code>
+     * @return The publicKey.
      */
     java.lang.String getPublicKey();
     /**
      * <code>string public_key = 4;</code>
+     * @return The bytes for publicKey.
      */
     com.google.protobuf.ByteString
         getPublicKeyBytes();
 
     /**
      * <code>uint32 listen_port = 5;</code>
+     * @return The listenPort.
      */
     int getListenPort();
 
     /**
      * <code>int64 firewall_mark = 6;</code>
+     * @return The firewallMark.
      */
     long getFirewallMark();
 
@@ -2715,7 +2816,7 @@ public final class DevicesProto {
   /**
    * Protobuf type {@code Device}
    */
-  public  static final class Device extends
+  public static final class Device extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:Device)
       DeviceOrBuilder {
@@ -2726,12 +2827,16 @@ public final class DevicesProto {
     }
     private Device() {
       name_ = "";
-      deviceType_ = 0;
       deviceTypeName_ = "";
       publicKey_ = "";
-      listenPort_ = 0;
-      firewallMark_ = 0L;
       peers_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Device();
     }
 
     @java.lang.Override
@@ -2792,16 +2897,16 @@ public final class DevicesProto {
               break;
             }
             case 58: {
-              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 peers_ = new java.util.ArrayList<net.moznion.wiregarden.PeersProto.Peer>();
-                mutable_bitField0_ |= 0x00000040;
+                mutable_bitField0_ |= 0x00000001;
               }
               peers_.add(
                   input.readMessage(net.moznion.wiregarden.PeersProto.Peer.parser(), extensionRegistry));
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -2815,7 +2920,7 @@ public final class DevicesProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           peers_ = java.util.Collections.unmodifiableList(peers_);
         }
         this.unknownFields = unknownFields.build();
@@ -2835,12 +2940,13 @@ public final class DevicesProto {
               net.moznion.wiregarden.DevicesProto.Device.class, net.moznion.wiregarden.DevicesProto.Device.Builder.class);
     }
 
-    private int bitField0_;
     public static final int NAME_FIELD_NUMBER = 1;
     private volatile java.lang.Object name_;
     /**
      * <code>string name = 1;</code>
+     * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
       java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
@@ -2855,7 +2961,9 @@ public final class DevicesProto {
     }
     /**
      * <code>string name = 1;</code>
+     * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getNameBytes() {
       java.lang.Object ref = name_;
@@ -2874,7 +2982,9 @@ public final class DevicesProto {
     private int deviceType_;
     /**
      * <code>uint32 device_type = 2;</code>
+     * @return The deviceType.
      */
+    @java.lang.Override
     public int getDeviceType() {
       return deviceType_;
     }
@@ -2883,7 +2993,9 @@ public final class DevicesProto {
     private volatile java.lang.Object deviceTypeName_;
     /**
      * <code>string device_type_name = 3;</code>
+     * @return The deviceTypeName.
      */
+    @java.lang.Override
     public java.lang.String getDeviceTypeName() {
       java.lang.Object ref = deviceTypeName_;
       if (ref instanceof java.lang.String) {
@@ -2898,7 +3010,9 @@ public final class DevicesProto {
     }
     /**
      * <code>string device_type_name = 3;</code>
+     * @return The bytes for deviceTypeName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getDeviceTypeNameBytes() {
       java.lang.Object ref = deviceTypeName_;
@@ -2917,7 +3031,9 @@ public final class DevicesProto {
     private volatile java.lang.Object publicKey_;
     /**
      * <code>string public_key = 4;</code>
+     * @return The publicKey.
      */
+    @java.lang.Override
     public java.lang.String getPublicKey() {
       java.lang.Object ref = publicKey_;
       if (ref instanceof java.lang.String) {
@@ -2932,7 +3048,9 @@ public final class DevicesProto {
     }
     /**
      * <code>string public_key = 4;</code>
+     * @return The bytes for publicKey.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getPublicKeyBytes() {
       java.lang.Object ref = publicKey_;
@@ -2951,7 +3069,9 @@ public final class DevicesProto {
     private int listenPort_;
     /**
      * <code>uint32 listen_port = 5;</code>
+     * @return The listenPort.
      */
+    @java.lang.Override
     public int getListenPort() {
       return listenPort_;
     }
@@ -2960,7 +3080,9 @@ public final class DevicesProto {
     private long firewallMark_;
     /**
      * <code>int64 firewall_mark = 6;</code>
+     * @return The firewallMark.
      */
+    @java.lang.Override
     public long getFirewallMark() {
       return firewallMark_;
     }
@@ -2970,12 +3092,14 @@ public final class DevicesProto {
     /**
      * <code>repeated .Peer peers = 7;</code>
      */
+    @java.lang.Override
     public java.util.List<net.moznion.wiregarden.PeersProto.Peer> getPeersList() {
       return peers_;
     }
     /**
      * <code>repeated .Peer peers = 7;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends net.moznion.wiregarden.PeersProto.PeerOrBuilder> 
         getPeersOrBuilderList() {
       return peers_;
@@ -2983,18 +3107,21 @@ public final class DevicesProto {
     /**
      * <code>repeated .Peer peers = 7;</code>
      */
+    @java.lang.Override
     public int getPeersCount() {
       return peers_.size();
     }
     /**
      * <code>repeated .Peer peers = 7;</code>
      */
+    @java.lang.Override
     public net.moznion.wiregarden.PeersProto.Peer getPeers(int index) {
       return peers_.get(index);
     }
     /**
      * <code>repeated .Peer peers = 7;</code>
      */
+    @java.lang.Override
     public net.moznion.wiregarden.PeersProto.PeerOrBuilder getPeersOrBuilder(
         int index) {
       return peers_.get(index);
@@ -3084,23 +3211,22 @@ public final class DevicesProto {
       }
       net.moznion.wiregarden.DevicesProto.Device other = (net.moznion.wiregarden.DevicesProto.Device) obj;
 
-      boolean result = true;
-      result = result && getName()
-          .equals(other.getName());
-      result = result && (getDeviceType()
-          == other.getDeviceType());
-      result = result && getDeviceTypeName()
-          .equals(other.getDeviceTypeName());
-      result = result && getPublicKey()
-          .equals(other.getPublicKey());
-      result = result && (getListenPort()
-          == other.getListenPort());
-      result = result && (getFirewallMark()
-          == other.getFirewallMark());
-      result = result && getPeersList()
-          .equals(other.getPeersList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getName()
+          .equals(other.getName())) return false;
+      if (getDeviceType()
+          != other.getDeviceType()) return false;
+      if (!getDeviceTypeName()
+          .equals(other.getDeviceTypeName())) return false;
+      if (!getPublicKey()
+          .equals(other.getPublicKey())) return false;
+      if (getListenPort()
+          != other.getListenPort()) return false;
+      if (getFirewallMark()
+          != other.getFirewallMark()) return false;
+      if (!getPeersList()
+          .equals(other.getPeersList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -3275,7 +3401,7 @@ public final class DevicesProto {
 
         if (peersBuilder_ == null) {
           peers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000040);
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
           peersBuilder_.clear();
         }
@@ -3306,7 +3432,6 @@ public final class DevicesProto {
       public net.moznion.wiregarden.DevicesProto.Device buildPartial() {
         net.moznion.wiregarden.DevicesProto.Device result = new net.moznion.wiregarden.DevicesProto.Device(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
         result.name_ = name_;
         result.deviceType_ = deviceType_;
         result.deviceTypeName_ = deviceTypeName_;
@@ -3314,50 +3439,49 @@ public final class DevicesProto {
         result.listenPort_ = listenPort_;
         result.firewallMark_ = firewallMark_;
         if (peersBuilder_ == null) {
-          if (((bitField0_ & 0x00000040) == 0x00000040)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             peers_ = java.util.Collections.unmodifiableList(peers_);
-            bitField0_ = (bitField0_ & ~0x00000040);
+            bitField0_ = (bitField0_ & ~0x00000001);
           }
           result.peers_ = peers_;
         } else {
           result.peers_ = peersBuilder_.build();
         }
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -3396,7 +3520,7 @@ public final class DevicesProto {
           if (!other.peers_.isEmpty()) {
             if (peers_.isEmpty()) {
               peers_ = other.peers_;
-              bitField0_ = (bitField0_ & ~0x00000040);
+              bitField0_ = (bitField0_ & ~0x00000001);
             } else {
               ensurePeersIsMutable();
               peers_.addAll(other.peers_);
@@ -3409,7 +3533,7 @@ public final class DevicesProto {
               peersBuilder_.dispose();
               peersBuilder_ = null;
               peers_ = other.peers_;
-              bitField0_ = (bitField0_ & ~0x00000040);
+              bitField0_ = (bitField0_ & ~0x00000001);
               peersBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                    getPeersFieldBuilder() : null;
@@ -3451,6 +3575,7 @@ public final class DevicesProto {
       private java.lang.Object name_ = "";
       /**
        * <code>string name = 1;</code>
+       * @return The name.
        */
       public java.lang.String getName() {
         java.lang.Object ref = name_;
@@ -3466,6 +3591,7 @@ public final class DevicesProto {
       }
       /**
        * <code>string name = 1;</code>
+       * @return The bytes for name.
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
@@ -3482,6 +3608,8 @@ public final class DevicesProto {
       }
       /**
        * <code>string name = 1;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
        */
       public Builder setName(
           java.lang.String value) {
@@ -3495,6 +3623,7 @@ public final class DevicesProto {
       }
       /**
        * <code>string name = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearName() {
         
@@ -3504,6 +3633,8 @@ public final class DevicesProto {
       }
       /**
        * <code>string name = 1;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
        */
       public Builder setNameBytes(
           com.google.protobuf.ByteString value) {
@@ -3520,12 +3651,16 @@ public final class DevicesProto {
       private int deviceType_ ;
       /**
        * <code>uint32 device_type = 2;</code>
+       * @return The deviceType.
        */
+      @java.lang.Override
       public int getDeviceType() {
         return deviceType_;
       }
       /**
        * <code>uint32 device_type = 2;</code>
+       * @param value The deviceType to set.
+       * @return This builder for chaining.
        */
       public Builder setDeviceType(int value) {
         
@@ -3535,6 +3670,7 @@ public final class DevicesProto {
       }
       /**
        * <code>uint32 device_type = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearDeviceType() {
         
@@ -3546,6 +3682,7 @@ public final class DevicesProto {
       private java.lang.Object deviceTypeName_ = "";
       /**
        * <code>string device_type_name = 3;</code>
+       * @return The deviceTypeName.
        */
       public java.lang.String getDeviceTypeName() {
         java.lang.Object ref = deviceTypeName_;
@@ -3561,6 +3698,7 @@ public final class DevicesProto {
       }
       /**
        * <code>string device_type_name = 3;</code>
+       * @return The bytes for deviceTypeName.
        */
       public com.google.protobuf.ByteString
           getDeviceTypeNameBytes() {
@@ -3577,6 +3715,8 @@ public final class DevicesProto {
       }
       /**
        * <code>string device_type_name = 3;</code>
+       * @param value The deviceTypeName to set.
+       * @return This builder for chaining.
        */
       public Builder setDeviceTypeName(
           java.lang.String value) {
@@ -3590,6 +3730,7 @@ public final class DevicesProto {
       }
       /**
        * <code>string device_type_name = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearDeviceTypeName() {
         
@@ -3599,6 +3740,8 @@ public final class DevicesProto {
       }
       /**
        * <code>string device_type_name = 3;</code>
+       * @param value The bytes for deviceTypeName to set.
+       * @return This builder for chaining.
        */
       public Builder setDeviceTypeNameBytes(
           com.google.protobuf.ByteString value) {
@@ -3615,6 +3758,7 @@ public final class DevicesProto {
       private java.lang.Object publicKey_ = "";
       /**
        * <code>string public_key = 4;</code>
+       * @return The publicKey.
        */
       public java.lang.String getPublicKey() {
         java.lang.Object ref = publicKey_;
@@ -3630,6 +3774,7 @@ public final class DevicesProto {
       }
       /**
        * <code>string public_key = 4;</code>
+       * @return The bytes for publicKey.
        */
       public com.google.protobuf.ByteString
           getPublicKeyBytes() {
@@ -3646,6 +3791,8 @@ public final class DevicesProto {
       }
       /**
        * <code>string public_key = 4;</code>
+       * @param value The publicKey to set.
+       * @return This builder for chaining.
        */
       public Builder setPublicKey(
           java.lang.String value) {
@@ -3659,6 +3806,7 @@ public final class DevicesProto {
       }
       /**
        * <code>string public_key = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearPublicKey() {
         
@@ -3668,6 +3816,8 @@ public final class DevicesProto {
       }
       /**
        * <code>string public_key = 4;</code>
+       * @param value The bytes for publicKey to set.
+       * @return This builder for chaining.
        */
       public Builder setPublicKeyBytes(
           com.google.protobuf.ByteString value) {
@@ -3684,12 +3834,16 @@ public final class DevicesProto {
       private int listenPort_ ;
       /**
        * <code>uint32 listen_port = 5;</code>
+       * @return The listenPort.
        */
+      @java.lang.Override
       public int getListenPort() {
         return listenPort_;
       }
       /**
        * <code>uint32 listen_port = 5;</code>
+       * @param value The listenPort to set.
+       * @return This builder for chaining.
        */
       public Builder setListenPort(int value) {
         
@@ -3699,6 +3853,7 @@ public final class DevicesProto {
       }
       /**
        * <code>uint32 listen_port = 5;</code>
+       * @return This builder for chaining.
        */
       public Builder clearListenPort() {
         
@@ -3710,12 +3865,16 @@ public final class DevicesProto {
       private long firewallMark_ ;
       /**
        * <code>int64 firewall_mark = 6;</code>
+       * @return The firewallMark.
        */
+      @java.lang.Override
       public long getFirewallMark() {
         return firewallMark_;
       }
       /**
        * <code>int64 firewall_mark = 6;</code>
+       * @param value The firewallMark to set.
+       * @return This builder for chaining.
        */
       public Builder setFirewallMark(long value) {
         
@@ -3725,6 +3884,7 @@ public final class DevicesProto {
       }
       /**
        * <code>int64 firewall_mark = 6;</code>
+       * @return This builder for chaining.
        */
       public Builder clearFirewallMark() {
         
@@ -3736,9 +3896,9 @@ public final class DevicesProto {
       private java.util.List<net.moznion.wiregarden.PeersProto.Peer> peers_ =
         java.util.Collections.emptyList();
       private void ensurePeersIsMutable() {
-        if (!((bitField0_ & 0x00000040) == 0x00000040)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           peers_ = new java.util.ArrayList<net.moznion.wiregarden.PeersProto.Peer>(peers_);
-          bitField0_ |= 0x00000040;
+          bitField0_ |= 0x00000001;
          }
       }
 
@@ -3888,7 +4048,7 @@ public final class DevicesProto {
       public Builder clearPeers() {
         if (peersBuilder_ == null) {
           peers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000040);
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
           peersBuilder_.clear();
@@ -3965,7 +4125,7 @@ public final class DevicesProto {
           peersBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               net.moznion.wiregarden.PeersProto.Peer, net.moznion.wiregarden.PeersProto.Peer.Builder, net.moznion.wiregarden.PeersProto.PeerOrBuilder>(
                   peers_,
-                  ((bitField0_ & 0x00000040) == 0x00000040),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           peers_ = null;
@@ -3975,7 +4135,7 @@ public final class DevicesProto {
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -4076,19 +4236,11 @@ public final class DevicesProto {
       "egardenB\014DevicesProtoZ+github.com/moznio" +
       "n/wiregarden/grpc/messagesb\006proto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
-    com.google.protobuf.Descriptors.FileDescriptor
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           net.moznion.wiregarden.PeersProto.getDescriptor(),
-        }, assigner);
+        });
     internal_static_GetDevicesRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_GetDevicesRequest_fieldAccessorTable = new
