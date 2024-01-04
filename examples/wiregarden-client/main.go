@@ -8,6 +8,7 @@ import (
 	"github.com/moznion/wiregarden/grpc/messages"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
@@ -30,7 +31,7 @@ func main() {
 		log.Fatal().Msg("mandatory parameter `host` is missing")
 	}
 
-	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", host, port), grpc.WithInsecure(), grpc.WithBlock())
+	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", host, port), grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
 	if err != nil {
 		log.Fatal().Err(err).Msg("did not connect: %v")
 	}

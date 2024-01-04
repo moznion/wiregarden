@@ -28,10 +28,11 @@ import (
 
 	"github.com/moznion/wiregarden/grpc/messages"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
-	conn, err := grpc.Dial("127.0.0.1:54321", grpc.WithInsecure(), grpc.WithBlock())
+	conn, err := grpc.Dial("127.0.0.1:54321", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}

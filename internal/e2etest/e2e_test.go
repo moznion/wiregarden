@@ -17,6 +17,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 var log zerolog.Logger
@@ -227,7 +228,7 @@ func setupServerAndConn(t *testing.T, ipRouter routes.IPRouter) *grpc.ClientConn
 		cancel()
 	})
 
-	conn, err := grpc.DialContext(ctx, fmt.Sprintf("127.0.0.1:%d", port), grpc.WithInsecure(), grpc.WithBlock())
+	conn, err := grpc.DialContext(ctx, fmt.Sprintf("127.0.0.1:%d", port), grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
 	assert.NoError(t, err)
 	t.Cleanup(func() {
 		_ = conn.Close()
