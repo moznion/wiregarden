@@ -2,9 +2,6 @@
 
 A broker daemon to provision the [WireGuard](https://www.wireguard.com/) peers over [gRPC](https://grpc.io/).
 
-THIS PROJECT IS CURRENTLY UNDER DEVELOPMENT, JUST A PoC PHASE.
-THERE IS THE POSSIBILITY TO BE CHANGED EVERYTHING WITHOUT NOTICES.
-
 ## Usage
 
 ### gRPC Server
