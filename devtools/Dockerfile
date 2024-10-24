@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21.0.1_12-jdk-jammy
+FROM eclipse-temurin:21.0.5_11-jdk-jammy
 
 ARG go_tar_file_name="go1.21.5.linux-amd64.tar.gz"
 
